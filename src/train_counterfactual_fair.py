@@ -1,187 +1,192 @@
-﻿from pathlib import Path
+﻿from __future__ import annotations
+
+from pathlib import Path
+import json
+import random
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
-from PIL import Image, ImageFilter
-import torchvision.transforms as T
 
-from dataset_fair import MultimodalCSVDatasetWithPaths
-from models import MultiModalViT
+from dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
+from models import MultimodalThreatModel, count_trainable_params
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = PROJECT_ROOT / "data" / "csv" / "multimodal.csv"
-OUT_DIR = PROJECT_ROOT / "outputs" / "checkpoints"
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+OUT_CKPT = PROJECT_ROOT / "outputs" / "checkpoints"
+OUT_REP = PROJECT_ROOT / "outputs" / "reports"
+OUT_CKPT.mkdir(parents=True, exist_ok=True)
+OUT_REP.mkdir(parents=True, exist_ok=True)
+
+SPLIT_PATH = PROJECT_ROOT / "data" / "csv" / "split_seed42.json"
 
 
-def collate_keep_paths(batch):
-    # batch: list of (image_path, phys, y, scar, mask_path)
-    image_paths = [b[0] for b in batch]
-    phys = torch.stack([b[1] for b in batch], dim=0)
-    y = torch.stack([b[2] for b in batch], dim=0)
-    scar = torch.stack([b[3] for b in batch], dim=0)
-    mask_paths = [b[4] for b in batch]
-    return image_paths, phys, y, scar, mask_paths
+def set_seed(seed: int = 42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 
-def remove_scar_pil(img_pil: Image.Image, mask_pil: Image.Image, blur_radius=6.0, alpha=0.85):
+def make_or_load_split(n: int, seed: int = 42, val_ratio: float = 0.2):
+    if SPLIT_PATH.exists():
+        d = json.loads(SPLIT_PATH.read_text(encoding="utf-8"))
+        return d["train_idx"], d["val_idx"]
+
+    rng = np.random.default_rng(seed)
+    idx = np.arange(n)
+    rng.shuffle(idx)
+    val_n = int(val_ratio * n)
+    val_idx = idx[:val_n].tolist()
+    train_idx = idx[val_n:].tolist()
+
+    SPLIT_PATH.write_text(json.dumps({"seed": seed, "val_ratio": val_ratio,
+                                     "train_idx": train_idx, "val_idx": val_idx}, indent=2),
+                          encoding="utf-8")
+    return train_idx, val_idx
+
+
+def js_divergence(p: torch.Tensor, q: torch.Tensor, eps: float = 1e-8) -> torch.Tensor:
     """
-    Counterfactual generation: replace scar region with blurred skin using mask.
+    Innovation-2: Jensen–Shannon divergence on probabilities (stable + bounded).
+    p,q: (B,2) probabilities
+    returns: (B,)
     """
-    img = img_pil.convert("RGB")
-    blur = img.filter(ImageFilter.GaussianBlur(radius=blur_radius))
+    p = torch.clamp(p, eps, 1.0)
+    q = torch.clamp(q, eps, 1.0)
+    m = 0.5 * (p + q)
+    kl_pm = (p * (p.log() - m.log())).sum(dim=1)
+    kl_qm = (q * (q.log() - m.log())).sum(dim=1)
+    return 0.5 * (kl_pm + kl_qm)
 
-    img_np = torch.from_numpy(__import__("numpy").array(img)).float()
-    blur_np = torch.from_numpy(__import__("numpy").array(blur)).float()
-    m = torch.from_numpy(__import__("numpy").array(mask_pil.convert("L"))).float() / 255.0
 
-    # soften mask edges
-    m = torch.clamp(m, 0, 1).unsqueeze(-1)
-
-    out = img_np * (1 - alpha * m) + blur_np * (alpha * m)
-    out = torch.clamp(out, 0, 255).byte().numpy()
-    return Image.fromarray(out)
+@torch.no_grad()
+def eval_acc(model, loader, device):
+    model.eval()
+    correct, total = 0, 0
+    for b in loader:
+        img = b["img"].to(device)
+        phys = b["phys"].to(device)
+        y = b["y"].to(device)
+        mask = b["mask"].to(device)
+        out = model(img, phys, mask=mask)
+        pred = out.logits.argmax(dim=1)
+        correct += (pred == y).sum().item()
+        total += y.numel()
+    return correct / max(total, 1)
 
 
 def main():
+    # ---- config (edit only here) ----
+    seed = 42
+    vision_backbone = "mobilenet_v3_small"  # or "vit_b_16" for non-edge reference
+    fusion = "cgf"                          # Innovation-1
+    epochs = 10
+    batch_size = 32
+    lr = 2e-4
+    num_workers = 0                         # Windows-safe
+    lambda_cf = 1.0                         # CF strength
+    lambda_gate = 0.05                      # small regularizer: if focus high, reduce vision trust
+    # ---------------------------------
+
+    set_seed(seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Device:", device)
 
-    # same transform for original and counterfactual
-    transform = T.Compose([
-        T.Resize((224, 224)),
-        T.ToTensor(),
-        T.Normalize(mean=[0.485, 0.456, 0.406],
-                    std=[0.229, 0.224, 0.225]),
-    ])
+    ds = MultimodalCSVDatasetWithCF(str(CSV_PATH))
+    train_idx, val_idx = make_or_load_split(len(ds), seed=seed)
 
-    dataset = MultimodalCSVDatasetWithPaths(str(CSV_PATH))
+    train_ds = Subset(ds, train_idx)
+    val_ds = Subset(ds, val_idx)
 
-    total = len(dataset)
-    val_size = int(0.2 * total)
-    train_size = total - val_size
-    train_ds, val_ds = random_split(dataset, [train_size, val_size], generator=torch.Generator().manual_seed(42))
+    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, num_workers=num_workers,
+                              pin_memory=True, collate_fn=collate_samples)
+    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers,
+                            pin_memory=True, collate_fn=collate_samples)
 
-    train_loader = DataLoader(train_ds, batch_size=16, shuffle=True, num_workers=0, collate_fn=collate_keep_paths)
-    val_loader = DataLoader(val_ds, batch_size=16, shuffle=False, num_workers=0, collate_fn=collate_keep_paths)
+    phys_dim = ds[0].phys.numel()
+    model = MultimodalThreatModel(
+        phys_dim=phys_dim,
+        vision_backbone=vision_backbone,
+        fusion=fusion,
+        num_classes=2,
+    ).to(device)
 
-    model = MultiModalViT(num_classes=2).to(device)
-
+    opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     ce = nn.CrossEntropyLoss()
-    opt = torch.optim.Adam(model.parameters(), lr=1e-4)
 
-    # fairness weight (tune)
-    lambda_cf = 1.0
-
-    best_val = 0.0
-    epochs = 5
+    best = -1.0
+    best_ckpt = OUT_CKPT / f"counterfactual_{fusion}_js_{vision_backbone}_best.pt"
 
     for epoch in range(1, epochs + 1):
         model.train()
-        total_loss = 0.0
-        total_n = 0
-        correct = 0
+        pbar = tqdm(train_loader, desc=f"Epoch {epoch} [train]")
+        for b in pbar:
+            img = b["img"].to(device)
+            img_cf = b["img_cf"].to(device)
+            phys = b["phys"].to(device)
+            y = b["y"].to(device)
+            has_cf = b["has_cf"].to(device)
+            mask = b["mask"].to(device)
 
-        for image_paths, phys, y, scar, mask_paths in tqdm(train_loader, desc=f"Epoch {epoch} [train]"):
-            phys, y = phys.to(device), y.to(device)
+            out = model(img, phys, mask=mask)
+            loss_task = ce(out.logits, y)
 
-            # Load and transform original images
-            imgs = []
-            imgs_cf = []
-            cf_mask = []  # which samples have CF
-            for i, p in enumerate(image_paths):
-                img_pil = Image.open(p).convert("RGB")
-                img_t = transform(img_pil)
-                imgs.append(img_t)
-
-                # build counterfactual only if scar==1 and mask exists
-                if float(scar[i].item()) == 1.0 and mask_paths[i] and mask_paths[i].lower() != "nan":
-                    try:
-                        mask_pil = Image.open(mask_paths[i]).convert("L")
-                        mask_pil = mask_pil.resize(img_pil.size)
-                        img_cf_pil = remove_scar_pil(img_pil, mask_pil, blur_radius=6.0, alpha=0.85)
-                        img_cf_t = transform(img_cf_pil)
-                        imgs_cf.append(img_cf_t)
-                        cf_mask.append(True)
-                    except Exception:
-                        cf_mask.append(False)
-                else:
-                    cf_mask.append(False)
-
-            img = torch.stack(imgs, dim=0).to(device)
-
-            logits = model(img, phys)
-            loss_ce = ce(logits, y)
-
-            # Counterfactual invariance loss on logits (only where CF exists)
+            # CF consistency only where CF exists
             loss_cf = torch.tensor(0.0, device=device)
-            if any(cf_mask):
-                idxs = [j for j, ok in enumerate(cf_mask) if ok]
-                # build matched phys for cf samples
-                phys_cf = phys[idxs]
+            if has_cf.any():
+                out_cf = model(img_cf, phys, mask=mask)
+                p = F.softmax(out.logits, dim=1)
+                q = F.softmax(out_cf.logits, dim=1)
+                js = js_divergence(p, q)                 # (B,)
+                loss_cf = js[has_cf].mean()
 
-                # stack cf images in same order
-                img_cf = torch.stack([imgs_cf[k] for k in range(len(idxs))], dim=0).to(device)
+            # Gate regularizer (Innovation-1)
+            loss_gate = torch.tensor(0.0, device=device)
+            if out.gate is not None and out.focus is not None:
+                loss_gate = (out.gate * out.focus).mean()
 
-                logits_cf = model(img_cf, phys_cf)
+            loss = loss_task + lambda_cf * loss_cf + lambda_gate * loss_gate
 
-                # match original logits subset
-                logits_sub = logits[idxs]
-
-                # invariance: make predictions similar
-                loss_cf = F.mse_loss(logits_sub, logits_cf)
-
-            loss = loss_ce + lambda_cf * loss_cf
-
-            opt.zero_grad()
+            opt.zero_grad(set_to_none=True)
             loss.backward()
             opt.step()
 
-            total_loss += loss.item() * img.size(0)
-            pred = torch.argmax(logits, dim=1)
-            correct += (pred == y).sum().item()
-            total_n += y.size(0)
+            pbar.set_postfix(task=float(loss_task.item()),
+                             cf=float(loss_cf.item()),
+                             gate=float(loss_gate.item()))
 
-        train_loss = total_loss / total_n
-        train_acc = correct / total_n
+        acc = eval_acc(model, val_loader, device)
+        print(f"Epoch {epoch}: val_acc={acc:.4f}")
 
-        # --- validation (accuracy only) ---
-        model.eval()
-        correct = 0
-        total_n = 0
-        vloss = 0.0
-        with torch.no_grad():
-            for image_paths, phys, y, scar, mask_paths in tqdm(val_loader, desc=f"Epoch {epoch} [val]"):
-                phys, y = phys.to(device), y.to(device)
-                imgs = []
-                for p in image_paths:
-                    img_pil = Image.open(p).convert("RGB")
-                    imgs.append(transform(img_pil))
-                img = torch.stack(imgs, dim=0).to(device)
+        if acc > best:
+            best = acc
+            torch.save(model.state_dict(), best_ckpt)
+            print("Saved:", best_ckpt)
 
-                logits = model(img, phys)
-                loss = ce(logits, y)
-                vloss += loss.item() * img.size(0)
-
-                pred = torch.argmax(logits, dim=1)
-                correct += (pred == y).sum().item()
-                total_n += y.size(0)
-
-        vloss /= total_n
-        vacc = correct / total_n
-
-        print(f"\nEpoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.3f} | val_loss={vloss:.4f} val_acc={vacc:.3f} | last_cf_loss={loss_cf.item():.6f}")
-
-        if vacc > best_val:
-            best_val = vacc
-            ckpt = OUT_DIR / "counterfactual_fair_best.pt"
-            torch.save(model.state_dict(), ckpt)
-            print("Saved best checkpoint:", ckpt)
-
-    print("\nDONE ✅ Best val_acc:", best_val)
+    report = {
+        "design": "B",
+        "seed": seed,
+        "vision_backbone": vision_backbone,
+        "fusion": fusion,
+        "epochs": epochs,
+        "batch_size": batch_size,
+        "lr": lr,
+        "lambda_cf": lambda_cf,
+        "lambda_gate": lambda_gate,
+        "best_val_acc": best,
+        "params_trainable": count_trainable_params(model),
+        "checkpoint": str(best_ckpt),
+        "split_path": str(SPLIT_PATH),
+    }
+    (OUT_REP / "train_counterfactual_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print("Saved report:", OUT_REP / "train_counterfactual_report.json")
 
 
 if __name__ == "__main__":

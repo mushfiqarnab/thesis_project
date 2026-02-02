@@ -1,100 +1,149 @@
-﻿from pathlib import Path
-import torch
-from torch.utils.data import DataLoader, random_split
+﻿from __future__ import annotations
 
-from dataset_fair import MultimodalCSVDatasetWithMask
-from models import MultiModalViT
+from pathlib import Path
+import json
+import numpy as np
+import torch
+import torch.nn.functional as F
+from torch.utils.data import DataLoader, Subset
+
+from dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
+from models import MultimodalThreatModel
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = PROJECT_ROOT / "data" / "csv" / "multimodal.csv"
-CKPT_PATH = PROJECT_ROOT / "outputs" / "checkpoints" / "baseline_best.pt"
+SPLIT_PATH = PROJECT_ROOT / "data" / "csv" / "split_seed42.json"
+
+OUT_DIR = PROJECT_ROOT / "outputs" / "results"
+OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
-def collate_keep_mask(batch):
-    imgs = torch.stack([b[0] for b in batch], dim=0)
-    phys = torch.stack([b[1] for b in batch], dim=0)
-    y = torch.stack([b[2] for b in batch], dim=0)
-    scar = torch.stack([b[3] for b in batch], dim=0)
-    mask_paths = [b[4] for b in batch]
-    return imgs, phys, y, scar, mask_paths
+def dp_gap_signed(yhat: np.ndarray, scar: np.ndarray) -> float:
+    p1 = yhat[scar == 1].mean() if (scar == 1).any() else 0.0
+    p0 = yhat[scar == 0].mean() if (scar == 0).any() else 0.0
+    return float(p1 - p0)
 
 
-def dp_gap(pred, scar):
-    pred1 = (pred == 1)
-    s1 = (scar == 1)
-    s0 = (scar == 0)
-    p1_s1 = pred1[s1].float().mean().item() if s1.any() else 0.0
-    p1_s0 = pred1[s0].float().mean().item() if s0.any() else 0.0
-    return abs(p1_s1 - p1_s0), p1_s1, p1_s0
+def eo_gaps(yhat: np.ndarray, y: np.ndarray, scar: np.ndarray) -> dict:
+    def rates(g):
+        idx = (scar == g)
+        if not idx.any():
+            return 0.0, 0.0
+        yy = y[idx]
+        yh = yhat[idx]
+        tp = ((yh == 1) & (yy == 1)).sum()
+        fn = ((yh == 0) & (yy == 1)).sum()
+        fp = ((yh == 1) & (yy == 0)).sum()
+        tn = ((yh == 0) & (yy == 0)).sum()
+        tpr = tp / max(tp + fn, 1)
+        fpr = fp / max(fp + tn, 1)
+        return float(tpr), float(fpr)
+
+    tpr1, fpr1 = rates(1)
+    tpr0, fpr0 = rates(0)
+    return {
+        "tpr1": tpr1, "tpr0": tpr0,
+        "fpr1": fpr1, "fpr0": fpr0,
+        "tpr_gap": float(tpr1 - tpr0),
+        "fpr_gap": float(fpr1 - fpr0),
+        "eo_max_gap": float(max(abs(tpr1 - tpr0), abs(fpr1 - fpr0))),
+    }
 
 
-def eo_gap(pred, y, scar):
-    s1 = (scar == 1)
-    s0 = (scar == 0)
-
-    def rates(mask):
-        yy = y[mask]
-        pp = pred[mask]
-        pos = (yy == 1)
-        neg = (yy == 0)
-        tpr = ((pp == 1) & pos).float().sum() / (pos.float().sum() + 1e-9)
-        fpr = ((pp == 1) & neg).float().sum() / (neg.float().sum() + 1e-9)
-        return tpr.item(), fpr.item()
-
-    tpr1, fpr1 = rates(s1) if s1.any() else (0.0, 0.0)
-    tpr0, fpr0 = rates(s0) if s0.any() else (0.0, 0.0)
-    gap = max(abs(tpr1 - tpr0), abs(fpr1 - fpr0))
-    return gap, (tpr1, fpr1), (tpr0, fpr0)
-
-
+@torch.no_grad()
 def main():
+    # ---- config (edit only here to match your checkpoint) ----
+    vision_backbone = "mobilenet_v3_small"
+    fusion = "cgf"  # "concat" for baseline, "cgf" for fair model
+    ckpt_path = PROJECT_ROOT / "outputs" / "checkpoints" / f"counterfactual_{fusion}_js_{vision_backbone}_best.pt"
+    out_json = OUT_DIR / "fairness_report.json"
+    batch_size = 64
+    num_workers = 0
+    # ---------------------------------------------------------
+
+    if not SPLIT_PATH.exists():
+        raise FileNotFoundError("split_seed42.json not found. Train once to generate it.")
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print("Device:", device)
+    ds = MultimodalCSVDatasetWithCF(str(CSV_PATH))
 
-    dataset = MultimodalCSVDatasetWithMask(str(CSV_PATH), img_size=224)
+    split = json.loads(SPLIT_PATH.read_text(encoding="utf-8"))
+    val_ds = Subset(ds, split["val_idx"])
 
-    total = len(dataset)
-    val_size = int(0.2 * total)
-    train_size = total - val_size
-    _, val_ds = random_split(dataset, [train_size, val_size], generator=torch.Generator().manual_seed(42))
+    loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers,
+                        pin_memory=True, collate_fn=collate_samples)
 
-    loader = DataLoader(val_ds, batch_size=32, shuffle=False, num_workers=0, collate_fn=collate_keep_mask)
+    phys_dim = ds[0].phys.numel()
+    model = MultimodalThreatModel(
+        phys_dim=phys_dim,
+        vision_backbone=vision_backbone,
+        fusion=fusion,
+        num_classes=2,
+    ).to(device)
 
-    model = MultiModalViT(num_classes=2).to(device)
-    model.load_state_dict(torch.load(CKPT_PATH, map_location=device))
+    model.load_state_dict(torch.load(ckpt_path, map_location=device))
     model.eval()
 
-    correct = 0
-    total_n = 0
-    all_pred, all_y, all_scar = [], [], []
+    probs_all, y_all, scar_all = [], [], []
+    cf_gap_list = []
+    gate_list, focus_list = [], []
 
-    with torch.no_grad():
-        for img, phys, y, scar, mask_paths in loader:
-            img, phys, y = img.to(device), phys.to(device), y.to(device)
-            logits = model(img, phys)
-            pred = torch.argmax(logits, dim=1).cpu()
+    for b in loader:
+        img = b["img"].to(device)
+        img_cf = b["img_cf"].to(device)
+        phys = b["phys"].to(device)
+        y = b["y"].cpu().numpy()
+        scar = b["scar"].cpu().numpy()
+        has_cf = b["has_cf"].cpu().numpy().astype(bool)
+        mask = b["mask"].to(device)
 
-            correct += (pred == y.cpu()).sum().item()
-            total_n += y.size(0)
+        out = model(img, phys, mask=mask)
+        p = F.softmax(out.logits, dim=1)[:, 1].detach().cpu().numpy()  # P(threat=1)
 
-            all_pred.append(pred)
-            all_y.append(y.cpu())
-            all_scar.append(scar.cpu().long())
+        if has_cf.any():
+            out_cf = model(img_cf, phys, mask=mask)
+            p_cf = F.softmax(out_cf.logits, dim=1)[:, 1].detach().cpu().numpy()
+            cf_gap_list.extend(np.abs(p[has_cf] - p_cf[has_cf]).tolist())
 
-    pred = torch.cat(all_pred)
-    y = torch.cat(all_y)
-    scar = torch.cat(all_scar)
+        if out.gate is not None:
+            gate_list.extend(out.gate.detach().cpu().numpy().reshape(-1).tolist())
+        if out.focus is not None:
+            focus_list.extend(out.focus.detach().cpu().numpy().reshape(-1).tolist())
 
-    acc = correct / total_n
-    dpg, p1s1, p1s0 = dp_gap(pred, scar)
-    eog, (tpr1, fpr1), (tpr0, fpr0) = eo_gap(pred, y, scar)
+        probs_all.append(p)
+        y_all.append(y)
+        scar_all.append(scar)
 
-    print("\nBaseline fairness ✅")
-    print("Val Accuracy:", round(acc, 4))
-    print("DP gap:", round(dpg, 4), "| P(pred=1|scar=1)=", round(p1s1, 4), " P(pred=1|scar=0)=", round(p1s0, 4))
-    print("EO gap:", round(eog, 4))
-    print("  scar=1: TPR=", round(tpr1, 4), "FPR=", round(fpr1, 4))
-    print("  scar=0: TPR=", round(tpr0, 4), "FPR=", round(fpr0, 4))
+    probs_all = np.concatenate(probs_all)
+    y_all = np.concatenate(y_all)
+    scar_all = np.concatenate(scar_all)
+
+    yhat = (probs_all >= 0.5).astype(int)
+
+    acc = float((yhat == y_all).mean())
+    dp_s = dp_gap_signed(yhat, scar_all)
+    eo = eo_gaps(yhat, y_all, scar_all)
+    cf_gap = float(np.mean(cf_gap_list)) if len(cf_gap_list) else 0.0
+
+    report = {
+        "checkpoint": str(ckpt_path),
+        "fusion": fusion,
+        "vision_backbone": vision_backbone,
+        "n_val": int(len(y_all)),
+        "acc": acc,
+        "dp_gap_signed": dp_s,
+        "dp_gap_abs": float(abs(dp_s)),
+        "eo": eo,
+        "cf_prob_gap_mean_abs": cf_gap,
+        "gate_mean": float(np.mean(gate_list)) if gate_list else None,
+        "focus_mean": float(np.mean(focus_list)) if focus_list else None,
+        "cf_samples": int(len(cf_gap_list)),
+    }
+
+    out_json.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print(json.dumps(report, indent=2))
+    print("Saved:", out_json)
 
 
 if __name__ == "__main__":
