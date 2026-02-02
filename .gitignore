@@ -1,0 +1,32 @@
+﻿# Python / build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Environments
+venv/
+.env/
+
+# OS / IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Outputs / checkpoints
+outputs/
+*.pt
+*.pth
+
+# DATA (ignore everything under data, including all CSVs)
+data/**
+!data/README.md
+!data/.gitkeep
+
+# Pickles / WESAD
+*.pkl
+**/WESAD/
