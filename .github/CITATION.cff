@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "Fair Multimodal Threat Detection with Causal Gated Fusion"
+authors:
+  - family-names: "Your Name"
+    given-names: "Your First"
+    orcid: "https://orcid.org/0000-0000-0000-0000"  # Update with your ORCID
+date-released: 2026-02-27
+url: "https://github.com/yourusername/thesis_project"
+repository-code: "https://github.com/yourusername/thesis_project"
+abstract: "A multimodal machine learning framework for fair threat detection using facial images and physiological signals with counterfactual fairness constraints."
+keywords:
+  - "fair machine learning"
+  - "multimodal learning"
+  - "threat detection"
+  - "counterfactual fairness"
+  - "edge deployment"
+license: MIT

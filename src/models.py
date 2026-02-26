@@ -108,22 +108,32 @@ class CausalGatedFusion(nn.Module):
             nn.Linear(128, num_classes),
         )
 
+
     @staticmethod
     def focus_from_mask(fmap: torch.Tensor, mask: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
         """
-        fmap: (B,C,h,w)
-        mask: (B,1,H,W)
-        returns focus: (B,1)
+        Thesis-correct focus ratio, properly normalized:
+          focus = (mean |activation| inside mask) / (mean |activation| overall)
+
+        This stays near ~1.0 when the mask region is not special, and >1 when the model
+        is concentrating energy in the scar region.
         """
         B, C, h, w = fmap.shape
-        m = F.interpolate(mask, size=(h, w), mode="bilinear", align_corners=False)  # (B,1,h,w)
-        energy = fmap.abs()
+        m = F.interpolate(mask.float(), size=(h, w), mode="nearest")   # (B,1,h,w)
+        energy = fmap.abs()                                           # (B,C,h,w)
 
-        inside = (energy * m).mean(dim=(1, 2, 3))          # (B,)
-        overall = energy.mean(dim=(1, 2, 3)) + eps         # (B,)
-        focus = (inside / overall).unsqueeze(1)            # (B,1)
+        # count mask pixels per sample
+        mask_pix = m.sum(dim=(2, 3), keepdim=False).squeeze(1) + eps   # (B,)
+
+        # total energy inside mask (sum over C,h,w), then convert to MEAN per element
+        inside_sum = (energy * m).sum(dim=(1, 2, 3))                   # (B,)
+        inside_mean = inside_sum / (mask_pix * C + eps)                # (B,)
+
+        overall_mean = energy.mean(dim=(1, 2, 3)) + eps                # (B,)
+
+        ratio = (inside_mean / overall_mean)
+        focus = torch.log1p(ratio).unsqueeze(1)        # (B,1)
         return focus
-
     def forward(self, v: torch.Tensor, p: torch.Tensor, fmap: Optional[torch.Tensor], mask: torch.Tensor) -> ModelOut:
         v_ = self.v_proj(v)
         p_ = self.p_proj(p)

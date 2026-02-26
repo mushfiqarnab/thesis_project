@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from pathlib import Path
 import json
@@ -15,14 +15,12 @@ from models import MultimodalThreatModel, count_trainable_params
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CSV_PATH = PROJECT_ROOT / "data" / "csv" / "multimodal.csv"
+CSV_PATH = PROJECT_ROOT / "data" / "csv" / "multimodal_10k_unbiased.csv"
 
 OUT_CKPT = PROJECT_ROOT / "outputs" / "checkpoints"
 OUT_REP = PROJECT_ROOT / "outputs" / "reports"
 OUT_CKPT.mkdir(parents=True, exist_ok=True)
 OUT_REP.mkdir(parents=True, exist_ok=True)
-
-SPLIT_PATH = PROJECT_ROOT / "data" / "csv" / "split_seed42.json"
 
 
 def set_seed(seed: int = 42):
@@ -34,9 +32,13 @@ def set_seed(seed: int = 42):
     torch.backends.cudnn.benchmark = False
 
 
-def make_or_load_split(n: int, seed: int = 42, val_ratio: float = 0.2):
-    if SPLIT_PATH.exists():
-        d = json.loads(SPLIT_PATH.read_text(encoding="utf-8"))
+def make_or_load_split(csv_path: Path, n: int, seed: int = 42, val_ratio: float = 0.2):
+    # Use dataset-specific split file name (matches project convention)
+    csv_stem = csv_path.stem
+    split_path = csv_path.parent / f"split_seed{seed}_{csv_stem}.json"
+    
+    if split_path.exists():
+        d = json.loads(split_path.read_text(encoding="utf-8"))
         return d["train_idx"], d["val_idx"]
 
     rng = np.random.default_rng(seed)
@@ -46,7 +48,7 @@ def make_or_load_split(n: int, seed: int = 42, val_ratio: float = 0.2):
     val_idx = idx[:val_n].tolist()
     train_idx = idx[val_n:].tolist()
 
-    SPLIT_PATH.write_text(json.dumps({"seed": seed, "val_ratio": val_ratio,
+    split_path.write_text(json.dumps({"seed": seed, "val_ratio": val_ratio,
                                      "train_idx": train_idx, "val_idx": val_idx}, indent=2),
                           encoding="utf-8")
     return train_idx, val_idx
@@ -100,7 +102,7 @@ def main():
     print("Device:", device)
 
     ds = MultimodalCSVDatasetWithCF(str(CSV_PATH))
-    train_idx, val_idx = make_or_load_split(len(ds), seed=seed)
+    train_idx, val_idx = make_or_load_split(CSV_PATH, len(ds), seed=seed)
 
     train_ds = Subset(ds, train_idx)
     val_ds = Subset(ds, val_idx)
@@ -147,10 +149,11 @@ def main():
                 js = js_divergence(p, q)                 # (B,)
                 loss_cf = js[has_cf].mean()
 
-            # Gate regularizer (Innovation-1)
+            # Gate regularizer (Innovation-1) - stabilized with log1p
             loss_gate = torch.tensor(0.0, device=device)
             if out.gate is not None and out.focus is not None:
-                loss_gate = (out.gate * out.focus).mean()
+                focus = torch.log1p(out.focus.clamp(min=0.0, max=1e3))
+                loss_gate = (out.gate * focus).mean()
 
             loss = loss_task + lambda_cf * loss_cf + lambda_gate * loss_gate
 
@@ -183,7 +186,7 @@ def main():
         "best_val_acc": best,
         "params_trainable": count_trainable_params(model),
         "checkpoint": str(best_ckpt),
-        "split_path": str(SPLIT_PATH),
+        "csv_path": str(CSV_PATH),
     }
     (OUT_REP / "train_counterfactual_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print("Saved report:", OUT_REP / "train_counterfactual_report.json")

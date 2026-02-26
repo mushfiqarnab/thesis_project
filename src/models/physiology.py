@@ -18,4 +18,4 @@ class PhysModule(nn.Module):
 
     def forward(self, x):
         # x shape: [Batch, Input_Dim]
-        return self.net(x)
+        return self.net(x)                        
