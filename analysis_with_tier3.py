@@ -126,34 +126,38 @@ class TierIIIAnalyzer:
         if verbose:
             print("\n[STEP 1] Generating Explanations (with profiling)...")
         
-        with torch.no_grad():
-            # Profile each method
-            methods_to_profile = {
-                'integrated_gradients': lambda: self.explainer.ig.explain(img, phys, mask=mask, steps=self.num_ig_steps),
-                'saliency_map': lambda: self.explainer.saliency.explain(img, phys, mask=mask),
-                'attention': lambda: self.explainer.attention.explain(img, phys, mask=mask),
-            }
-            
-            method_results = {}
-            timings = {}
-            
-            for method_name, method_fn in methods_to_profile.items():
-                try:
-                    result, timing = self.profiler.profile_method(
-                        method_fn,
-                        method_name=method_name,
-                        verbose=False  # We'll show summary later
-                    )
-                    method_results[method_name] = result
-                    timings[method_name] = timing
-                    analysis['predictions'][method_name] = float(result.prediction)
-                    
-                    if verbose:
-                        print(f"  ✅ {method_name}: {result.prediction:.4f} "
-                              f"({timing['wall_time_sec']:.4f}s)")
-                except Exception as e:
-                    if verbose:
-                        print(f"  ⚠️  {method_name}: {e}")
+        # For gradient-based methods, we need to enable gradients
+        # Use vanilla image/phys (not requires_grad) for attention
+        # For IG/Saliency, let the method handle gradient enabling
+        
+        # Profile each method
+        methods_to_profile = {
+            'integrated_gradients': lambda: self.explainer.ig.explain(img, phys, mask=mask, steps=self.num_ig_steps),
+            'saliency_map': lambda: self.explainer.saliency.explain(img, phys, mask=mask),
+            'attention': lambda: self.explainer.attention.explain(img, phys, mask=mask),
+        }
+        
+        method_results = {}
+        timings = {}
+        
+        for method_name, method_fn in methods_to_profile.items():
+            try:
+                result, timing = self.profiler.profile_method(
+                    method_fn,
+                    method_name=method_name,
+                    verbose=False  # We'll show summary later
+                )
+                method_results[method_name] = result
+                timings[method_name] = timing
+                analysis['predictions'][method_name] = float(result.prediction)
+                
+                if verbose:
+                    print(f"  [OK] {method_name}: {result.prediction:.4f} "
+                          f"({timing['wall_time_sec']:.4f}s)")
+            except Exception as e:
+                if verbose:
+                    err_msg = str(e)[:80]  # Truncate long errors
+                    print(f"  [Error] {method_name}: {err_msg}")
         
         analysis['performance']['timings'] = timings
         
@@ -182,7 +186,7 @@ class TierIIIAnalyzer:
                 analysis['validations']['ig_validation'] = val_results
                 
                 if verbose:
-                    status = "✅ PASS" if val_results['all_pass'] else "⚠️ ISSUES"
+                    status = "[PASS]" if val_results['all_pass'] else "[ISSUES]"
                     print(f"  {status}: Attribution validation")
                     print(f"    - Has NaN: {val_results['attributions']['has_nan']}")
                     print(f"    - All zero: {val_results['attributions']['all_zero']}")
@@ -190,7 +194,7 @@ class TierIIIAnalyzer:
         
         except Exception as e:
             if verbose:
-                print(f"  ⚠️  Validation error: {e}")
+                print(f"  [Error] Validation error: {e}")
         
         # ============================================================
         # STEP 3: Compare methods with ExplanationComparator
@@ -210,7 +214,7 @@ class TierIIIAnalyzer:
             }
             
             if verbose:
-                status = "✅ AGREE" if pred_comparison['predictions_agree'] else "⚠️ DISAGREE"
+                status = "[AGREE]" if pred_comparison['predictions_agree'] else "[DISAGREE]"
                 print(f"  {status}: Method predictions")
                 print(f"    - Mean: {pred_comparison['mean_prediction']:.4f}")
                 print(f"    - Spread: {pred_comparison['prediction_spread']:.4f}")
@@ -229,7 +233,7 @@ class TierIIIAnalyzer:
         
         except Exception as e:
             if verbose:
-                print(f"  ⚠️  Comparison error: {e}")
+                print(f"  [Error] Comparison error: {e}")
         
         # ============================================================
         # STEP 4: Summary
@@ -238,8 +242,8 @@ class TierIIIAnalyzer:
             print("\n[SUMMARY]")
             print(f"  Sample ID: {analysis['sample_id']}")
             print(f"  Methods: {len(method_results)} successful")
-            print(f"  Validation: {'✅ PASSED' if analysis['validations'].get('ig_validation', {}).get('all_pass', False) else '⚠️ CHECK'}")
-            print(f"  Consistency: {'✅ GOOD' if analysis['comparisons'].get('agreement', False) else '⚠️ LOW'}")
+            print(f"  Validation: {'[PASS]' if analysis['validations'].get('ig_validation', {}).get('all_pass', False) else '[CHECK]'}")
+            print(f"  Consistency: {'[GOOD]' if analysis['comparisons'].get('agreement', False) else '[LOW]'}")
         
         return analysis
     
@@ -313,7 +317,7 @@ class TierIIIAnalyzer:
             except Exception as e:
                 batch_results['num_failed'] += 1
                 if verbose:
-                    print(f"  ⚠️  Sample {batch_idx} failed: {e}")
+                    print(f"  [Error] Sample {batch_idx} failed: {e}")
         
         # ============================================================
         # Batch Summary Statistics
@@ -454,7 +458,7 @@ def main():
     )
     
     print("\n" + "="*70)
-    print("✅ ANALYSIS COMPLETE")
+    print("[DONE] ANALYSIS COMPLETE")
     print("="*70)
     print(f"\nResults saved in analyzer.results dictionary")
     print(f"Next steps:")

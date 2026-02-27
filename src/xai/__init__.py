@@ -513,9 +513,7 @@ class IntegratedGradients:
             grad_img: (B, C, H, W)
             grad_phys: (B, D)
         """
-        img.requires_grad_(True)
-        phys.requires_grad_(True)
-        
+        # Inputs should already have requires_grad=True from calling code
         out = self.model(img, phys, mask=mask)
         logits = out.logits
         
@@ -526,13 +524,11 @@ class IntegratedGradients:
         grad_img = img.grad.detach().clone() if img.grad is not None else torch.zeros_like(img)
         grad_phys = phys.grad.detach().clone() if phys.grad is not None else torch.zeros_like(phys)
         
-        # CRITICAL FIX (2025-01-XX): Zero gradients to prevent accumulation across IG steps
-        # Without this, gradients accumulate exponentially in the interpolation loop
-        img.grad = None
-        phys.grad = None
-        
-        img.requires_grad_(False)
-        phys.requires_grad_(False)
+        # Clear gradients to prevent accumulation
+        if img.grad is not None:
+            img.grad.zero_()
+        if phys.grad is not None:
+            phys.grad.zero_()
         
         return grad_img, grad_phys
         
@@ -575,8 +571,13 @@ class IntegratedGradients:
             # Linear interpolation: x' + t(x - x') where t ∈ [0, 1]
             alpha = step / steps
             
+            # Create interpolated tensors and enable gradient tracking
             img_interp = img_baseline + alpha * (img - img_baseline)
             phys_interp = phys_baseline + alpha * (phys - phys_baseline)
+            
+            # Enable gradient tracking on the interpolated tensors
+            img_interp = img_interp.detach().requires_grad_(True)
+            phys_interp = phys_interp.detach().requires_grad_(True)
             
             grad_img, grad_phys = self.compute_gradients(img_interp, phys_interp, mask, target_class)
             
