@@ -4,7 +4,7 @@
 
 **Paper**: [Thesis Title - To be updated]  
 **Authors**: [Your Name(s)]  
-**Status**: ✅ Complete | 🎯 Thesis Defense Ready
+**Status**: 
 
 ---
 
