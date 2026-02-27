@@ -1,0 +1,15 @@
+{
+  "design": "B",
+  "seed": 42,
+  "vision_backbone": "mobilenet_v3_small",
+  "fusion": "cgf",
+  "epochs": 10,
+  "batch_size": 32,
+  "lr": 0.0002,
+  "lambda_cf": 1.0,
+  "lambda_gate": 0.05,
+  "best_val_acc": 0.60625,
+  "params_trainable": 1162019,
+  "checkpoint": "C:\\Users\\USERAS\\thesis_project\\outputs\\checkpoints\\counterfactual_cgf_js_mobilenet_v3_small_best.pt",
+  "split_path": "C:\\Users\\USERAS\\thesis_project\\data\\csv\\split_seed42.json"
+}

@@ -1,0 +1,13 @@
+{
+  "design": "A",
+  "seed": 42,
+  "vision_backbone": "mobilenet_v3_small",
+  "fusion": "concat",
+  "epochs": 10,
+  "batch_size": 32,
+  "lr": 0.0002,
+  "best_val_acc": 0.559375,
+  "params_trainable": 1013666,
+  "checkpoint": "C:\\Users\\USERAS\\thesis_project\\outputs\\checkpoints\\baseline_mobilenet_v3_small_concat_best.pt",
+  "split_path": "C:\\Users\\USERAS\\thesis_project\\data\\csv\\split_seed42.json"
+}
