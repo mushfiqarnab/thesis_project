@@ -18,3 +18,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
+
+from dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
+from models import MultimodalThreatModel, count_trainable_params
