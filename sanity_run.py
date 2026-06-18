@@ -21,3 +21,17 @@ from tqdm import tqdm
 
 from dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
 from models import MultimodalThreatModel, count_trainable_params
+
+
+def find_ffhq_images(ffhq_dir: Path, n: int) -> List[Path]:
+    """Walk ffhq_dir recursively and collect first N image files."""
+    exts = {".png", ".jpg", ".jpeg"}
+    found: List[Path] = []
+    for root, _, files in os.walk(str(ffhq_dir)):
+        for f in sorted(files):
+            if Path(f).suffix.lower() in exts:
+                found.append(Path(root) / f)
+            if len(found) >= n:
+                return found
+    return found
+
