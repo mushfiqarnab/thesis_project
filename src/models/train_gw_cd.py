@@ -49,8 +49,8 @@ class TopologicalScarDataset(Dataset):
         # In production, use PIL/cv2 to load row['anchor_frame']
         img = torch.randn(3, 224, 224)
         
-        # Physiology: HRV and GSR
-        phys = torch.tensor([row['mean_hrv'], row['mean_gsr']], dtype=torch.float32)
+        # Physiology: HRV, GSR, and pad to 4 channels (HR, EDA, BVP, Temp)
+        phys = torch.tensor([row['mean_hrv'], row['mean_gsr'], 0.0, 0.0], dtype=torch.float32)
         
         # Labels
         y = torch.tensor(row['stress_label'], dtype=torch.long)
@@ -82,7 +82,7 @@ def evaluate(model, dataloader, device):
         y = batch["y"].to(device)
         scar = batch["scar"].to(device)
         
-        out = model(img, phys, scar_labels=None)
+        out = model(img=img, phys=phys, scar_labels=None)
         preds = torch.argmax(out["logits"], dim=1)
         
         correct += (preds == y).sum().item()
@@ -156,7 +156,7 @@ def main():
             optimizer.zero_grad()
             
             # Forward pass inherently maps onto the Grassmann Manifold
-            out = model(img, phys, scar_labels=scar)
+            out = model(img=img, phys=phys, scar_labels=scar)
             
             # 1. Standard Classification Loss
             loss_cls = criterion_cls(out["logits"], y)
