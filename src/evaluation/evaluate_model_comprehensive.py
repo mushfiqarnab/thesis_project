@@ -26,7 +26,7 @@ from src.dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
 from src.models import MultimodalThreatModel
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from src.comprehensive_analysis import ModelEvaluator, OUTPUT_DIR
 
 sns.set_style("whitegrid")

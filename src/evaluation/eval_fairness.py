@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from pathlib import Path
 import argparse
@@ -13,11 +13,15 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Subset
 import torchvision.models as tvm
 
-from dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
-from models import MultimodalThreatModel
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from src.dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
+from src.models import MultimodalThreatModel
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CSV = PROJECT_ROOT / "data" / "csv" / "multimodal.csv"
 LEGACY_DEFAULT_SPLIT = PROJECT_ROOT / "data" / "csv" / "split_seed42.json"
 OUT_DIR = PROJECT_ROOT / "outputs" / "results"

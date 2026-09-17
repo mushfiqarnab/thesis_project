@@ -26,3 +26,9 @@ pyyaml>=6.0
 pytest>=7.0.0
 black>=23.0.0
 flake8>=6.0.0
+
+# Phase 3 Generative Synthesis (MEIL Pipeline)
+diffusers>=0.20.0
+transformers>=4.30.0
+accelerate>=0.21.0
+mediapipe>=0.10.0
