@@ -109,24 +109,30 @@ def eval_metrics_per_subject(model, loader, device, phys_mu, phys_sigma):
     }
 
 def test_stiefel_toggle():
-    print("\n--- TEST 1: Stiefel Toggle ---")
+    print("\n--- TEST 1: Stiefel Toggle (Perturbed Weights) ---")
     # Off
     m_off = MultimodalThreatModel(phys_dim=2, fusion="cgf", disable_stiefel=True)
     m_off.eval()
-    print("disable_stiefel=True -> Layer type:", type(m_off.fuse.v_proj))
     W_off = m_off.fuse.v_proj.weight_raw
+    # Perturb weights away from default initialization
+    with torch.no_grad():
+        W_off.add_(torch.randn_like(W_off) * 0.5)
+    
     I = torch.eye(W_off.size(0))
     dev_off = torch.linalg.matrix_norm(W_off @ W_off.T - I, ord='fro').item()
-    print(f"disable_stiefel=True -> ||WW^T - I||_F: {dev_off:.4f}")
+    print(f"disable_stiefel=True -> Layer: {type(m_off.fuse.v_proj).__name__} | ||WW^T - I||_F: {dev_off:.4f}")
     
     # On
     m_on = MultimodalThreatModel(phys_dim=2, fusion="cgf", disable_stiefel=False)
     m_on.eval()
-    print("disable_stiefel=False -> Layer type:", type(m_on.fuse.v_proj))
+    W_on_raw = m_on.fuse.v_proj.weight_raw
+    with torch.no_grad():
+        W_on_raw.add_(torch.randn_like(W_on_raw) * 0.5)
+    
     W_on = m_on.fuse.v_proj.get_stiefel_weight()
     I = torch.eye(W_on.size(0))
     dev_on = torch.linalg.matrix_norm(W_on @ W_on.T - I, ord='fro').item()
-    print(f"disable_stiefel=False -> ||WW^T - I||_F: {dev_on:.4e}")
+    print(f"disable_stiefel=False -> Layer: {type(m_on.fuse.v_proj).__name__} | ||WW^T - I||_F: {dev_on:.4e}")
 
 def run_one_epoch(model, opt, loader, device, phys_mu, phys_sigma, w_dp, w_eo, w_cf, grad_accum=1):
     model.train()
@@ -161,11 +167,29 @@ def main():
     u = pd.read_csv("data/csv/multimodal_10k_unbiased.csv")
     ds = MultimodalCSVDatasetWithCF("data/csv/multimodal_10k_unbiased.csv")
     
-    train_idx = u[u.subject.isin(f0["train"])].index.tolist()
-    val_idx = u[u.subject.isin(f0["val"])].index.tolist()
-    test_idx = u[u.subject.isin(f0["test"])].index.tolist()
+    # Assert disjointness and print fold-0 lists and counts
+    train_df = u[u.subject.isin(f0["train"])]
+    val_df = u[u.subject.isin(f0["val"])]
+    test_df = u[u.subject.isin(f0["test"])]
     
-    train_phys = u.iloc[train_idx][["hrv", "gsr"]].to_numpy(dtype=np.float32)
+    print("\n--- Fold 0 Split Info ---")
+    print(f"Train subjects ({len(f0['train'])}): {f0['train']} | Rows: {len(train_df)}")
+    print(f"Val subjects ({len(f0['val'])}): {f0['val']} | Rows: {len(val_df)}")
+    print(f"Test subjects ({len(f0['test'])}): {f0['test']} | Rows: {len(test_df)}")
+    
+    assert set(f0["train"]).isdisjoint(f0["val"])
+    assert set(f0["train"]).isdisjoint(f0["test"])
+    assert set(f0["val"]).isdisjoint(f0["test"])
+    assert set(train_df.image_path).isdisjoint(val_df.image_path)
+    assert set(train_df.image_path).isdisjoint(test_df.image_path)
+    assert set(val_df.image_path).isdisjoint(test_df.image_path)
+    print("Disjointness asserts passed.")
+    
+    train_idx = train_df.index.tolist()
+    val_idx = val_df.index.tolist()
+    test_idx = test_df.index.tolist()
+    
+    train_phys = train_df[["hrv", "gsr"]].to_numpy(dtype=np.float32)
     phys_mu = torch.tensor(train_phys.mean(axis=0), device="cpu")
     phys_sigma = torch.tensor(train_phys.std(axis=0).clip(min=1e-6), device="cpu")
     
@@ -174,20 +198,21 @@ def main():
     test_loader = DataLoader(Subset(ds, test_idx), batch_size=64, shuffle=False, collate_fn=collate_samples)
 
     w_dp, w_eo, w_cf = 1.0, 1.0, 0.2
-    print(f"Weights: w_dp={w_dp}, w_eo={w_eo}, w_cf={w_cf}")
-
+    
     print("\n--- TEST 4: Determinism ---")
+    device_str = "cpu"
+    print(f"Device: {device_str}, CUBLAS deterministic: {torch.backends.cudnn.deterministic}, Benchmark: {torch.backends.cudnn.benchmark}")
     set_seed(0)
     m1 = MultimodalThreatModel(phys_dim=2, fusion="cgf", disable_stiefel=False)
     opt1 = torch.optim.AdamW(m1.parameters(), lr=2e-4)
-    run_one_epoch(m1, opt1, train_loader, "cpu", phys_mu, phys_sigma, w_dp, w_eo, w_cf)
-    v1 = eval_metrics_per_subject(m1, val_loader, "cpu", phys_mu, phys_sigma)
+    run_one_epoch(m1, opt1, train_loader, device_str, phys_mu, phys_sigma, w_dp, w_eo, w_cf)
+    v1 = eval_metrics_per_subject(m1, val_loader, device_str, phys_mu, phys_sigma)
     
     set_seed(0)
     m2 = MultimodalThreatModel(phys_dim=2, fusion="cgf", disable_stiefel=False)
     opt2 = torch.optim.AdamW(m2.parameters(), lr=2e-4)
-    run_one_epoch(m2, opt2, train_loader, "cpu", phys_mu, phys_sigma, w_dp, w_eo, w_cf)
-    v2 = eval_metrics_per_subject(m2, val_loader, "cpu", phys_mu, phys_sigma)
+    run_one_epoch(m2, opt2, train_loader, device_str, phys_mu, phys_sigma, w_dp, w_eo, w_cf)
+    v2 = eval_metrics_per_subject(m2, val_loader, device_str, phys_mu, phys_sigma)
     
     diff = np.abs(v1["probs"] - v2["probs"]).max()
     print(f"Max probability difference between identical seeds: {diff:.6e}")
@@ -202,8 +227,8 @@ def main():
     os.makedirs("outputs/checkpoints", exist_ok=True)
     
     for epoch in range(1, 4):
-        run_one_epoch(model, opt, train_loader, "cpu", phys_mu, phys_sigma, w_dp, w_eo, w_cf)
-        val = eval_metrics_per_subject(model, val_loader, "cpu", phys_mu, phys_sigma)
+        run_one_epoch(model, opt, train_loader, device_str, phys_mu, phys_sigma, w_dp, w_eo, w_cf)
+        val = eval_metrics_per_subject(model, val_loader, device_str, phys_mu, phys_sigma)
         
         is_degenerate = val["p1_var"] < 0.005
         is_below_baseline = val["acc"] <= (val["majority_acc"] + 0.01)
@@ -235,7 +260,7 @@ def main():
                 "phys_sigma": phys_sigma,
                 "fold": 0,
                 "seed": 0,
-                "git_commit": "dry-run",
+                "git_commit": git_hash,
                 "split_hash": folds_data["u_hash"],
                 "state_dict": model.state_dict()
             }
@@ -266,12 +291,11 @@ def main():
     m_test.load_state_dict(sd["state_dict"])
     
     val_re = eval_metrics_per_subject(m_test, val_loader, "cpu", sd["phys_mu"], sd["phys_sigma"])
-    # The last evaluated `val` corresponds to the last epoch. If we saved an earlier epoch, we should compare to THAT epoch's metrics.
-    # For dry run, since we saved the last epoch, we compare with the last `val`.
     
-    diff_acc = abs(val_re["acc"] - val["acc"])
-    print(f"Reload Acc Diff: {diff_acc:.4e}")
-    assert diff_acc < 1e-4, "Reload metrics mismatch!"
+    # Reload test at probability level
+    prob_diff = np.abs(val_re["probs"] - val["probs"]).max()
+    print(f"Reload Probability Diff (Max): {prob_diff:.6e}")
+    assert prob_diff < 1e-4, "Reload metrics probability mismatch!"
     print("Reload test passed.")
 
     print("\n--- FINAL TEST EVALUATION ---")
