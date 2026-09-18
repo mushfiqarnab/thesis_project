@@ -153,24 +153,31 @@ class ScarBenchGenerator:
             'frame_path': [f"/data/bp4d/{subject_id}/frame_{int(ts):06d}.png" for ts in timestamps]
         })
 
+import argparse
+
 def main():
-    # Phase 3 Configuration
-    TRAIN_RHO = 0.85  # Heavily biased
-    TEST_RHO = 0.0    # Strictly unbiased (held-out)
-    
+    parser = argparse.ArgumentParser(description="Build ScarBench-Lite dataset manifolds.")
+    parser.add_argument("--source", type=str, default="BP4D+", help="Source dataset name")
+    parser.add_argument("--train_rho", type=float, default=0.85, help="Bias correlation for training set")
+    parser.add_argument("--test_rho", type=float, default=0.0, help="Bias correlation for test set")
+    parser.add_argument("--output_dir", type=str, default="./scarbench_data/", help="Output directory")
+    args = parser.parse_args()
+
     # Subject stratification (Assume 20 subjects for Lite version)
     np.random.seed(42)
     all_subjects = [f"F{i:03d}" for i in range(1, 11)] + [f"M{i:03d}" for i in range(1, 11)]
     train_subjects = all_subjects[:14]
     test_subjects = all_subjects[14:]
     
-    generator = ScarBenchGenerator(output_dir="./scarbench_data")
+    generator = ScarBenchGenerator(output_dir=args.output_dir)
     
     # Generate Training Manifold
-    generator.process_split(train_subjects, rho=TRAIN_RHO, split_name="train")
+    logger.info(f"Generating Training Manifold with rho={args.train_rho} from {args.source}")
+    generator.process_split(train_subjects, rho=args.train_rho, split_name="train")
     
     # Generate Test Manifold
-    generator.process_split(test_subjects, rho=TEST_RHO, split_name="test")
+    logger.info(f"Generating Test Manifold with rho={args.test_rho} from {args.source}")
+    generator.process_split(test_subjects, rho=args.test_rho, split_name="test")
     
     logger.info("Phase 3 Dataset Generation Complete. Ready for causal unlearning evaluation.")
 

@@ -8,6 +8,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as tvm
 
+from models.stiefel_causal_layer import StiefelCausalLinear
+
 
 @dataclass
 class ModelOut:
@@ -68,10 +70,10 @@ class VisionEncoder(nn.Module):
 
 
 class FusionConcat(nn.Module):
-    def __init__(self, v_dim: int, p_dim: int, hidden: int = 128, num_classes: int = 2):
+    def __init__(self, v_dim: int, p_dim: int, hidden: int = 128, num_classes: int = 2, disable_stiefel: bool = False):
         super().__init__()
         self.cls = nn.Sequential(
-            nn.Linear(v_dim + p_dim, hidden),
+            StiefelCausalLinear(v_dim + p_dim, hidden, ns_iterations=3, disable_stiefel=disable_stiefel),
             nn.ReLU(inplace=True),
             nn.Dropout(0.2),
             nn.Linear(hidden, num_classes),
@@ -82,27 +84,23 @@ class FusionConcat(nn.Module):
 
 
 class CausalGatedFusion(nn.Module):
-    """
-    Innovation-1 (CGF):
-      focus = energy in mask region / energy overall  (B,1)
-      gate  = sigmoid(MLP([phys_proj, focus]))  -> trust vision
-      fused = gate*vision_proj + (1-gate)*phys_proj
-    """
-    def __init__(self, v_dim: int, p_dim: int, d: int = 256, num_classes: int = 2):
+    def __init__(self, v_dim: int, p_dim: int, d: int = 256, num_classes: int = 2, disable_stiefel: bool = False):
         super().__init__()
-        self.v_proj = nn.Linear(v_dim, d)
+        self.v_proj = StiefelCausalLinear(v_dim, d, ns_iterations=3, disable_stiefel=disable_stiefel)
+        self.v_norm = nn.LayerNorm(d)
+        
         self.p_proj = nn.Linear(p_dim, d)
+        self.p_norm = nn.LayerNorm(d)
 
         self.gate_mlp = nn.Sequential(
             nn.Linear(d + 1, 128),
             nn.ReLU(inplace=True),
             nn.Linear(128, 1),
         )
-        # small bias: start by trusting physiology a bit more
         nn.init.constant_(self.gate_mlp[-1].bias, -0.5)
 
         self.cls = nn.Sequential(
-            nn.Linear(d, 128),
+            StiefelCausalLinear(d, 128, ns_iterations=3, disable_stiefel=disable_stiefel),
             nn.ReLU(inplace=True),
             nn.Dropout(0.2),
             nn.Linear(128, num_classes),
@@ -135,8 +133,8 @@ class CausalGatedFusion(nn.Module):
         focus = torch.log1p(ratio).unsqueeze(1)        # (B,1)
         return focus
     def forward(self, v: torch.Tensor, p: torch.Tensor, fmap: Optional[torch.Tensor], mask: torch.Tensor) -> ModelOut:
-        v_ = self.v_proj(v)
-        p_ = self.p_proj(p)
+        v_ = self.v_norm(self.v_proj(v))
+        p_ = self.p_norm(self.p_proj(p))
 
         if fmap is None:
             focus = torch.zeros((v.size(0), 1), device=v.device, dtype=v.dtype)
@@ -152,10 +150,6 @@ class CausalGatedFusion(nn.Module):
 
 
 class MultimodalThreatModel(nn.Module):
-    """
-    fusion="concat" -> Design A
-    fusion="cgf"    -> Design B (innovation)
-    """
     def __init__(
         self,
         phys_dim: int,
@@ -163,6 +157,7 @@ class MultimodalThreatModel(nn.Module):
         fusion: str = "concat",
         num_classes: int = 2,
         freeze_vision: bool = False,
+        disable_stiefel: bool = False,
     ):
         super().__init__()
         self.vision = VisionEncoder(vision_backbone, freeze=freeze_vision)
@@ -171,9 +166,9 @@ class MultimodalThreatModel(nn.Module):
         fusion = fusion.lower()
         self.fusion_name = fusion
         if fusion == "concat":
-            self.fuse = FusionConcat(self.vision.emb_dim, 64, hidden=128, num_classes=num_classes)
+            self.fuse = FusionConcat(self.vision.emb_dim, 64, hidden=128, num_classes=num_classes, disable_stiefel=disable_stiefel)
         elif fusion == "cgf":
-            self.fuse = CausalGatedFusion(self.vision.emb_dim, 64, d=256, num_classes=num_classes)
+            self.fuse = CausalGatedFusion(self.vision.emb_dim, 64, d=256, num_classes=num_classes, disable_stiefel=disable_stiefel)
         else:
             raise ValueError(f"Unknown fusion: {fusion}")
 

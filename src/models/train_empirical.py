@@ -29,27 +29,8 @@ from src.models.dr_ps_zocr import DRPSZOCRModule, BoundedKappaAdversary, perform
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("HPC_Production_GW_CD")
 
-class TopologicalScarDataset(Dataset):
-    def __init__(self, csv_path: str):
-        self.df = pd.read_csv(csv_path)
-        logger.info(f"Loaded dataset {csv_path} with {len(self.df)} samples.")
-        
-    def __len__(self):
-        return len(self.df)
-        
-    def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        img = torch.randn(3, 224, 224)
-        phys = torch.tensor([row['mean_hrv'], row['mean_gsr'], 0.0, 0.0], dtype=torch.float32)
-        y = torch.tensor(row['stress_label'], dtype=torch.long)
-        scar = torch.tensor(row['has_synthetic_scar'], dtype=torch.long)
-        
-        # Mock physical displacements for ZOCR
-        A_f = torch.abs(torch.randn(1) * 0.1) 
-        A_c_raw = torch.abs(torch.randn(1) * 0.1)
-        scar_zone = "brow" # Use brow zone for clinical kappa bounds
-        
-        return {"img": img, "phys": phys, "y": y, "scar": scar, "A_f": A_f, "A_c_raw": A_c_raw, "scar_zone": scar_zone}
+
+from src.data.clinical_dataloader import MultimodalClinicalDataset
 
 class ZOCRWrapperModel(nn.Module):
     def __init__(self, base_model, zocr_module):
@@ -122,9 +103,9 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"INITIALIZING ZOCR PRODUCTION RUN ON DEVICE: {device}")
     
-    train_loader = DataLoader(TopologicalScarDataset(args.train_csv), 
+    train_loader = DataLoader(MultimodalClinicalDataset(args.train_csv), 
                               batch_size=args.batch_size, shuffle=True, drop_last=True)
-    test_loader = DataLoader(TopologicalScarDataset(args.test_csv), 
+    test_loader = DataLoader(MultimodalClinicalDataset(args.test_csv), 
                              batch_size=args.batch_size, shuffle=False)
     
     base_model = GWPACDNet(d=64, k=4).to(device)
