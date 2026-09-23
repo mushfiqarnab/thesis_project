@@ -20,8 +20,14 @@
 # Face detection / crop extraction (scripts/ubfc_leakage/preprocess_video_mediapipe.py)
 mediapipe==0.10.14
 
-# Video I/O and image loading (all pipeline scripts; cv2.__version__ reports "5.0.0" on this dist)
-opencv-python==4.13.0.92
+# Video I/O and image loading (all pipeline scripts).
+# NOTE (2026-09-23 audit): the machine that ran the reported extraction had TWO
+# opencv dists installed simultaneously (opencv-contrib-python 5.0.0.93 and
+# opencv-python 4.13.0.92, both owning the same cv2/ folder); the imported
+# runtime (cv2.__version__ and getBuildInformation()) was 5.0.0, i.e. the
+# contrib package shadowed the other. Install exactly ONE opencv package;
+# the pin below is the dist that was actually loaded at runtime.
+opencv-contrib-python==5.0.0.93
 
 # Numerical work (rPPG estimators, filtering, resampling, Welch PSD)
 numpy==2.4.2

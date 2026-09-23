@@ -183,6 +183,16 @@ Values range from 0.0249 to 0.1799, with a single clip (s1 T3) well separated fr
 shows the strong (>0.5) correlation characteristic of a clean rPPG extraction, which is consistent with
 the small-magnitude picture in §4.3.
 
+**Geometry provenance flag (2026-09-23).** A post-hoc audit of the retained manifests
+(`scripts/ubfc_leakage/audit_manifest_geometry.py`) found that the α=1.0 pass is not internally uniform:
+clips s4 T2 and s4 T3 carry crop geometry inconsistent with the committed crop rule (implied scale
+constants ≈ 2.25 and ≈ 2.48 vs 3.566 for the other ten clips), and s4 T3 is missing 15 OK frames
+relative to every other clip. All twelve α=1.0 manifests share identical file timestamps
+(2026-09-23 02:50:57), so the anomaly predates the documented 02:40 overwrite and its provenance is
+unresolved. The α=0.5 artifacts used by every estimator-comparison result in this document are uniform
+across all 12 clips and unaffected. The §4.1 α=1.0 row is reported as run; cite its per-clip values
+only with this caveat.
+
 ### 4.3 Magnitude under POS, and a disagreement between the two criteria
 
 **Scope: this subsection describes the POS and PBV arms only. The magnitude conclusion does NOT generalise
@@ -395,6 +405,18 @@ and the viability analysis stand on their own.
 * **The `3.566283` scale constant has a broken chain of custody**: the raw per-frame bbox-width/IOD data
   behind it was destroyed by an unbacked-up overwrite, and the constant is taken on faith from a single
   non-reproducible computation. It is retained because re-deriving it is no longer possible.
+  **Geometry audit (2026-09-23):** the retained manifests of the current artifacts imply the committed
+  crop rule (w = IOD × 3.566283 × 1.5) to within 0.1% uniformly across all 12 clips — but this is
+  **circular**, because those crops were cut using the constant; it recovers the *rule as applied*, not
+  the historical derivation. The audit also found that in the preserved α=1.0 manifests, clips s4 T2 and
+  s4 T3 show crop geometry inconsistent with the committed rule (implied constants ≈ 2.25 and ≈ 2.48,
+  i.e. ~37% smaller boxes), with identical file timestamps across all twelve α=1.0 manifests — so the
+  anomaly's provenance is unresolved and was not produced by the documented 02:40 overwrite. Recorded
+  in the pre-registration (Geometry audit / Geometry provenance flag); artifacts:
+  `scripts/ubfc_leakage/audit_manifest_geometry.py`, `outputs/leakage_run/manifest_geometry_audit.txt`.
+  Consequence: the α=1.0 aggregate statistics in §4.1 are reported as run, but per-clip α=1.0 values
+  must not be cited without this caveat; all estimator-comparison results (§4.5) use the α=0.5
+  artifacts and are unaffected.
 
 ---
 
@@ -410,6 +432,7 @@ and the viability analysis stand on their own.
 | Estimator comparison (POS/CHROM/PBV) | `src/evaluation/leakage_estimator_comparison.py` |
 | Per-clip estimator table (12 clips × POS/CHROM/PBV) | `outputs/leakage_run/estimator_per_clip_results.csv`, `outputs/leakage_run/estimator_comparison_full_output.txt` (via `scripts/ubfc_leakage/save_per_clip_results.py`) |
 | Spectral verification (§4.5, open item 5) | `outputs/leakage_run/spectral_verification.csv`, `outputs/leakage_run/spectral_verification.txt` (via `scripts/ubfc_leakage/spectral_verification.py`) |
+| Manifest geometry audit (§6, §4.2) | `outputs/leakage_run/manifest_geometry_audit.txt` (via `scripts/ubfc_leakage/audit_manifest_geometry.py`) |
 | α ablation driver | `scripts/ubfc_leakage/run_ablation.py` |
 | Determinism control | `scripts/ubfc_leakage/check_nondeterminism.py`, re-executed 2026-09-23 07:43:01 |
 | Per-frame manifests | `processed/{s1..s4}/T{1..3}/manifest_alpha1.csv`, `manifest.csv` |
@@ -469,8 +492,9 @@ Retained as a record; nothing below remains open.
 ## Appendix A. Reproduction
 
 All commands run from the repository root. The reported run used the system Python 3.11 interpreter
-(numpy 2.4.2, scipy 1.17.0, opencv 5.0.0); the project `.venv` does **not** include `cv2` and cannot run
-these scripts as-is.
+(numpy 2.4.2, scipy 1.17.0, opencv 5.0.0 effective build - the machine had opencv-contrib-python
+5.0.0.93 shadowing an also-installed opencv-python 4.13.0.92; see the requirements.txt note); the
+project `.venv` does **not** include `cv2` and cannot run these scripts as-is.
 
 ```bash
 # Estimator comparison (§4.5) - POS, CHROM, PBV on identical inputs. ~50 s.
@@ -481,6 +505,9 @@ python scripts/ubfc_leakage/save_per_clip_results.py
 
 # Spectral verification (§4.5, open item 5) - CHROM vs wrist-BVP PSD, all 12 clips. ~1 min.
 python scripts/ubfc_leakage/spectral_verification.py
+
+# Manifest box-geometry audit (§6, §4.2) - 3.566283 provenance + alpha=1.0 anomaly. ~seconds.
+python scripts/ubfc_leakage/audit_manifest_geometry.py
 
 # Determinism control (§4.6) - asserts exactly 12 matched manifest pairs.
 python scripts/ubfc_leakage/check_nondeterminism.py
