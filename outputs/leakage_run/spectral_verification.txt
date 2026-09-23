@@ -1,0 +1,22 @@
+SPECTRAL VERIFICATION OF HIGH CHROM CLIPS (open item 5, writeup section 4.5)
+Method: Welch PSD (nperseg=1024) of the CHROM rPPG signal produced by the
+unchanged comparison harness vs the subject's own wrist BVP, both in 0.7-4.0 Hz.
+Pre-stated rule: PEAK_MATCH iff |f_peak(rPPG) - f_peak(BVP)| <= 0.1 Hz.
+
+s2 T1: rPPG peak 0.9082 Hz vs BVP peak 0.9082 Hz (delta 0.0000 Hz) -> PEAK_MATCH; pulse-band fraction 0.8920, low sub-band fraction 0.5027, peak SNR 53.47.
+s3 T1: rPPG peak 1.4062 Hz vs BVP peak 1.4648 Hz (delta 0.0586 Hz) -> PEAK_MATCH; pulse-band fraction 0.7469, low sub-band fraction 0.1573, peak SNR 13.81.
+
+All 12 clips:
+Clip        fBVP   fRPPG     dHz  pulseFrac  lowFrac  peakSNR  verdict
+s1 T1     1.2305  1.2305  0.0000     0.8151   0.0726    33.98  PEAK_MATCH
+s1 T2     0.7617  1.3184  0.5566     0.8311   0.1159    13.41  NO_MATCH
+s1 T3     1.2598  1.1719  0.0879     0.8014   0.1551    13.29  PEAK_MATCH
+s2 T1     0.9082  0.9082  0.0000     0.8920   0.5027    53.47  PEAK_MATCH
+s2 T2     0.9961  0.9961  0.0000     0.9011   0.4473    44.03  PEAK_MATCH
+s2 T3     1.2305  0.9082  0.3223     0.7272   0.2365     6.21  NO_MATCH
+s3 T1     1.4648  1.4062  0.0586     0.7469   0.1573    13.81  PEAK_MATCH
+s3 T2     1.6406  1.2305  0.4102     0.7594   0.1889     6.84  NO_MATCH
+s3 T3     1.6992  1.0547  0.6445     0.6768   0.1606     5.36  NO_MATCH
+s4 T1     0.8789  0.8203  0.0586     0.8993   0.5711    27.50  PEAK_MATCH
+s4 T2     1.0840  0.8789  0.2051     0.7431   0.3021    10.30  NO_MATCH
+s4 T3     1.3770  0.8496  0.5273     0.8501   0.3046    14.46  NO_MATCH

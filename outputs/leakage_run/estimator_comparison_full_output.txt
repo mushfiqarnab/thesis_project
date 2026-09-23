@@ -1,0 +1,25 @@
+LEAKAGE TEST BY ESTIMATOR
+Pre-registered rule: pass iff Mann-Whitney p (True > Null) > 0.05.
+Produced by scripts/ubfc_leakage/save_per_clip_results.py on top of
+src/evaluation/leakage_estimator_comparison.py (code unchanged).
+
+Estimator   True mean r  Null mean r  Null p95 r         U         p  Verdict    pct
+------------------------------------------------------------------------------------
+POS              0.0802       0.0599      0.1186    1050.0    0.0314     FAIL   pass
+CHROM            0.1933       0.0603      0.1092    1318.0    0.0001     FAIL   fail
+PBV              0.0898       0.0598      0.1169    1113.0    0.0103     FAIL   pass
+
+Per-clip true correlations (max Pearson r over lags within +/-0.5 s):
+Clip           POS     CHROM       PBV
+s1 T1       0.0519    0.1479    0.0736
+s1 T2       0.0740    0.0664    0.1017
+s1 T3       0.2026    0.0740    0.1798
+s2 T1       0.0427    0.8487    0.1352
+s2 T2       0.1163    0.1144    0.0641
+s2 T3       0.0635    0.0425    0.0562
+s3 T1       0.0495    0.4865    0.1611
+s3 T2       0.0310    0.1220    0.0518
+s3 T3       0.0632    0.0890    0.0501
+s4 T1       0.1067    0.1128    0.1090
+s4 T2       0.0792    0.0664    0.0309
+s4 T3       0.0815    0.1494    0.0637
