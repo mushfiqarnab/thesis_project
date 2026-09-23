@@ -1,34 +1,34 @@
-# Core PyTorch
-torch>=2.0.0
-torchvision>=0.15.0
-torchaudio>=2.0.0
+# EQARNB / UBFC-Phys leakage pipeline - dependency manifest
+#
+# Reproduces the environment of the reported leakage runs (2026-09-22/23).
+# The full pipeline (Mediapipe extraction -> rPPG analysis) is verified
+# end-to-end on the system Python 3.11 interpreter, whose package set is
+# pinned below. Note: the project's .venv_worldclass venv does NOT include
+# mediapipe, so it can run only the analysis half
+# (src/evaluation/leakage_estimator_comparison.py and the scripts under
+# scripts/ubfc_leakage/ that import it); extraction additionally requires
+# mediapipe.
+#
+# This file replaces a corrupted manifest that was UTF-16 encoded with a
+# single non-existent entry (mediapipe==1.0.1). The mediapipe version below
+# is the pre-registered pin (docs/experiment_preregistration.md, 2026-09-23
+# amendment: "pinned to 0.10.14") and matches the working installation.
+#
+# Install on Python 3.11:
+#   pip install -r requirements.txt
 
-# Data processing
-numpy>=1.24.0
-pandas>=1.5.0
-Pillow>=9.0.0
-opencv-python>=4.5.0  # For image processing (scar generation)
+# Face detection / crop extraction (scripts/ubfc_leakage/preprocess_video_mediapipe.py)
+mediapipe==0.10.14
 
-# Machine learning & signal processing
-scikit-learn>=1.2.0
-scipy>=1.10.0
-neurokit2>=0.2.0  # For physiological signal processing (WESAD)
+# Video I/O and image loading (all pipeline scripts; cv2.__version__ reports "5.0.0" on this dist)
+opencv-python==4.13.0.92
 
-# Visualization
-matplotlib>=3.7.0
-seaborn>=0.12.0
+# Numerical work (rPPG estimators, filtering, resampling, Welch PSD)
+numpy==2.4.2
+scipy==1.17.0
 
-# Utilities
-tqdm>=4.65.0
-pyyaml>=6.0
+# Manifest diffing in the determinism control (scripts/ubfc_leakage/check_nondeterminism.py)
+pandas==3.0.0
 
-# Development (optional)
-pytest>=7.0.0
-black>=23.0.0
-flake8>=6.0.0
-
-# Phase 3 Generative Synthesis (MEIL Pipeline)
-diffusers>=0.20.0
-transformers>=4.30.0
-accelerate>=0.21.0
-mediapipe>=0.10.0
+# mediapipe-compatible protobuf runtime (verified working set)
+protobuf==4.25.9
