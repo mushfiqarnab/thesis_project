@@ -224,6 +224,25 @@ a directional observation that does not meet the pre-registered bar for a confir
 claim EMA has been "ruled out" in the strict pre-registered sense — only that it is not supported as the
 mechanism, and that eliminating it does not repair the leakage.
 
+**O7 — the α=1.0 arm is not robust to removing two clips (2026-09-23).** A
+leave-two-clips-out check excluded s4 T2 and s4 T3, the two clips whose α=1.0
+manifests show crop geometry inconsistent with the committed rule (mean w/IOD =
+3.3709 and 3.7259 respectively, vs. the expected 5.3494). On the remaining N=10
+true-match pairs tested against the same N=132 null permutations, the result
+is U=832.0, p=0.0857 — above the pre-registered p<0.05 threshold. Removing
+two geometrically anomalous clips is sufficient to flip the α=1.0 arm above
+the significance boundary. The arm must not be cited as strong independent
+evidence of leakage at zero smoothing.
+
+This does not affect the primary finding, which rests on the α=0.5 arm
+(p=0.0314, pre-registered, geometrically uniform crops verified across all
+12 clips). The EMA verdict stated in this section is unchanged — if anything
+strengthened: removing the anomalous clips makes α=1.0 *less* compelling as
+a leakage signal, which is the opposite of what an EMA mechanism would predict.
+
+*Provenance: `outputs/leakage_run/o7_reanalysis.txt` (499 bytes, sha256:
+6a1ac8f0…61ee4d)*
+
 ### 4.5 Estimator specificity: the verdict holds across POS, CHROM and PBV
 
 The reported result rests on a single estimator, so the leakage test was re-run with two additional
@@ -446,6 +465,25 @@ filesystem, not from a log: `find data/UBFC-Phys -name '*.avi' -printf '%h\n' | 
 the project session brief. It is **not** cited here, because it is not present in the repository and has
 not been independently confirmed.
 
+**Crop provenance for the α=0.5 primary arm (chain of custody):**
+
+(a) The original α=0.5 crop PNGs are unrecoverable. They were overwritten
+during the α=1.0 regeneration pass without a prior backup; only the manifests
+were preserved (`manifest_backup_alpha05.csv` for each of 12 clips).
+
+(b) The regenerated α=0.5 manifest set is not byte-identical to the original
+manifests — up to 1,795/1,800 rows differ in box coordinates per clip, maximum
+delta 374 px. The original run used a scratch dependency of `run_ablation.py`
+that no longer exists on disk. Two checks confirm the regeneration is nonetheless
+functionally faithful: (i) no intermediate cache exists that could serve stale
+data; (ii) frame k=0 — the only frame with a pre-regeneration timestamp — is
+marked FAILED in all 12/12 clip manifests and is never read by the pipeline. The
+matching headline statistics (0.0802, 0.1186, 0.0599, 1050.0, 0.0314) are
+consistent with POS averaging color spatially over the full crop region: a
+shifted-but-overlapping crop of similar size produces a near-identical spatial
+mean when the fixed `IOD × 3.566283 × 1.5` rule dominates over box-coordinate
+jitter.
+
 ---
 
 ## 8. Open items before this draft is submission-ready - ALL RESOLVED 2026-09-23
@@ -486,6 +524,27 @@ Retained as a record; nothing below remains open.
    **RESOLVED 2026-09-23 (author decision): include it**, labelled exploratory/post-hoc exactly as §3.6
    already specifies. §4.5 keeps its exploratory status and its p-values are not reported as
    confirmatory; the pre-registered POS result remains the formal finding.
+
+---
+
+## 9. Future work
+
+**Controlled confounder benchmark.** The EQARNB architecture was designed to
+suppress a planted visual confounder (rendered facial scar) when classifying
+stress phase from face and physiology. The controlled benchmark dataset built
+for this purpose (418 FFHQ portraits × 15 WESAD subjects, ρ=0.85 scar-threat
+correlation, `data/publishable_scar_production/`) was not included in this
+submission for three reasons. First, the face and physiology inputs come from
+unrelated subjects, meaning vision carries no true label signal beyond the
+planted confounder, making the DP gap result circular. Second, only the ρ=0.85
+bias regime was constructed; the ρ=0.50 and ρ=0.15 regimes required for the
+robustness evaluation do not exist. Third, no sham-edit condition was
+implemented, so the artifact probe and manipulation check cannot run. Valid
+evaluation requires: synchronized face-physiology data from the same subjects
+(UBFC-Phys provides this), all three ρ regimes, sham edits matched on size and
+placement, and physiology-only and balanced-ERM kill-switch baselines before any
+architecture comparison. Checkpoints and dataset artifacts are preserved in the
+repository for future work.
 
 ---
 

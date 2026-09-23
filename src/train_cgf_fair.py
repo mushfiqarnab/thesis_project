@@ -248,9 +248,19 @@ def eval_metrics(model, loader, device, phys_mu=None, phys_sigma=None):
     eo_max = float(max(abs(tpr1 - tpr0), abs(fpr1 - fpr0)))
     cf_gap = float(cf_abs_sum / max(cf_count, 1))
     
+    majority_baseline = float(max((y_np == 0).mean(), 
+                                   (y_np == 1).mean()))
+    threat_mask = (y_np == 1)
+    minority_recall = float((yhat[threat_mask] == 1).mean()) \
+                      if threat_mask.sum() > 0 else 0.0
+
     return {
-        "acc": acc, "dp_abs": dp, "eo_max_gap": eo_max, "cf_gap": cf_gap,
-        "majority_acc": majority_acc, "p1_var": p1_var
+        "acc": acc,
+        "dp_abs": dp,
+        "eo_max_gap": eo_max,
+        "cf_gap": cf_gap,
+        "majority_baseline": majority_baseline,
+        "minority_recall": minority_recall,
     }
 
 
@@ -266,15 +276,29 @@ def main():
     use_amp = bool(args.amp and (device.type == "cuda"))
 
     ds = MultimodalCSVDatasetWithCF(str(csv_path))
-    if args.split_file:
-        split_path = Path(args.split_file)
+    test_loader = None
+    if "split" in ds.df.columns and set(ds.df["split"].unique()).issuperset({"train", "val"}):
+        train_idx = ds.df.index[ds.df["split"] == "train"].tolist()
+        val_idx = ds.df.index[ds.df["split"] == "val"].tolist()
+        test_idx = ds.df.index[ds.df["split"] == "test"].tolist()
+        print(f"[Split] Honoring pre-computed disjoint splits: train={len(train_idx)}, val={len(val_idx)}, test={len(test_idx)}")
     else:
-        split_path = csv_path.parent / f"split_seed{args.seed}_{csv_path.stem}.json"
-        
-    train_idx, val_idx = make_or_load_split(split_path, len(ds), args.seed, args.val_ratio)
+        if args.split_file:
+            split_path = Path(args.split_file)
+        else:
+            split_path = csv_path.parent / f"split_seed{args.seed}_{csv_path.stem}.json"
+        train_idx, val_idx = make_or_load_split(split_path, len(ds), args.seed, args.val_ratio)
+        test_idx = []
 
     train_ds = Subset(ds, train_idx)
     val_ds = Subset(ds, val_idx)
+    if test_idx:
+        test_ds = Subset(ds, test_idx)
+        test_loader = DataLoader(
+            test_ds, batch_size=args.batch_size, shuffle=False,
+            num_workers=args.num_workers, pin_memory=(device.type == "cuda"),
+            collate_fn=collate_samples,
+        )
 
     phys_mu = phys_sigma = None
     if args.zscore_phys:
@@ -334,7 +358,7 @@ def main():
     ce = nn.CrossEntropyLoss()
     scaler, amp_ctx = make_amp(device, enabled=use_amp)
 
-    best_score = -1e9
+    best_score = float("-inf")
     report_path = OUT_REP / f"train_counterfactual_v2_{csv_path.stem}_{args.backbone}_{args.out_suffix}.json"
     best_path = OUT_CKPT / f"counterfactual_{args.fusion}_js_{args.backbone}_{csv_path.stem}_best_{args.out_suffix}.pt"
 
@@ -374,7 +398,7 @@ def main():
                 loss_task = ce(out.logits, y)
 
                 loss_cf = torch.tensor(0.0, device=device)
-                if has_cf.any():
+                if args.lambda_cf > 0.0 and has_cf.any():
                     out_cf = model(img_cf, phys, mask=mask)
                     js = js_divergence_stable(out.logits, out_cf.logits)
                     loss_cf = js[has_cf].mean()
@@ -411,34 +435,46 @@ def main():
         # ── ZERO COMPROMISE DEFENSE: Validation & Anti-Collapse ──
         val = eval_metrics(model, val_loader, device, phys_mu, phys_sigma)
         
-        is_degenerate = val["p1_var"] < 0.005
-        is_below_baseline = val["acc"] <= (val["majority_acc"] + 0.01)
-        raw_score = val["acc"] - args.w_dp * val["dp_abs"] - args.w_eo * val["eo_max_gap"] - args.w_cf * val["cf_gap"]
-
-        log_str = f"  [Val] Acc: {val['acc']:.4f} | DP: {val['dp_abs']:.4f} | Var: {val['p1_var']:.4f}"
-        
-        if biased_loader:
-            b_val = eval_metrics(model, biased_loader, device, phys_mu, phys_sigma)
-            log_str += f" || [Biased] DP: {b_val['dp_abs']:.4f}"
-            
-        print(log_str)
-
-        if is_degenerate or is_below_baseline:
-            print(f"  -> [REJECT] Model exhibits soft-collapse or fails to beat majority baseline.")
-            score = -1e9
+        # Degenerate model guard
+        # Grounded in: Menon & Williamson (2018),
+        # Yao et al. TMLR (2024) surrogate-fairness gap
+        degenerate = (val["acc"] < val["majority_baseline"] + 0.05 or
+                      val["minority_recall"] < 0.10)
+        if degenerate:
+            # Degenerate epochs are never scored or checkpointed. If every
+            # epoch is degenerate, best_path is never created and the
+            # post-training test evaluation below is skipped by its exists() guard.
+            print(f"[epoch {epoch}] DEGENERATE — not scored, not checkpointed "
+                  f"(acc={val['acc']:.4f} <= "
+                  f"baseline+0.05={val['majority_baseline']+0.05:.4f} "
+                  f"or recall={val['minority_recall']:.4f}<0.10)")
         else:
-            score = raw_score
-            print(f"  -> [PASS] Score = {score:.4f}")
-
-        if score > best_score:
-            best_score = score
-            torch.save(model.state_dict(), best_path)
-            print(f"  -> [SAVE] NEW BEST CHECKPOINT")
+            score = (val["acc"]
+                     - args.w_dp * val["dp_abs"]
+                     - args.w_eo * val["eo_max_gap"]
+                     - args.w_cf * val["cf_gap"])
+            if score > best_score:
+                best_score = score
+                torch.save(model.state_dict(), best_path)
+                print(f"  -> [SAVE] NEW BEST CHECKPOINT")
 
     print(f"================================================================")
     print(f"TRAINING COMPLETE. Best Score: {best_score:.4f}")
     print(f"Checkpoint: {best_path}")
     print(f"================================================================")
+
+    if test_loader is not None and best_path.exists():
+        print(f"\n================================================================")
+        print(f"[Evaluation] EVALUATING BEST CHECKPOINT ON HELD-OUT TEST SET")
+        print(f"================================================================")
+        model.load_state_dict(torch.load(best_path, map_location=device))
+        test = eval_metrics(model, test_loader, device, phys_mu, phys_sigma)
+        print(f"  Test Accuracy:    {test['acc']:.4f}")
+        print(f"  Test DP Gap:      {test['dp_abs']:.4f}")
+        print(f"  Test EO Gap:      {test['eo_max_gap']:.4f}")
+        print(f"  Test CF Gap:      {test['cf_gap']:.4f}")
+        print(f"  Minority Recall:  {test['minority_recall']:.4f}")
+        print(f"================================================================\n")
 
 if __name__ == "__main__":
     main()

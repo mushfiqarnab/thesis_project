@@ -29,7 +29,7 @@ MANIFEST
 # VIRTUAL ENVIRONMENTS
 # ==========================================
 venv/
-.venv/
+.venv*/
 env/
 .env/
 ENV/
@@ -74,11 +74,23 @@ Thumbs.db
 # LARGE DATA & MODELS (DO NOT COMMIT)
 # ==========================================
 # Datasets (large, not reproducible without raw sources)
+# NOTE: a negation cannot re-include a file whose parent DIRECTORY is excluded.
+# data/** excludes data/csv itself, so !data/csv/... patterns below were dead
+# until data/csv/ was re-included first (this is how the Data Loss #2 split
+# files ended up untracked despite these patterns existing).
 data/**
 !data/README.md
 !data/.gitkeep
+!data/csv/
 !data/csv/split_*.json
 !data/csv/README.md
+!data/csv/*.sha256
+!data/csv/wesad_windows.csv
+# Corpus hash sidecars: re-include the directory, re-exclude its contents,
+# then allow only the .sha256 files (same parent-directory rule as above)
+!data/publishable_scar_production/
+data/publishable_scar_production/*
+!data/publishable_scar_production/*.sha256
 
 # Checkpoints & model weights (too large, rebuild from training)
 *.pt

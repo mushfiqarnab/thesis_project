@@ -100,9 +100,26 @@ The training inputs for the FFHQ-scar model battery were lost. Affected files: `
 * **What they were:** the tabulated training corpora and deterministic (seed-42) split files for the counterfactual/CGF battery — Design A/B (February 2026), the multimodal-10k and unbiased variants, and the September 2026 strict/Stiefel/edge ablation battery.
 * **Evidence they existed and were used:** `outputs/reports/train_counterfactual_multimodal_*.json`, `train_counterfactual_report.json`, and `repair_multimodal_10k_unbiased_mobilenet_v3_small.json` record the exact paths as run configuration; 15 checkpoints in `outputs/checkpoints/` carry `multimodal_10k` in their names with mtimes 2026-02-03 11:35 through 2026-09-21 05:08. (That the September runs re-read these files from disk rather than from a cache is UNVERIFIED.)
 * **Current state:** absent from disk as of the 2026-09-23 inventory; `data/csv/` now holds only `approved_pristine_manifest.csv`, `multimodal_diffusion_worldclass.csv/.jsonl`, and `wesad_windows.csv`. **No file under `data/csv/` was ever tracked in git** (`git ls-files data/csv` is empty), so the repository contains no recoverable copy of any of them.
-* **Deletion event: UNKNOWN.** Bounded only between the last consistent use (checkpoints through 2026-09-21 08:58) and verified absence (2026-09-23). No operation, actor, or log record has been identified, and none is guessed at here. This loss is categorically worse than the two logged above: those destroyed *derivatives* whose generating inputs and code survive; this one destroyed the *inputs* to finished, checkpoint-bearing runs.
+* **Deletion event:** Deletion was deliberate (author, 2026-09-23): the multimodal / multimodal-10k training corpora and their generating pipeline were judged low-quality and removed. Superseded, not lost to accident. The deletion remains bounded between the last consistent use (checkpoints through 2026-09-21 08:58) and verified absence (2026-09-23). The severity assessment below is unchanged: this destroyed the *inputs* to finished, checkpoint-bearing runs, which is categorically worse than the two losses above, which destroyed *derivatives* whose generating inputs and code survive.
 * **Downstream now unverifiable:** all multimodal-10k-lineage checkpoints are unrerunnable from source — including `counterfactual_cgf_js_vit_b_16_multimodal_10k_unbiased_best_stiefel.pt` (344 MB, 2026-09-18), the September strict/Stiefel/concat battery, the February Design A/B runs (`multimodal.csv`-lineage, including `baseline_best.pt` and `counterfactual_fair_best.pt` at 344 MB each), and the pruned/repaired derivatives. Their surviving result reports (uncommitted) are unverifiable by re-run. **Not affected:** the 2026-09-21 `publishable` production runs, which read `data/publishable_scar_production/multimodal_publishable.csv` (present on disk, 102 MB).
-* **Scope note:** these runs belong to the pre-pivot FFHQ-scar model lineage, which the Dataset Status note at the top of this document marks deprecated. How that lineage's surviving artifacts (checkpoints, uncommitted reports, edge exports) relate to the current thesis scope is an author-level question raised on 2026-09-23 and deliberately **not resolved in this document**.
+* **Scope note:** these runs belong to the pre-pivot FFHQ-scar model lineage, which the Dataset Status note at the top of this document marks deprecated. How that lineage's surviving artifacts (checkpoints, uncommitted reports, edge exports) relate to the current thesis scope is an author-level question raised on 2026-09-23 and deliberately **not resolved in this document**. **Update (2026-09-23, author):** partially resolved by the O6-rescope amendment at the end of this document - the publishable corpus is in scope as the controlled-confounder benchmark; the multimodal-10k lineage itself remains superseded.
+
+### Session Review Findings (Logged 2026-09-23, post-amendment)
+
+A code-level review of the session's uncommitted training/dataset/model diffs was performed, plus a direct audit of `data/publishable_scar_production/multimodal_publishable.csv` (the surviving corpus) against its actual contents.
+
+**A. Dataset audit (verified against the file, not the builder):** 3,344 rows; 418 unique faces x 8 WESAD windows each; embedded `train`/`val`/`test` split with **zero overlap across splits on both `face_id` and `physiology_subject`** (train 10 subjects / 293 faces, val 2 / 63, test 3 / 62); every face carries both scar=0 and scar=1 rows with exact `clean_path`/`scarred_path`/`counterfactual_image_path` pairing and sha256 provenance columns fully populated. Realized bias: P(scar=1|threat=1)=0.850, P(scar=1|threat=0)=0.150, corr(scar, threat)=0.70, uniform across all three splits. **However, the Core Hypothesis premise remains unearned under this corpus**: `face_id` and `physiology_subject` are unrelated by construction (0% identity match; every face is crossed with 2-8 different physiology subjects), so vision carries zero *true* signal about the label and any learnable vision-label association is the painted confounder itself. The scar renderer version in the builder is `scar-like-renderer-2.0`; no sham-edit condition exists in the current builder (the sham/artifact-probe protocol in this document is unimplemented there).
+
+**B. Provenance finding - the λ=5.0 sweep result and the edge ONNX sit on destroyed inputs.** The session's modified `experiment_lambda_sweep.py` reads `CSV_PATH = "data/csv/multimodal.csv"` - a Data Loss #2 file verified absent from disk (2026-09-23). The existing `outputs/lambda_sweep_results.csv` row (λ=5.0, acc 0.7155, DP 0.0444; mtime 2026-09-21 00:02) and `outputs/lambda_sweep_ckpts/lambda_5.0_{best,final}.pth` (mtimes 2026-09-21 00:01-00:02) predate the loss window close, so they were plausibly produced while the input existed, but the run is **unrerunnable and unverifiable from source**, joining the rest of the multimodal-lineage artifacts above. The exported `outputs/equitas_mitl_strict_v4_edge.onnx` (mtime 2026-09-21 00:14) is derived from `lambda_5.0_final.pth` per the session's modified `src/edge/export_v4_onnx.py` and inherits the same lineage. No new claim should be built on these artifacts. The sweep script itself now implements a genuinely different estimator (learned Lagrange multiplier on the DP penalty, clamped >= 0, per-batch dual ascent) than the fixed-λ grid its results table implies; the λ column of future results must be labeled accordingly.
+
+**C. Code fixes applied during this review (both verified):**
+1. `src/train_cgf_fair.py` - the degenerate-epoch guard used the sentinel `score = -999.0` against `best_score = -1e9`; any degenerate epoch therefore *always* overwrote the best checkpoint with a degenerate model (save path: `-999.0 > -1e9`), defeating the guard's purpose. Fixed: degenerate epochs are skipped entirely (never scored, never saved); `best_score` initialized to `-inf`; if all epochs are degenerate, no checkpoint is created and the post-training test evaluation is skipped by its existing `exists()` guard.
+2. `.gitignore` - the negation patterns `!data/csv/split_*.json` etc. were dead: `data/**` excludes the `data/csv` directory itself, and a negation cannot re-include a file whose parent directory is excluded (confirmed via `git check-ignore` and `git add -n`). This was the standing condition under which Data Loss #2's split files were untracked despite protective-looking patterns. Fixed: `!data/csv/` re-included before its children; `.venv*/` added (`.venv_worldclass/` was untracked-but-unignored); verified with `git add -n` that split JSONs are now trackable while bulk data remains excluded.
+3. **Sentinel bug audit gap (2026-09-23, Task 2):** The two Sep 21 production benchmark reports (`thesis_production_benchmark_report.json`, `equitas_rcmf_master_benchmark_report.json`) contain no checkpoint path or hash field; the attribution of those results to `equitas_rcmf_master_best.pt` (Sep 21 08:44) rests on file timestamp and §3.4 of the session handoff document, not on any machine-readable field in the reports themselves. The five scripts audited for the sentinel bug pattern are clean; the two Sep 21 checkpoints postdate the fix. `dry_run_best.pt` (Sep 19 02:35) was produced by `train_cgf_fair.py` while the bug was active and carries no downstream citations.
+
+**D. Verification asset created:** `data/publishable_scar_production/multimodal_publishable.csv.sha256` records SHA-256 = `2035777f957fa4c5cc830989f4fe40fb9190589f17c567cb29a3ef0e6b2acae2` for the operative corpus. Any future training run on this CSV must assert this hash at startup and refuse to proceed on mismatch. The CSV itself remains bulk-excluded from git (393 MB-class images are the real corpus; the CSV alone is not the dataset), which is why the sidecar matters: the hash is the trackable identity.
+
+**E. Still missing before any run:** (i) the O6 pivot decision and this FFHQ-scar line were in unresolved tension at logging time - subsequently partially resolved by the O6-rescope amendment at the end of this document (the publishable corpus is in scope as the benchmark corpus); the multimodal-10k lineage remains out; (ii) the sham-edit / artifact-probe protocol has no builder implementation, so the publishable corpus cannot support the artifact-probe claim as built; (iii) a small smoke test + manual inspection of rendered scar pairs remains a prerequisite to any full run, per the freeze discipline this document already commits to.
 
 ---
 
@@ -243,5 +260,65 @@ Derivation from this document's own pre-registered rules, using $N_{vision} = 4$
 **Also invalidated at this size:** the >15% cohort invalidation trigger on anchor stability is meaningless against ~4-7 subjects (15% of 4 is 0.6 subjects), and the $\rho \in \{0.85, 0.5, 0.15\}$ arms cannot be constructed at all until a confounder injector exists (O1) and a pool exists to bias (O4).
 
 **FINAL DECISION (2026-09-23, author, confirmed after full consideration including timeline):** the thesis **pivots to the benchmark / limitations framing**. The vision branch will not be run as an equivalence study, and no further vision-side training run is required on this line. The negative result already in hand - the leakage test failing at both smoothing settings, together with the power analysis above - becomes the reported finding rather than a failed prerequisite. Draft writeup: `docs/negative_result_writeup.md`.
+
+**AMENDED 2026-09-23 (same day, author):** the benchmark arm of this pivot is now operationalized. `data/publishable_scar_production/multimodal_publishable.csv` is designated the controlled-confounder benchmark corpus, with permitted-claim scope, validity gates, and required discipline defined in the amendment immediately below. The equivalence withdrawal above is **unchanged**.
+
+---
+
+## Pre-Registration Amendment (2026-09-23): O6 Rescope - The Publishable Corpus as the Controlled-Confounder Benchmark
+
+**This amendment operationalizes the benchmark arm of the pivot recorded under O6 and partially resolves the open question in the Data Loss #2 scope note. It does not reopen the equivalence study, does not amend the UBFC-Phys negative-result line (`docs/negative_result_writeup.md` stands as written), and does not rehabilitate any multimodal-10k-lineage artifact.**
+
+### Designation
+
+`data/publishable_scar_production/multimodal_publishable.csv` (SHA-256 `2035777f957fa4c5cc830989f4fe40fb9190589f17c567cb29a3ef0e6b2acae2`, sidecar committed as `.sha256`) is designated the **controlled-confounder benchmark (CCB) corpus**.
+
+Its verified properties are recorded in section A of the Session Review Findings above: 3,344 rows; 418 faces x 8 WESAD windows; exact paired `scarred_path` / `counterfactual_image_path` per row with sha256 provenance; embedded disjoint train/val/test splits with zero overlap on both `face_id` and `physiology_subject`; realized bias P(scar=1|threat=1)=0.850, P(scar=1|threat=0)=0.150, uniform across splits. The embedded `split` column is the operative split; the split-honoring branch of `src/train_cgf_fair.py` is the code path that reads it.
+
+### Why the zero-true-signal premise is earned here, and why that is the point
+
+Under UBFC-Phys the premise had to be earned against the POS leakage test, and the test failed. Under the CCB the premise is true **by construction**: `face_id` and `physiology_subject` are unrelated by construction (0% identity match; every face is crossed with 2-8 physiology subjects; zero cross-split subject overlap). A stranger's portrait cannot carry the subject's label. This is not a defect of the benchmark - it is the benchmark's design. The rendered scar at controlled rho is the **only** vision-label association in the data, so any vision utilization the model exhibits is, by construction, confounder utilization. The CCB is therefore the correct instrument for the claim the pivot actually makes - characterizing when multimodal architectures suppress vs. exploit a synthetic shortcut - and for nothing else.
+
+### Permitted claims (descriptive, within-corpus)
+
+* Counterfactual consistency (`cf_gap`, already computed by `eval_metrics`).
+* The **counterfactual flip rate**: over scar=1 rows, the fraction of predictions that change between `scarred_path` and its exact paired clean image. This is the exact executable form of the flip test sketched under K1's shortcut-confirmation note; the exact pairing makes it exact rather than approximate. Requires a small, committed evaluation addition before the freeze.
+* Group gaps (DP/EO by scar group), HSIC(v_c, S) probes per the K4 estimator spec, and the K5-style inference-time gate ablation (forced G in {0, 1}).
+* Architecture comparisons (ERM/concat vs CGF vs fair-constrained) on the above, reported descriptively.
+
+### Non-permitted claims
+
+* Any TOST/equivalence claim (withdrawn under O6; the df arithmetic is unchanged, and the withdrawn machinery must not be silently reused).
+* Any claim that CCB results say anything about stress classification from real faces, or about the UBFC-Phys line. The two lines share no data.
+* Any population-level inferential claim about subjects: all CCB metrics are descriptive statistics over this corpus's fixed splits.
+* Any artifact-probe or realism claim until the sham gate below is met. Realism claim scope remains governed by `docs/SCAR_ARTIFACT_VALIDATION_PROTOCOL.md`.
+
+### Binding validity gate: the sham condition
+
+The CCB currently has no sham-edit condition (verified: the builder renders scars only, generator version `scar-like-renderer-2.0`). Without shams, "scar vs. clean" is trivially separable and the pre-registered boundary-ring artifact probe is meaningless - the probe requires scar vs. sham. **Any "the confounder is not a low-level boundary artifact" claim is blocked until a sham condition matched on size and location distributions is added to the builder, the corpus is regenerated and re-hashed, and the probe passes on the regenerated corpus.** Whether the benchmark chapter makes such a claim at all is an author choice; if it does, this gate is binding.
+
+### Scope of the rho arms
+
+The operative CSV is rho=0.85 only (`rho_target` = 0.85 for all rows). The builder renders both clean and scarred variants for every face and assigns scar labels stratified by threat, so rho in {0.5, 0.15} variants are regenerable via the builder's `--rho` argument without re-rendering images. Each rho variant is a distinct corpus with its own hash and its own freeze; any multi-rho benchmark claim requires each variant generated, hashed, and recorded in this document before any run.
+
+### Required discipline before any CCB run
+
+1. Startup hash assertion against the sidecar; mismatch aborts the run.
+2. Smoke test (one epoch, a few hundred samples) with manual inspection of rendered pairs.
+3. Commit the builder and the training/evaluation scripts used, so the run is rerunnable from source (the Data Loss #2 lesson).
+4. Any threshold that converts a measurement into a claim (e.g., what counts as "exploits the confounder") must be pre-registered in a dated amendment before the freeze.
+
+### Disposition of the descoped items
+
+* **O1** (UBFC confounder injector): remains out of scope; the CCB does not run on UBFC crops.
+* **O3** (manipulation-check threshold): remains descoped; no K2a manipulation check exists in benchmark form. If a multi-rho sweep is run, "does confounder utilization scale with rho" is a descriptive benchmark result, not the pre-registered manipulation check.
+* **O4** (K1-K5 re-derivation for UBFC): remains descoped for UBFC; K-battery names are not reused for CCB measurements. The permitted-claims list above is the CCB's operative definition.
+* **O6 equivalence withdrawal**: unchanged. The estimation-only / negative-result line is unaffected.
+
+### Deliberately not decided here
+
+* Chapter structure and the defence-facing claim hierarchy for the CCB chapter (author + advisor, per O6).
+* Single-rho (0.85) vs multi-rho reporting.
+* Whether an artifact-probe claim is included at all (blocked by the sham gate until met, regardless).
 
 
