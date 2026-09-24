@@ -21,10 +21,10 @@ class CounterfactualNTKExtractor:
         Must be run with batch_size=1 to extract per-sample Jacobian rows.
         """
         self.model.zero_grad()
-        logits = self.model(cf_image, cf_phys)
+        logits_out = self.model(cf_image, cf_phys)
         
         # We target the specific logit for the counterfactual class
-        target_logit = logits[0, target_class]
+        target_logit = logits_out.logits[0, target_class]
         target_logit.backward()
         
         with torch.no_grad():

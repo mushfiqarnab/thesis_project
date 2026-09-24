@@ -60,7 +60,7 @@ class StiefelCausalLinear(nn.Module):
         scale = norm / (self.out_features ** 0.5)
         Q = W / scale
         
-        I = torch.eye(self.out_features, dtype=Q.dtype, device=Q.device)
+        orig_dtype = Q.dtype; Q = Q.to(torch.float32); I = torch.eye(self.out_features, dtype=torch.float32, device=Q.device)
         
         # 2. Björck-Bowie Newton-Schulz Iteration
         # Q_{t+1} = (1.5 * I - 0.5 * Q_t @ Q_t^T) @ Q_t
@@ -69,7 +69,7 @@ class StiefelCausalLinear(nn.Module):
             step = 1.5 * I - 0.5 * Q_Q_T
             Q = torch.matmul(step, Q)
             
-        return Q
+        return Q.to(orig_dtype)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         if self.disable_stiefel:

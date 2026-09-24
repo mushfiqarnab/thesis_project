@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Dict, List
@@ -167,6 +167,7 @@ class MultimodalCSVDatasetWithCF(Dataset):
 
         # Mask column (optional)
         self.mask_col = "mask_path" if "mask_path" in self.df.columns else None
+        self.cf_img_col = "counterfactual_image_path" if "counterfactual_image_path" in self.df.columns else None
 
         # Physiology columns
         self.phys_cols = _infer_phys_cols(self.df)
@@ -239,36 +240,44 @@ class MultimodalCSVDatasetWithCF(Dataset):
         img_cf_pil = img_pil
         has_cf = False
 
-        if scar == 1 and self.mask_col is not None:
+        # Load mask if available
+        mask_pil = None
+        if self.mask_col is not None:
             mpath = _safe_str(row.get(self.mask_col, ""))
             if mpath and Path(mpath).exists():
                 try:
                     mask_pil = Image.open(mpath).convert("L")
-
-                    # Fix masks saved as {0,1} and binarize safely
                     mask_pil = _normalize_mask_to_255(mask_pil)
-
-                    # Align mask to image, preserve edges
                     mask_pil = mask_pil.resize(img_pil.size, resample=Image.NEAREST)
-
-                    # Tensorize + hard binarize
                     mask_t = self.mask_tf(mask_pil)
                     mask_t = (mask_t > 0.5).float()
-
-                    # If mask ended up empty, disable CF (safe)
-                    if float(mask_t.sum().item()) < 1.0:
-                        has_cf = False
-                        mask_t.zero_()
-                        img_cf_pil = img_pil
-                    else:
-                        img_cf_pil = remove_scar_pil(
-                            img_pil, mask_pil,
-                            blur_radius=self.blur_radius,
-                            alpha=self.alpha,
-                        )
-                        has_cf = True
-
                 except Exception:
+                    mask_t.zero_()
+                    mask_pil = None
+
+        # Priority 1: Exact Paired Counterfactual Image (Publishable Standard)
+        if self.cf_img_col is not None:
+            cf_path_str = _safe_str(row.get(self.cf_img_col, ""))
+            if cf_path_str and Path(cf_path_str).exists():
+                try:
+                    img_cf_pil = Image.open(cf_path_str).convert("RGB")
+                    has_cf = True
+                except Exception:
+                    img_cf_pil = img_pil
+                    has_cf = False
+
+        # Priority 2: Heuristic blur fallback (Legacy datasets without counterfactual_image_path)
+        if not has_cf and scar == 1 and mask_pil is not None:
+            if float(mask_t.sum().item()) >= 1.0:
+                try:
+                    img_cf_pil = remove_scar_pil(
+                        img_pil, mask_pil,
+                        blur_radius=self.blur_radius,
+                        alpha=self.alpha,
+                    )
+                    has_cf = True
+                except Exception:
+                    img_cf_pil = img_pil
                     has_cf = False
 
         img = self.img_tf(img_pil)

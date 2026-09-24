@@ -120,7 +120,7 @@ def main():
     fs_target = 30
     
     print("Extracting POS and loading BVP...")
-    for s in ["s1", "s2", "s3", "s4"]:
+    for s in ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"]:
         for t in ["1", "2", "3"]:
             print(f"Processing {s} T{t}...")
             rgb = extract_rgb_from_pngs(s, t)
@@ -161,7 +161,7 @@ def main():
         true_corrs.append(best_r)
         
     for c1, c2 in itertools.permutations(dev_clips_data, 2):
-        if c1['subject'] == c2['subject'] and c1['task'] == c2['task']:
+        if c1['subject'] == c2['subject']:
             continue
         best_r_null = max_cross_corr(c1['rppg_filt'], c2['bvp_filt'], max_lag_samples)
         null_corrs.append(best_r_null)

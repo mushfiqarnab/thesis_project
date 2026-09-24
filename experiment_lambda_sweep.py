@@ -38,9 +38,9 @@ import numpy as np
 import logging
 from torch.utils.data import DataLoader, random_split
 
-sys.path.insert(0, '.')
+sys.path.insert(0, '.'); sys.path.insert(0, 'src')
 from src.data.clinical_dataloader import MultimodalClinicalDataset
-from src.models.pacd_net import GWPACDNet
+from src.models_arch import MultimodalThreatModel
 
 logging.basicConfig(
     level=logging.INFO,
@@ -53,10 +53,10 @@ RANDOM_SEED    = 42
 EPOCHS         = 20
 BATCH_SIZE     = 64
 LR             = 1e-4
-CSV_PATH       = "data/csv/multimodal_10k.csv"
+CSV_PATH       = "data/csv/multimodal.csv"
 RESULTS_PATH   = "outputs/lambda_sweep_results.csv"
 CKPT_DIR       = "outputs/lambda_sweep_ckpts"
-LAMBDA_VALUES  = [0.0, 0.5, 1.0, 2.0, 5.0, 10.0]
+LAMBDA_VALUES  = [5.0]
 
 os.makedirs(CKPT_DIR, exist_ok=True)
 torch.manual_seed(RANDOM_SEED)
@@ -106,10 +106,25 @@ def run_lambda(lambda_dp):
     logger.info("=" * 65)
 
     torch.manual_seed(RANDOM_SEED)
-    model = GWPACDNet(d=64, k=4).to(device)
-    optimizer  = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=1e-4)
-    scheduler  = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS)
+    
+    # We need phys_dim for MultimodalThreatModel. Let's get it from a dummy batch.
+    dummy_loader = torch.utils.data.DataLoader(train_dataset, batch_size=1)
+    dummy_batch = next(iter(dummy_loader))
+    phys_dim = dummy_batch['phys'].shape[-1]
+    
+    model = MultimodalThreatModel(
+        phys_dim=phys_dim,
+        vision_backbone="mobilenet_v3_small",
+        fusion="cgf",
+        num_classes=2
+    ).to(device)
+    
+    optimizer  = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=0.0)
+    scheduler  = None
     criterion  = nn.CrossEntropyLoss()
+
+    lagrange_lambda = torch.nn.Parameter(torch.tensor(0.0, device=device))
+    lambda_optimizer = torch.optim.SGD([lagrange_lambda], lr=1e-2, maximize=True)
 
     best_pareto = -float("inf")
     best_acc    = 0.0
@@ -126,16 +141,21 @@ def run_lambda(lambda_dp):
             scar_labels = batch["scar"].to(device)
 
             optimizer.zero_grad()
-            out     = model(img=imgs, phys=phys, scar_labels=scar_labels)
-            logits  = out["logits"]
+            lambda_optimizer.zero_grad()
+            out = model(img=imgs, phys=phys, mask=batch.get("mask"))
+            logits = out.logits
             l_cls   = criterion(logits, labels)
-            l_dp    = differentiable_dp_penalty(logits, scar_labels) if lambda_dp > 0 else torch.tensor(0.0)
-            loss    = l_cls + lambda_dp * l_dp
+            l_dp    = differentiable_dp_penalty(logits, scar_labels)
+            loss    = l_cls + lagrange_lambda * l_dp
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
+            lambda_optimizer.step()
+            
+            with torch.no_grad():
+                lagrange_lambda.data = torch.clamp(lagrange_lambda.data, min=0.0)
 
-        scheduler.step()
+        pass # scheduler removed
 
         # ── Validation (every epoch for the sweep) ──
         model.eval()
@@ -144,8 +164,8 @@ def run_lambda(lambda_dp):
             for batch in val_loader:
                 imgs  = batch["img"].to(device)
                 phys  = batch["phys"].to(device)
-                out   = model(img=imgs, phys=phys, scar_labels=None)
-                preds = out["logits"].argmax(dim=1).cpu().tolist()
+                out   = model(img=imgs, phys=phys, mask=batch.get("mask"))
+                preds = out.logits.argmax(dim=1).cpu().tolist()
                 all_preds.extend(preds)
                 all_labels.extend(batch["y"].tolist())
                 all_scars.extend(batch["scar"].tolist())
@@ -159,9 +179,14 @@ def run_lambda(lambda_dp):
         p1  = preds_np[s1m].mean() if s1m.sum() > 0 else 0.0
         p0  = preds_np[s0m].mean() if s0m.sum() > 0 else 0.0
         dp_gap  = abs(p1 - p0)
-        pareto  = acc - dp_gap
+        
+        majority_baseline = max((labs_np == 1).mean(), (labs_np == 0).mean())
+        if acc > (majority_baseline + 0.02):
+            pareto = acc - dp_gap
+        else:
+            pareto = -999.0
 
-        if pareto > best_pareto:
+        if pareto > best_pareto and pareto > -900:
             best_pareto = pareto
             best_acc    = acc
             best_dp     = dp_gap
@@ -170,13 +195,19 @@ def run_lambda(lambda_dp):
 
         if (epoch + 1) % 5 == 0 or epoch == EPOCHS - 1:
             elapsed = time.time() - t0
+            current_lr = optimizer.param_groups[0]['lr']
             logger.info(
                 f"  Epoch {epoch+1:03d}/{EPOCHS} | "
                 f"Acc={acc:.4f} | DP={dp_gap:.4f} | Pareto={pareto:.4f} | "
-                f"LR={scheduler.get_last_lr()[0]:.2e} | t={elapsed:.1f}s"
+                f"LR={current_lr:.2e} | t={elapsed:.1f}s"
             )
 
+    # Always save the final epoch's checkpoint for evaluation
+    final_ckpt_path = os.path.join(CKPT_DIR, f"lambda_{lambda_dp:.1f}_final.pth")
+    torch.save(model.state_dict(), final_ckpt_path)
+
     logger.info(f"  BEST: Acc={best_acc:.4f} | DP Gap={best_dp:.4f} | Pareto={best_pareto:.4f}")
+    logger.info(f"  FINAL LAGRANGE LAMBDA: {lagrange_lambda.item():.4f}")
     return best_acc, best_dp, best_pareto
 
 

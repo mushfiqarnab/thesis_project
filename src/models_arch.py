@@ -8,7 +8,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as tvm
 
-from models.stiefel_causal_layer import StiefelCausalLinear
+try:
+    from .models.stiefel_causal_layer import StiefelCausalLinear
+except ImportError:
+    from models.stiefel_causal_layer import StiefelCausalLinear
 
 
 @dataclass
@@ -87,7 +90,6 @@ class CausalGatedFusion(nn.Module):
     def __init__(self, v_dim: int, p_dim: int, d: int = 256, num_classes: int = 2, disable_stiefel: bool = False):
         super().__init__()
         self.v_proj = StiefelCausalLinear(v_dim, d, ns_iterations=3, disable_stiefel=disable_stiefel)
-        self.v_norm = nn.LayerNorm(d)
         
         self.p_proj = nn.Linear(p_dim, d)
         self.p_norm = nn.LayerNorm(d)
@@ -133,7 +135,7 @@ class CausalGatedFusion(nn.Module):
         focus = torch.log1p(ratio).unsqueeze(1)        # (B,1)
         return focus
     def forward(self, v: torch.Tensor, p: torch.Tensor, fmap: Optional[torch.Tensor], mask: torch.Tensor) -> ModelOut:
-        v_ = self.v_norm(self.v_proj(v))
+        v_ = self.v_proj(v)
         p_ = self.p_norm(self.p_proj(p))
 
         if fmap is None:

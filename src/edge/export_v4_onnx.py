@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from models_arch import MultimodalThreatModel
 
 def export_to_onnx():
-    ckpt_path = Path("outputs/checkpoints/counterfactual_cgf_js_mobilenet_v3_small_multimodal_10k_unbiased_best_strict_stiefel.pt")
+    ckpt_path = Path("outputs/lambda_sweep_ckpts/lambda_5.0_final.pth")
     out_path = Path("outputs/equitas_mitl_strict_v4_edge.onnx")
     
     print("==================================================================")
@@ -25,10 +25,7 @@ def export_to_onnx():
         return
         
     print(f"[1/3] Loading V4 CGF Architecture...")
-    # Initialize the model exactly as it was during the Master Run
-    # Because we unified StiefelCausalLinear across all runs, the state dict keys
-    # now match perfectly. EQUITAS_DISABLE_STIEFEL defaults to 0 (active).
-    model = MultimodalThreatModel(phys_dim=2, fusion="cgf")
+    model = MultimodalThreatModel(phys_dim=4, fusion="cgf")
     
     print(f"[2/3] Restoring Golden Weights...")
     state_dict = torch.load(ckpt_path, map_location="cpu")
@@ -36,7 +33,6 @@ def export_to_onnx():
         state_dict = state_dict["state_dict"]
     cleaned = {k.replace("module.", ""): v for k, v in state_dict.items()}
     
-    # WE NOW ENFORCE STRICT=TRUE TO PROVE NO WEIGHTS ARE DROPPED
     model.load_state_dict(cleaned, strict=True)
     model.eval()
     
@@ -46,17 +42,15 @@ def export_to_onnx():
             self.core = core_model
             
         def forward(self, img, phys):
-            # ONNX tracing requires standard tensor outputs, not dataclasses
-            out = self.core(img, phys)
+            out = self.core(img, phys, mask=None)
             return out.logits
             
     onnx_model = ONNXWrapper(model)
     onnx_model.eval()
     
-    print(f"[3/3] Compiling to Opset 13 INT8-Ready Graph...")
-    # Create dummy inputs for tracing
+    print(f"[3/3] Compiling to Opset 14 INT8-Ready Graph...")
     dummy_img = torch.randn(1, 3, 224, 224)
-    dummy_phys = torch.randn(1, 2)
+    dummy_phys = torch.randn(1, 4)
     
     # Export
     torch.onnx.export(

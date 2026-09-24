@@ -31,7 +31,7 @@ import numpy as np
 import scipy.signal as signal
 import scipy.stats as stats
 
-SUBJECTS = ["s1", "s2", "s3", "s4"]
+SUBJECTS = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"]
 TASKS = ["1", "2", "3"]
 
 # Identical to the reported run (scratch/run_full_pos_pipeline.py)
@@ -239,7 +239,7 @@ def evaluate(clips, estimator_name):
 def main():
     print("Building shared clip inputs (metadata identical across estimators)...")
     clips = build_clips()
-    assert len(clips) == 12, f"expected 12 clips, got {len(clips)}"
+    assert len(clips) == 24, f"expected 24 clips, got {len(clips)}"
     print(f"\n{len(clips)} clips loaded.\n")
 
     results = []

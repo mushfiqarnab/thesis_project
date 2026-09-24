@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
 
 from dataset_fair import MultimodalCSVDatasetWithCF, collate_samples
-from models import MultimodalThreatModel, count_trainable_params
+from models_arch import MultimodalThreatModel, count_trainable_params
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -54,11 +54,13 @@ def make_or_load_split(csv_path: Path, n: int, seed: int = 42, val_ratio: float 
 
 
 @torch.no_grad()
-def eval_acc(model, loader, device):
+def eval_acc(model, loader, device, camera_off=False):
     model.eval()
     correct, total = 0, 0
     for b in loader:
         img = b["img"].to(device)
+        if camera_off:
+            img = torch.zeros_like(img)
         phys = b["phys"].to(device)
         y = b["y"].to(device)
         out = model(img, phys)
@@ -69,13 +71,26 @@ def eval_acc(model, loader, device):
 
 
 def main():
-    # ---- config (edit only here) ----
-    seed = 42
-    vision_backbone = "mobilenet_v3_small"   # change to "vit_b_16" for reference baseline
-    fusion = "concat"
-    epochs = 10
-    batch_size = 32
-    lr = 2e-4
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--csv", type=str, default=str(CSV_PATH))
+    parser.add_argument("--epochs", type=int, default=10)
+    parser.add_argument("--batch_size", type=int, default=32)
+    parser.add_argument("--lr", type=float, default=2e-4)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--vision_backbone", type=str, default="mobilenet_v3_small")
+    parser.add_argument("--fusion", type=str, default="concat")
+    parser.add_argument("--camera_off", action="store_true", help="Zero out vision input to test physiology-only")
+    parser.add_argument("--suffix", type=str, default="baseline")
+    args = parser.parse_args()
+
+    seed = args.seed
+    vision_backbone = args.vision_backbone
+    fusion = args.fusion
+    epochs = args.epochs
+    batch_size = args.batch_size
+    lr = args.lr
+    csv_path = Path(args.csv)
     num_workers = 0  # Windows-safe; increase on Linux if stable
     # ---------------------------------
 
@@ -83,8 +98,8 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Device:", device)
 
-    ds = MultimodalCSVDatasetWithCF(str(CSV_PATH))
-    train_idx, val_idx = make_or_load_split(CSV_PATH, len(ds), seed=seed)
+    ds = MultimodalCSVDatasetWithCF(str(csv_path))
+    train_idx, val_idx = make_or_load_split(csv_path, len(ds), seed=seed)
 
     train_ds = Subset(ds, train_idx)
     val_ds = Subset(ds, val_idx)
@@ -106,13 +121,15 @@ def main():
     ce = nn.CrossEntropyLoss()
 
     best = -1.0
-    best_ckpt = OUT_CKPT / f"baseline_{vision_backbone}_{fusion}_best.pt"
+    best_ckpt = OUT_CKPT / f"{args.suffix}_{vision_backbone}_{fusion}_best.pt"
 
     for epoch in range(1, epochs + 1):
         model.train()
         pbar = tqdm(train_loader, desc=f"Epoch {epoch} [train]")
         for b in pbar:
             img = b["img"].to(device)
+            if args.camera_off:
+                img = torch.zeros_like(img)
             phys = b["phys"].to(device)
             y = b["y"].to(device)
 
@@ -125,7 +142,7 @@ def main():
 
             pbar.set_postfix(loss=float(loss.item()))
 
-        acc = eval_acc(model, val_loader, device)
+        acc = eval_acc(model, val_loader, device, camera_off=args.camera_off)
         print(f"Epoch {epoch}: val_acc={acc:.4f}")
 
         if acc > best:
@@ -134,7 +151,8 @@ def main():
             print("Saved:", best_ckpt)
 
     report = {
-        "design": "A",
+        "design": args.suffix,
+        "camera_off": args.camera_off,
         "seed": seed,
         "vision_backbone": vision_backbone,
         "fusion": fusion,
@@ -146,8 +164,9 @@ def main():
         "checkpoint": str(best_ckpt),
         "csv_path": str(CSV_PATH),
     }
-    (OUT_REP / "train_baseline_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print("Saved report:", OUT_REP / "train_baseline_report.json")
+    report_file = OUT_REP / f"train_{args.suffix}_report.json"
+    report_file.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print("Saved report:", report_file)
 
 
 if __name__ == "__main__":

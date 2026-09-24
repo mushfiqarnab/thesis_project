@@ -472,7 +472,8 @@ class IntegratedGradients:
             img_baseline: (B, 3, H, W) baseline image (all zeros)
             phys_baseline: (B, D) baseline physiology (all zeros)
             
-        Reference: Kindermans et al. (2019) "Sanity Checks for Saliency Maps" + 
+        Reference: Adebayo et al. (2018) "Sanity Checks for Saliency Maps" + 
+                   Kindermans et al. (2019) "The (Un)reliability of Saliency Methods" +
                    Sundararajan et al. (2017) Section 4.1
                    
         Note: Black baseline is the academic standard for IG because it satisfies
@@ -483,7 +484,7 @@ class IntegratedGradients:
             raise ValueError(
                 f"Baseline type '{baseline_type}' is not supported. "
                 f"Use 'black' (zeros) as the baseline. "
-                f"See Kindermans et al. 2019 for why other baselines are problematic."
+                f"See Adebayo et al. 2018 & Kindermans et al. 2019 for why other baselines are problematic."
             )
         
         # Zero image (no visual information in normalized space)
@@ -725,8 +726,8 @@ class SaliencyMap:
             #
             # Academic Basis:
             # - Simonyan et al. (2013) "Deep Inside Convolutional Networks" recommends L2 for multi-channel
-            # - Montavon et al. (2015) "Deep Inside Convolutional Networks: Visualizing Image 
-            #   Classification Models" shows L2 norm preserves more information than max
+            # - Montavon et al. (2018) "Methods for Interpreting and Understanding Deep Neural Networks"
+            #   shows L2 norm preserves more information than max
             # - L2 norm is standard in computer vision saliency (OpenCV, PyTorch conventions)
             #
             # Mathematical: L2 = ||∇f(x)||_2 = sqrt(Σ_c |∂f/∂x_c|^2)
@@ -1177,7 +1178,7 @@ class PerformanceProfiler:
     Useful for understanding computational bottlenecks and optimizing
     XAI computation in production settings.
     
-    Reference: Lin et al. (2021) "An Empirical Study of Example Forgetting
+    Reference: Toneva et al. (ICLR 2019) "An Empirical Study of Example Forgetting
     during Deep Neural Network Learning"
     """
     

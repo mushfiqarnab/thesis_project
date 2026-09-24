@@ -65,7 +65,7 @@ def process_video(sid, task, alpha=0.5):
             
             # Global fixed scalar across all 21,571 frames
             iod = max(1.0, ((kps[0].x * iw - kps[1].x * iw)**2 + (kps[0].y * ih - kps[1].y * ih)**2)**0.5)
-            base_size = iod * 3.566283
+            base_size = iod * 2.590073
             side = int(base_size * MARGIN)
             
             x = int(anchor_x) - side//2

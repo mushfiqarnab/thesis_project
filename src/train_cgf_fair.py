@@ -94,18 +94,35 @@ def set_seed(seed: int):
     torch.backends.cudnn.benchmark = False
 
 
-def make_or_load_split(split_path: Path, n: int, seed: int, val_ratio: float):
+def make_or_load_split(split_path: Path, df: pd.DataFrame, seed: int, val_ratio: float):
     if split_path.exists():
         d = json.loads(split_path.read_text(encoding="utf-8"))
         return d["train_idx"], d["val_idx"]
-    rng = np.random.default_rng(seed)
-    idx = np.arange(n)
-    rng.shuffle(idx)
-    val_n = int(val_ratio * n)
-    val_idx = idx[:val_n].tolist()
-    train_idx = idx[val_n:].tolist()
+    
+    n = len(df)
+    subj_col = None
+    for col in ["subject_id", "subject"]:
+        if col in df.columns:
+            subj_col = col
+            break
+            
+    if subj_col:
+        # Prevent identity leakage: split by subject, not by frame
+        from sklearn.model_selection import GroupShuffleSplit
+        gss = GroupShuffleSplit(n_splits=1, test_size=val_ratio, random_state=seed)
+        train_idx, val_idx = next(gss.split(df, groups=df[subj_col]))
+        train_idx, val_idx = train_idx.tolist(), val_idx.tolist()
+    else:
+        # Fallback to random split if no subject column exists
+        rng = np.random.default_rng(seed)
+        idx = np.arange(n)
+        rng.shuffle(idx)
+        val_n = int(val_ratio * n)
+        val_idx = idx[:val_n].tolist()
+        train_idx = idx[val_n:].tolist()
+        
     split_path.write_text(
-        json.dumps({"seed": seed, "val_ratio": val_ratio, "train_idx": train_idx, "val_idx": val_idx}, indent=2),
+        json.dumps({"seed": seed, "val_ratio": val_ratio, "train_idx": train_idx, "val_idx": val_idx, "grouped": bool(subj_col)}, indent=2),
         encoding="utf-8",
     )
     return train_idx, val_idx
@@ -287,7 +304,7 @@ def main():
             split_path = Path(args.split_file)
         else:
             split_path = csv_path.parent / f"split_seed{args.seed}_{csv_path.stem}.json"
-        train_idx, val_idx = make_or_load_split(split_path, len(ds), args.seed, args.val_ratio)
+        train_idx, val_idx = make_or_load_split(split_path, ds.df, args.seed, args.val_ratio)
         test_idx = []
 
     train_ds = Subset(ds, train_idx)
@@ -338,7 +355,7 @@ def main():
         ds_biased = MultimodalCSVDatasetWithCF(args.csv_biased)
         split_biased = Path(args.csv_biased).parent / f"split_seed{args.seed}_{Path(args.csv_biased).stem}.json"
         if split_biased.exists():
-            _, b_val_idx = make_or_load_split(split_biased, len(ds_biased), args.seed, args.val_ratio)
+            _, b_val_idx = make_or_load_split(split_biased, ds_biased.df, args.seed, args.val_ratio)
             biased_loader = DataLoader(
                 Subset(ds_biased, b_val_idx), batch_size=args.batch_size, shuffle=False,
                 num_workers=args.num_workers, pin_memory=(device.type == "cuda"), collate_fn=collate_samples
