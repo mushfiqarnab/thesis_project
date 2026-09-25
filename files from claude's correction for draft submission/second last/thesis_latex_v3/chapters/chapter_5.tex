@@ -1,0 +1,32 @@
+\section{From Technical Results to Deployment Considerations}
+Technical performance alone does not justify deploying a biometric system in a sensitive setting. This chapter examines how the design choices in EQUITAS-RCMF relate to data-protection requirements and to guidance on algorithmic bias. It identifies where the architecture supports these requirements; it does not establish legal compliance, which depends on how, where, and by whom a system is deployed.
+
+\section{On-Device Processing and Model Choice}
+Processing data on the device that captures it avoids transmitting raw biometric data to external servers, which reduces privacy risk and simplifies compliance with data-transfer restrictions. This favours compact vision backbones. MobileNetV3-Small has about 2.9 million parameters and requires about 66 million multiply--add operations per image~\cite{howard2019}, whereas ViT-B/16 has about 86 million parameters and requires roughly 17.5 billion floating-point operations.
+% TODO(authors): Add a citation for the ViT-B/16 figures (Dosovitskiy et al., ICLR 2021)
+% if you keep this comparison. Do not reuse the markdown's latency table: its
+% MobileNetV3-Large figure (~1.01 ms on a mobile CPU) conflicts with the 51 ms on a
+% Pixel 1 reported by Howard et al.
+The choice of MobileNetV3-Small is therefore motivated both by the latency budget and by the goal of keeping processing on the device.
+
+\section{Structural Separation of Scar Information}
+The Stiefel decomposition projects visual features onto two orthogonal subspaces, and the training objective routes scar information into the confounder subspace while penalizing its presence in the causal subspace and in the prediction (Section~\ref{sec:loss}). This design makes the intended separation explicit and measurable: the orthogonality of the projections can be verified numerically, and the effect of the scar on predictions is measured directly by the counterfactual gap. Orthogonality alone does not guarantee that the causal subspace is free of scar information; it is the combination of the structural constraint, the invariance losses, and the counterfactual evaluation that supports the claim that predictions do not depend on the scar.
+
+\section{Privileged Information and Data Minimization}
+Under the learning-using-privileged-information paradigm~\cite{vapnik2009, vapnik2015}, the scar mask is used only to guide training. The deployed model neither requires nor accepts it, so this annotation does not need to be collected at deployment. This is consistent with the principle of data minimization. The deployed model still processes the full facial image, so the principle is supported by the design only for the mask, not for the visual input as a whole.
+
+\section{Alignment with Guidance on Algorithmic Bias}
+Buzatu's guidance for the private security sector~\cite{buzatu2024} identifies AI-driven threat detection and risk assessment as areas where biased outputs can affect human rights, and recommends, among other measures, building fairness constraints into algorithm design and avoiding reliance on a single fairness metric. EQUITAS-RCMF addresses these recommendations by incorporating fairness terms into training and by reporting the counterfactual gap together with demographic-parity and equalized-odds gaps. The guidance also calls for human oversight of critical decisions, which is an organizational requirement that no model architecture can satisfy on its own.
+
+\section{Data Protection Law}
+The General Data Protection Regulation~\cite{gdpr2016} is relevant to any deployment of this system that processes the data of people in the European Union.
+\begin{itemize}
+    \item \textbf{Article 9} treats biometric data used to uniquely identify a person as a special category of personal data, whose processing is permitted only under specific conditions.
+    \item \textbf{Article 5(1)(c)} requires personal data to be limited to what is necessary for the purpose. Using the scar mask only during training, and processing on the device, are consistent with this principle.
+    \item \textbf{Article 22} restricts decisions based solely on automated processing, including profiling, that produce legal or similarly significant effects. A stress or threat assessment used in such a decision would require safeguards such as meaningful human involvement, regardless of how fair the underlying model is.
+\end{itemize}
+% Note: the Bangladesh data-protection law is intentionally not discussed in this
+% draft. If it is added later, cite the enacted text from bdlaws.minlaw.gov.bd.
+
+\section{Summary}
+The design choices in EQUITAS-RCMF support several requirements for responsible deployment: processing on the device, use of the scar annotation only during training, explicit fairness terms in training, and evaluation with several fairness criteria. These choices reduce specific risks, but they do not by themselves make a deployment lawful or fair. Those outcomes also depend on the purpose of the deployment, the legal basis for processing, and the human oversight around the system's decisions.

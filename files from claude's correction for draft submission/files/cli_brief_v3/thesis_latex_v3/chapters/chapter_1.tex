@@ -1,0 +1,35 @@
+\section{Background and Motivation}
+Wearable biometric sensors and edge-deployed physiological monitoring systems require models that satisfy two demanding constraints at once: they must run in real time on limited hardware, and their decisions must not depend on attributes that have no causal bearing on the outcome. Most deep learning pipelines are trained by empirical risk minimization (ERM), which minimizes average error on the training data and implicitly assumes that deployment data follow the same distribution. When a training set contains a visual attribute that happens to correlate with the label, such as a facial scar, a sensor mark, or a distinctive background, ERM can reduce its loss by exploiting that attribute rather than learning the signal of interest, a failure mode known as shortcut learning~\cite{geirhos2020}. If the correlation changes at deployment, a model that relies on it fails, and if the attribute describes a person, the model treats people unequally for a reason unrelated to their state.
+
+For a multimodal stress detector that combines facial video with physiological signals, this raises two questions. The first is whether the visual modality contains legitimate physiological information at all, or whether any visual contribution must be spurious. The second is whether a model can be built that ignores a spurious visual attribute when that attribute is predictive in its training data, without discarding the rest of the input.
+
+\section{Research Objective and Causal Models}
+This thesis addresses these questions in two lines of work.
+
+\paragraph{Line A: physiological information in facial video.} Using real facial video and wrist-worn physiological recordings from the UBFC-Phys dataset~\cite{sabour2023}, a pre-registered test asks whether pulse information can be recovered from the video. The assumed causal structure is
+\begin{equation}
+C \to X_V, \qquad C \to Y,
+\end{equation}
+where $C$ is the underlying physiological arousal state, $X_V$ the visual observation, and $Y \in \{0,1\}$ the stress label. If this holds, the visual modality carries genuine information about $Y$.
+
+\paragraph{Line B: invariance to a spurious visual attribute.} The second line asks: \emph{can an edge-deployable multimodal model be designed whose predictions are invariant to a known spurious visual attribute, when that attribute is strongly associated with the label in the training data?} This is studied on a controlled benchmark in which physiological recordings are paired with face images that carry no stress information, and a synthetic brow-line scar $S \in \{0,1\}$ is added to the faces with a probability that depends on the stress label. The assumed causal structure is
+\begin{equation}
+C \to X_P, \qquad C \to Y, \qquad Y \to S \ \text{(through dataset construction)}, \qquad S \to X_V, \qquad S \not\to Y,
+\end{equation}
+where $X_P$ is the physiological input. The scar does not cause stress, so any dependence of the prediction $\hat{Y}$ on $S$ is spurious and should be removed. Because the scar is assigned according to the label, a model that ignores the scar will still show different rates of positive predictions between scarred and unscarred inputs whenever the two are associated; the appropriate group criterion in this setting is therefore equalized odds rather than demographic parity~\cite{anthis2023}.
+
+The fairness objective follows the counterfactual fairness criterion of Kusner et al.~\cite{kusner2017}: with $X_F$ the facial input, the prediction should satisfy
+\begin{equation}
+P\bigl(f(X_F, X_P) = y \mid X, S = s\bigr) = P\bigl(f(X_F^{S \leftarrow s'}, X_P) = y \mid X, S = s\bigr),
+\end{equation}
+so that it is unchanged when the scar is counterfactually removed while the physiological input is held fixed.
+
+\section{Contributions}
+This thesis makes the following contributions:
+\begin{enumerate}
+    \item \textbf{Evidence of physiological information in facial video (Line A).} A pre-registered test on four UBFC-Phys participants showing that pulse information is recoverable from facial video, so that a visual branch can carry genuine as well as spurious cues.
+    \item \textbf{The EQUITAS-RCMF architecture (Line B).} A multimodal architecture that combines a MobileNetV3-Small vision encoder with a Stiefel orthogonal subspace decomposition, a gate that reduces the weight of visual features concentrated on the scar, and a confounder branch that uses the scar mask only during training.
+    \item \textbf{A controlled benchmark and evaluation protocol (Line B).} A benchmark pairing WESAD chest physiology with FFHQ faces carrying synthetic scars, in which the scar is the only label-related visual cue, together with test regimes in which the scar is positively associated with stress, independent of it, or negatively associated with it.
+    \item \textbf{Invariance results.} Evidence that EQUITAS-RCMF's accuracy and predictions are unchanged across these regimes, with a near-zero counterfactual gap and a low equalized-odds gap, and an analysis of why demographic parity is not the appropriate criterion when the attribute is assigned according to the label.
+    \item \textbf{Edge deployment.} A JIT-compiled inference graph that does not require the scar mask, benchmarked for latency and throughput on a desktop CPU.
+\end{enumerate}
