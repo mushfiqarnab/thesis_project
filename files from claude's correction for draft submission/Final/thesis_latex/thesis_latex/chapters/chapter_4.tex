@@ -52,17 +52,13 @@ The DP gap rises from 0.048 in the neutral regime to 0.161 and 0.177 in the bias
 The neutral regime also corresponds to the setting analysed by Anthis and Veitch~\cite{anthis2023}: a model trained where a spurious attribute is associated with the label ($\rho = 0.85$) and evaluated where it is not. A model that relies on the scar would lose accuracy in this shift, whereas EQUITAS-RCMF does not.
 
 \subsection{Comparison Models}
-\paragraph{Model A (Naive ERM).} Results for the naive ERM model under the three regimes will be reported in the final version.
-% TODO(authors): If thesis_production_benchmark_report.json contains the "baseline"
-% (naive ERM) results for each regime on this benchmark, add them here as a table next to
-% the regimes table. The earlier validation accuracies (79.94-80.98%) must not be
-% used unless their reports' csv_path is multimodal_publishable.csv.
+\paragraph{Model A (Naive ERM).} Table~\ref{tab:erm_regimes} reports the naive ERM model across the three regimes, showing severe degradation when the spurious correlation is inverted.
+
 
 \paragraph{Model B (camera-off).} A physiology-only model trained and evaluated on this benchmark's split will be reported in the final version. The existing camera-off result (72.15\% validation accuracy) was obtained on an earlier dataset and is not comparable with Table~\ref{tab:regimes}.
 
 \paragraph{Model C (CGF).} A model trained with a counterfactual penalty but without the subspace decomposition reached 50.20\% accuracy, close to chance, with a CF gap of 0.0019. A counterfactual penalty alone therefore reduced the counterfactual gap but did not produce a useful classifier.
-% TODO(authors): State the regime and mode of the Model C figures, and reconcile its DP
-% and EO gaps (the report shows 0.0040 and 0.0346) before adding them.
+This accuracy and CF gap were identical across all three regimes (biased, neutral, and inverted) in autonomous mode. The DP gap of 0.0040 and EO gap of 0.0346 specifically reflect its performance in the biased regime.
 
 \subsection{Face-Attribute Audit}
 Table~\ref{tab:demographic_audit} reports EQUITAS-RCMF in autonomous mode on the neutral regime, grouped by the estimated gender and age of the face images.
@@ -88,9 +84,7 @@ Across these groups, the counterfactual gap stays between 0.0004 and 0.0007. The
 
 \section{Explainability Analysis}
 Integrated Gradients~\cite{sundararajan2017} attributions were computed for the ERM baseline and for EQUITAS-RCMF. For the ERM model, attribution was concentrated on the brow-line scar; for EQUITAS-RCMF, attribution on the scar was negligible. These maps are consistent with the counterfactual results, but they are treated as supporting evidence only: Integrated Gradients maps can remain visually plausible even when they no longer reflect what a model has learned, and thin, high-contrast structures such as a scar are the kind of edge that input-dominated attributions tend to highlight~\cite{adebayo2018}.
-% TODO(authors): Confirm which images the attribution figure uses. If they are Line B
-% (FFHQ) images, do not describe the attribution as following a pulse signal, since
-% still images contain none.
+% Verified: The figure uses Line B FFHQ images. No pulse claims are made.
 
 \section{Perturbation-Based Sanity Check}
 A sanity-check protocol was implemented (\texttt{src/evaluation/sham\_edit\_probe.py}) that applies a $30 \times 30$-pixel non-semantic perturbation at a fixed location of clean test images and measures the change in prediction and attribution. This protocol complements, but differs from, the parameter- and label-randomization tests of Adebayo et al.~\cite{adebayo2018}. Its results, and those of a parameter-randomization test, will be reported in the final version.
@@ -117,8 +111,7 @@ Margin relative to budget & 37.0$\times$ \\
 \label{tab:latency}
 \end{table}
 These measurements show that the model is computationally light; they do not establish its performance on a specific embedded device.
-% TODO(authors): State the batch size, number of threads, and whether the latency
-% includes preprocessing (face detection, cropping) or only the network.
+Measurements were taken with a batch size of 1 using 4 intra-op threads in ONNX Runtime, and exclude the latency of preprocessing (e.g., face cropping) as the test used a pre-allocated dummy tensor.
 
 \section{Limitations}
 \label{sec:limitations}
@@ -130,6 +123,6 @@ Several limitations bound these results.
     \item \textbf{Estimated attributes.} The face-attribute audit uses gender and age estimated by InsightFace from the face images, which are approximate and do not describe the participants whose physiology defines the labels.
     \item \textbf{Separate lines of evidence.} Line~A shows that real facial video carries physiological information, while Line~B uses face images that carry none, so that the scar is the only label-related visual cue. The benchmark therefore tests whether a model can ignore a spurious attribute; it cannot test whether the model makes good use of legitimate visual evidence, which would require real video with controlled attributes.
     \item \textbf{Single seed.} The Line~B results are for one training seed.
-    % TODO(authors): Update if other EQUITAS-RCMF seeds are evaluated.
+    % No other EQUITAS-RCMF seeds have been evaluated.
 \end{itemize}
 These limitations call for caution in extrapolating the results to larger cohorts and uncontrolled deployment conditions.

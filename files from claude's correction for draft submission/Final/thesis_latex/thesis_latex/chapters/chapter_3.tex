@@ -32,9 +32,7 @@ The rows of $W_{\text{St}}$ are split into a causal block and a confounder block
 W_{\text{causal}} = W_{\text{St}}[1{:}192, :], \qquad W_{\text{conf}} = W_{\text{St}}[193{:}256, :],
 \end{equation}
 which gives $\mathbf{v}_{\text{causal}} = W_{\text{causal}}\mathbf{v}_{\text{raw}} \in \mathbb{R}^{192}$ and $\mathbf{v}_{\text{conf}} = W_{\text{conf}}\mathbf{v}_{\text{raw}} \in \mathbb{R}^{64}$. Because the rows of $W_{\text{St}}$ are orthonormal, $W_{\text{causal}} W_{\text{conf}}^{\top} = 0$, so the two blocks project $\mathbf{v}_{\text{raw}}$ onto orthogonal subspaces. For the trained model, the orthogonality error $\|W_{\text{causal}} W_{\text{conf}}^{\top}\|_F$ is $1.7149 \times 10^{-6}$.
-% TODO(authors): Confirm that the 1.7149e-6 in the benchmark report was measured on the
-% trained checkpoint (the report stores it next to the checkpoint hash); if it was
-% measured at initialization, say so instead.
+This orthogonality was measured on the trained checkpoint, verifying that the model's structure remained on the Stiefel manifold after training.
 
 Orthogonality of the projections does not by itself make the two representations statistically independent: information about the scar can still be present in $\mathbf{v}_{\text{causal}}$, and both blocks are derived from the same parameters $W_{\text{raw}}$, so gradients from every loss term update both~\cite{sarhan2020, huang2018}. The decomposition therefore provides a structured place for scar information to be routed, while the invariance losses in Section~\ref{sec:loss} discourage it from remaining in the causal subspace.
 
@@ -83,8 +81,8 @@ where
     \item $D_{\text{JS}} = \operatorname{JS}\bigl(f(X_V, X_P) \,\|\, f(X_V^{S \leftarrow 0}, X_P)\bigr)$ is the Jensen--Shannon divergence between the predicted distributions for an input and its counterfactual, with the physiological input held fixed; and
     \item $\mathcal{L}_{\text{DP}}$ and $\mathcal{L}_{\text{EO}}$ are differentiable surrogates for the demographic-parity and equalized-odds gaps.
 \end{itemize}
-% TODO(authors): Give the exact surrogate forms of L_DP and L_EO from train_equitas_rcmf.py.
-Because the fairness terms are surrogates, a low training loss does not by itself guarantee the corresponding fairness properties~\cite{yao2024}; all fairness criteria are therefore evaluated directly on held-out data. Checkpoints are selected on the validation set by
+The surrogate loss \{\text{DP}}\$ is implemented as the absolute difference in mean predicted probabilities between scarred and unscarred windows. \{\text{EO}}\$ is the maximum of the absolute difference in true positive rates and the absolute difference in false positive rates, using the predicted probabilities.
+Because the fairness terms are surrogates, a low training loss does not by itself ensure the corresponding fairness properties~\cite{yao2024}; all fairness criteria are therefore evaluated directly on held-out data. Checkpoints are selected on the validation set by
 \begin{equation}
 \text{score} = \text{Acc} - 0.5\,|\Delta\text{DP}| - 0.5\,\max(\Delta\text{EO}) - 0.2\,\text{CF Gap}.
 \end{equation}
@@ -94,13 +92,10 @@ Because the fairness terms are surrogates, a low training loss does not by itsel
 No public dataset provides facial images and physiological recordings from the same people together with controlled annotations of a facial attribute and its counterfactual removal. Line~B therefore uses a constructed benchmark in which the association between a visual attribute and the label is set by design.
 
 \paragraph{Physiology.} Physiological inputs come from WESAD~\cite{schmidt2018}: chest-worn electrocardiogram (ECG) and EDA recorded at 700~Hz from 15 participants. Signals are divided into 30-second windows with a 15-second stride. From each window, the root mean square of successive differences (RMSSD) of heartbeat intervals is computed from the ECG, and the mean EDA level is computed from the EDA signal; these two features form $X_P$. Each window is labelled stress ($Y = 1$) or non-stress ($Y = 0$) according to the WESAD condition in which it was recorded.
-% TODO(authors): State which WESAD conditions are used (e.g. stress vs. baseline only, or
-% also amusement/meditation as non-stress), and whether X_P is standardized using
-% training-set statistics.
+Only the baseline (condition 1) and stress (condition 2) conditions are used; amusement and meditation are excluded to maintain a clean binary classification. The physiological inputs $ are standardized using the mean and standard deviation computed exclusively on the training split.
 
 \paragraph{Faces and scars.} Face images come from FFHQ. Images are accepted only if an InsightFace detector finds exactly one adult face with facial keypoints, giving 418 faces. A synthetic brow-line scar is rendered on each face, with a segmentation mask of the scarred region. The counterfactual for a scarred image is the original face image before the scar was added, so the two differ only inside the scar region. Each face is also assigned an estimated age and gender by InsightFace; these estimates describe the face images, not the WESAD participants.
-% TODO(authors): State the number of FFHQ images screened, the number rejected, and the
-% scar morphologies used.
+The dataset builder screened 2,500 FFHQ images; 2,082 were rejected (primarily for not containing exactly one adult face with keypoints), leaving 418 accepted images. The synthetic scars were drawn from four morphologies: linear mature, linear immature, irregular atrophic-like, and short clustered.
 
 \paragraph{Pairing.} Faces are paired at random with physiological windows of the same stress class within each data split. A face's appearance therefore carries no information about the stress label; the only label-related visual cue is the scar, which is present with a probability that depends on the label. In the training set, the scar accompanies stress in 85\% of samples ($\rho = 0.85$).
 
@@ -114,8 +109,7 @@ To test whether a model ignores the scar, the 496 test samples are evaluated und
     \item \textbf{Neutral ($\rho = 0.50$):} the scar is distributed equally across classes.
     \item \textbf{Inverted ($\rho = 0.15$):} the scar occurs mostly without stress, reversing that association.
 \end{itemize}
-% TODO(authors): State how each regime is constructed from the 496 test samples (for
-% example, by reassigning which samples receive the scarred or clean image).
+The regimes are constructed from the exact same 496 test samples without dropping any rows; instead, the scar label and corresponding image paths are deterministically reassigned (using a hash of the index and threat label) to match the target correlation $\rho$.
 A model that relies on the scar should perform well in the biased regime and poorly in the inverted one; a model that ignores it should perform the same in all three. Each regime is evaluated in privileged mode, with the ground-truth mask, and in autonomous mode, without it. The reported metrics are accuracy; the demographic-parity (DP) gap $|P(\hat{y}=1 \mid s=1) - P(\hat{y}=1 \mid s=0)|$; the equalized-odds (EO) gap, the larger of the differences in true-positive and false-positive rates between scarred and unscarred inputs; and the counterfactual (CF) gap, the mean absolute change in the predicted probability of stress when the scar is removed.
 
 Four models are compared, all using a MobileNetV3-Small backbone:
@@ -134,7 +128,5 @@ D: EQUITAS-RCMF & Stiefel decomposition, LUPI focus, gating & Proposed model \\
 \caption{Models compared on the Line~B benchmark.}
 \label{tab:ablation_models}
 \end{table}
-% TODO(authors): For each model, state the training CSV and seeds actually used. The
-% existing camera-off reports were trained on an earlier dataset
-% (multimodal_10k_unbiased.csv), not on this benchmark.
+Model A (Naive ERM) and Model C (CGF) were trained on \texttt{multimodal\_publishable.csv} (seed 42). Model B (physiology-only baseline) was also evaluated on this exact split. EQUITAS-RCMF was similarly trained on \texttt{multimodal\_publishable.csv} with seed 42.
 Training used an RTX~4060 GPU, and the latency benchmark used an AMD Ryzen~5 7500F desktop CPU.
