@@ -190,3 +190,6 @@ SAFA_*.md
 TEMP_*.md
 SCRATCH_*.md
 DEBUG_*.md
+
+outputs_snapshot_*/
+outputs_snapshot*

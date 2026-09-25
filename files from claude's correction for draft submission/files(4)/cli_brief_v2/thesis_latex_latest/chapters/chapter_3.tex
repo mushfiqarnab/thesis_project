@@ -34,7 +34,7 @@ which gives $\mathbf{v}_{\text{causal}} = W_{\text{causal}}\mathbf{v}_{\text{raw
 \begin{equation}
 W_{\text{causal}} W_{\text{conf}}^{\top} = 0,
 \end{equation}
-so the two blocks project $\mathbf{v}_{\text{raw}}$ onto orthogonal subspaces. The orthogonality error $\|W_{\text{causal}} W_{\text{conf}}^{\top}\|_F$ was measured as $1.7149 \times 10^{-6}$ at initialization.
+so the two blocks project $\mathbf{v}_{\text{raw}}$ onto orthogonal subspaces. The orthogonality error $\|W_{\text{causal}} W_{\text{conf}}^{\top}\|_F$ was measured as $1.7149 \times 10^{-6}$ at initialization; the value for the trained model will be reported in the final version, following recovery of the master checkpoint.
 
 Orthogonality of the projections does not by itself make the two representations statistically independent: information about the scar can still be present in $\mathbf{v}_{\text{causal}}$, and both blocks are derived from the same parameters $W_{\text{raw}}$, so gradients from all loss terms update both~\cite{sarhan2020, huang2018}. The decomposition therefore provides a structured place for scar information to be routed, while the invariance losses in Section~\ref{sec:loss} discourage it from remaining in the causal subspace.
 
@@ -42,6 +42,8 @@ Orthogonality of the projections does not by itself make the two representations
 The model estimates how strongly the visual features concentrate on the scar region. Following the learning-using-privileged-information paradigm~\cite{vapnik2009, vapnik2015}, this estimate uses the ground-truth scar mask only during training.
 
 \paragraph{Privileged mode (training).} With the scar mask $M$ available, the focus is the log-normalized ratio of feature-map energy inside the mask to the energy over the whole map:
+% TODO(authors): Define "activation energy" precisely (for example, the squared L2 norm
+% over channels at each spatial location of A), and state how M is resized to h x w.
 \begin{equation}
 \text{Focus} = \log\!\left(1 + \frac{\text{mean activation energy of } \mathbf{A} \text{ inside } M}{\text{mean activation energy of } \mathbf{A} + \epsilon}\right).
 \end{equation}
@@ -51,16 +53,23 @@ The model estimates how strongly the visual features concentrate on the scar reg
 \text{Focus}_{\text{auto}} = \sigma\bigl(\mathbf{w}_{\text{conf}}^{\top}\mathbf{v}_{\text{conf}} + b_{\text{conf}}\bigr).
 \end{equation}
 When the model is compiled for deployment in this mode, the mask input and the computations that depend on it are absent from the traced graph (Section~\ref{sec:deployment}).
-% TODO(authors): State how Focus_auto is trained to match the privileged Focus (for
-% example, a regression or distillation loss between the two), since the loss
-% functional below does not include such a term explicitly.
+% TODO(authors): Check the code and state (a) which loss trains Focus_auto (for example,
+% a regression or distillation loss to the privileged Focus), (b) whether the two are on
+% the same scale -- the privileged Focus = log(1 + r) is unbounded, while Focus_auto is a
+% sigmoid in (0, 1), so exp(-kappa * Focus) can be weaker at inference than in training
+% unless the target is rescaled -- and (c) which focus the gate uses during training.
+% Report this in Chapter 3; a train/inference mismatch here would need to be listed as a
+% limitation in Chapter 4.
 
 \section{Focus-Driven Attention Gate}
 The contribution of visual features is controlled by a gate that combines a learned cross-modal term with an exponential penalty on the focus:
 \begin{equation}
 G = \sigma\!\bigl(\operatorname{MLP}_{\text{cross}}([\mathbf{v}_{\text{causal}}; \mathbf{p}_{\text{emb}}])\bigr) \cdot \exp(-\kappa \cdot \text{Focus}),
 \end{equation}
-where $\kappa$ is a learnable temperature initialized at $1.5$ and clamped to $[0.1, 10.0]$. The factor $\exp(-\kappa \cdot \text{Focus})$ reduces the gate, and hence the weight given to visual features, when those features concentrate on the scar region.
+where $\kappa$ is a learnable temperature initialized at $1.5$ and clamped to $[0.1, 10.0]$.
+% TODO(authors): State whether G is a scalar or a 192-dimensional vector. The fusion
+% below uses element-wise multiplication, which implies a vector, while exp(-kappa*Focus)
+% is a scalar applied to every dimension. The factor $\exp(-\kappa \cdot \text{Focus})$ reduces the gate, and hence the weight given to visual features, when those features concentrate on the scar region.
 
 \section{Latent Fusion and Classification}
 The fused representation weights the visual and physiological embeddings by the gate,
@@ -84,7 +93,7 @@ where
     \item $\mathcal{L}_{\text{conf}}$ supervises the confounder branch to predict the scar label from $\mathbf{v}_{\text{conf}}$, so that scar information is routed into the confounder subspace;
     \item $\mathcal{L}_{\text{causal-inv}}$ encourages $\mathbf{v}_{\text{causal}}$ to be invariant to the presence of the scar;
     \item $\mathcal{L}_{\text{latent-inv}}$ encourages invariance of the fused representation;
-    \item $D_{\text{JS}} = \operatorname{JS}\bigl(f(X) \,\|\, f(X^{S \leftarrow 0})\bigr)$ is the Jensen--Shannon divergence between the predicted distributions for an input and its scar-removed counterfactual; and
+    \item $D_{\text{JS}} = \operatorname{JS}\bigl(f(X_V, X_P) \,\|\, f(X_V^{S \leftarrow 0}, X_P)\bigr)$ is the Jensen--Shannon divergence between the predicted distributions for an input and its scar-removed counterfactual, with the physiological input held fixed; and
     \item $\mathcal{L}_{\text{DP}}$ and $\mathcal{L}_{\text{EO}}$ are differentiable surrogates for the demographic-parity and equalized-odds gaps.
 \end{itemize}
 % TODO(authors): Give the exact definitions of L_causal-inv, L_latent-inv, L_DP and L_EO
@@ -97,16 +106,27 @@ Checkpoints are selected on the validation set by
 \end{equation}
 
 \section{Dataset and Experimental Protocol}
-The experiments use a pre-registered pilot cohort of eight participants (s1--s8) from UBFC-Phys~\cite{sabour2023}, a multimodal dataset recorded during a social-stress protocol, which provides both the facial video and the wrist-worn BVP and EDA signals used by the model. Each participant contributes three video clips: a rest task (T1), labelled non-stress ($Y = 0$), and speech (T2) and arithmetic (T3) tasks from the Trier Social Stress Test, labelled stress ($Y = 1$). The 24 clips yield 3,344 temporal windows, split into 2,344 training, 504 validation, and 496 test windows. A synthetic brow-line scar is added to the facial frames, with a segmentation mask recorded for each scarred sample; scar-removed counterfactuals are produced from the mask.
+The experiments use a pre-registered pilot cohort of eight participants (s1--s8) from UBFC-Phys~\cite{sabour2023}, a multimodal dataset recorded during a social-stress protocol, which provides both the facial video and the wrist-worn BVP and EDA signals used by the model. Each participant contributes three video clips: a rest task (T1), labelled non-stress ($Y = 0$), and speech (T2) and arithmetic (T3) tasks from the Trier Social Stress Test, labelled stress ($Y = 1$). The 24 clips yield 3,344 temporal windows, split into 2,344 training, 504 validation, and 496 test windows.
+% TODO(authors): State the window length and stride, which video frame represents each
+% window, and which BVP/EDA features make up X_P (e.g. mean IBI, SDNN, RMSSD, EDA
+% statistics).
+Faces are cropped using a width of $3.566 \times 1.5$ times the inter-ocular distance, a value chosen to reproduce the crop geometry used in the pre-registered extraction. A synthetic brow-line scar is added to the facial frames, with a segmentation mask recorded for each scarred sample, and each scarred frame is paired with a scar-free counterfactual.
+% TODO(authors): State how the counterfactual is produced. Because the scar is synthetic,
+% the ideal counterfactual is the original frame before the scar was added, which differs
+% from the scarred frame only inside the scar; if the code instead removes the scar from
+% the scarred frame (e.g. by blurring inside the mask), state that and its limitation.
 % TODO(authors): State whether the train/validation/test split is by participant or by
 % window. With eight participants, a window-level split places data from the same
 % person in every split and makes test accuracy optimistic.
 
-To test whether the model ignores the scar, the correlation $\rho$ between the scar and the stress label is varied at test time across three regimes:
+To test whether the model ignores the scar, the association $\rho$ between the scar and the stress label is varied at test time across three regimes:
+% TODO(authors): State the scar-label association in the training set. If training uses
+% rho = 0.85, keep the phrase "the association in the training data" below; if training
+% is balanced, change the Regime 1 and Regime 3 descriptions accordingly.
 \begin{itemize}
-    \item \textbf{Regime 1 (biased, $\rho = 0.85$):} the scar occurs mostly with stress, as in a biased training set.
+    \item \textbf{Regime 1 (biased, $\rho = 0.85$):} the scar occurs mostly with stress, matching the association in the training data.
     \item \textbf{Regime 2 (neutral, $\rho = 0.50$):} the scar is distributed equally across classes.
-    \item \textbf{Regime 3 (inverted, $\rho = 0.15$):} the scar occurs mostly without stress, reversing the training correlation.
+    \item \textbf{Regime 3 (inverted, $\rho = 0.15$):} the scar occurs mostly without stress, reversing that association.
 \end{itemize}
 Each regime is evaluated in both privileged mode, with the ground-truth mask, and autonomous mode, without it. This draft reports results for the neutral regime in autonomous mode (Chapter~4); results for the biased and inverted regimes will be reported in the final version.
 
@@ -126,7 +146,7 @@ D: EQUITAS-RCMF & Stiefel decomposition, LUPI focus, gating & Proposed model \\
 \caption{Models compared in the ablation study.}
 \label{tab:ablation_models}
 \end{table}
+% TODO(authors): Confirm in the code that Model C is named CGF (Causal Gated Fusion),
 % not "CGP"; the markdown used both.
 
 Training used an RTX~4060 GPU, and the edge benchmark used an x86-64 CPU.
-
