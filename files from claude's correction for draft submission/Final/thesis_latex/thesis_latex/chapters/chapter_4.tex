@@ -55,7 +55,7 @@ The neutral regime also corresponds to the setting analysed by Anthis and Veitch
 \paragraph{Model A (Naive ERM).} Table~\ref{tab:erm_regimes} reports the naive ERM model across the three regimes, showing severe degradation when the spurious correlation is inverted.
 
 
-\paragraph{Model B (camera-off).} A physiology-only model trained and evaluated on this benchmark's split will be reported in the final version. The existing camera-off result (72.15\% validation accuracy) was obtained on an earlier dataset and is not comparable with Table~\ref{tab:regimes}.
+\paragraph{Model B (camera-off).} A physiology-only model trained and evaluated on this benchmark's split reached a test accuracy of 69.31\% using the pre-registered K1 baseline (four features, evaluated leave-one-subject-out). A secondary exploratory test using only the two features and participant split seen by EQUITAS-RCMF reached a test accuracy of 56.65\% with logistic regression and 53.63\% with a one-layer MLP (majority-class accuracy 50.00\%). Because the face images carry no stress information, this is the reference against which EQUITAS-RCMF's accuracy of 0.617 should be judged.
 
 \paragraph{Model C (CGF).} A model trained with a counterfactual penalty but without the subspace decomposition reached 50.20\% accuracy, close to chance, with a CF gap of 0.0019. A counterfactual penalty alone therefore reduced the counterfactual gap but did not produce a useful classifier.
 This accuracy and CF gap were identical across all three regimes (biased, neutral, and inverted) in autonomous mode. The DP gap of 0.0040 and EO gap of 0.0346 specifically reflect its performance in the biased regime.
