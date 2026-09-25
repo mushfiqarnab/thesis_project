@@ -1,0 +1,39 @@
+{
+  "config": {
+    "detect_faces": true,
+    "max_images": 10,
+    "min_face_px": 64,
+    "min_height": 224,
+    "min_width": 224,
+    "run_id": "genuine_pilot"
+  },
+  "created_at_utc": "2026-09-20T20:43:43.891933+00:00",
+  "decode_counts": {
+    "ok": 10
+  },
+  "domain_status_counts": {
+    "FFHQ": {
+      "pending_review": 6,
+      "rejected": 4
+    }
+  },
+  "manifest_path": "C:\\Users\\USERAS\\thesis_project\\outputs\\source_audits\\source_audit_genuine_pilot.csv",
+  "manifest_sha256": "5b0c833fc0fa7632254eb3cbe28da2e464df1a9a3f8d2d1bff47bfb2efaabd84",
+  "metadata_files": {
+    "FFHQ": []
+  },
+  "reason_counts": {
+    "license_review_required": 10,
+    "no_face_detected": 4,
+    "provenance_review_required": 10
+  },
+  "rows_written": 10,
+  "source_roots": [
+    "C:\\Users\\USERAS\\thesis_project\\data\\raw\\FFHQ"
+  ],
+  "status_counts": {
+    "pending_review": 6,
+    "rejected": 4
+  },
+  "warning": "pending_review rows are not approved pristine sources and must not enter generation"
+}

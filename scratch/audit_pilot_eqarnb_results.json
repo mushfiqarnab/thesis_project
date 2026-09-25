@@ -1,0 +1,32 @@
+{
+    "Regime_EXT": {
+        "Optimal_Threshold": 0.7000000000000001,
+        "Max_J_Statistic": 0.20779220779220786,
+        "Accuracy": 0.5714285714285714,
+        "Precision": 0.7722772277227723,
+        "AUC-ROC": 0.5355877888345422,
+        "DP_Gap": 0.04306414848583523
+    },
+    "Regime_MOD": {
+        "Optimal_Threshold": 0.6900000000000001,
+        "Max_J_Statistic": 0.2597402597402598,
+        "Accuracy": 0.6060606060606061,
+        "Precision": 0.7889908256880734,
+        "AUC-ROC": 0.5920897284533648,
+        "DP_Gap": 0.15036748162591868
+    },
+    "Regime_RND": {
+        "Optimal_Threshold": 0.74,
+        "Max_J_Statistic": 0.23376623376623362,
+        "Accuracy": 0.5411255411255411,
+        "Precision": 0.8333333333333334,
+        "AUC-ROC": 0.5885478158205432,
+        "DP_Gap": 0.11876543209876544
+    },
+    "Causal_Invariance_Audit": {
+        "D_true (Semantic Scar)": 2.483526865641276e-09,
+        "D_sham (Chin Blur)": -8.692344029744467e-09,
+        "D_sham / D_true Ratio": -3.5000000000000004,
+        "Verdict": "PASS"
+    }
+}

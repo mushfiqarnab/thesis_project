@@ -1,0 +1,40 @@
+{
+  "config": {
+    "detect_faces": true,
+    "max_images": 3,
+    "min_face_px": 64,
+    "min_height": 224,
+    "min_width": 224,
+    "run_id": "dryrun_20260921"
+  },
+  "created_at_utc": "2026-09-20T19:46:13.680133+00:00",
+  "decode_counts": {
+    "ok": 6
+  },
+  "domain_status_counts": {
+    "CelebA": {
+      "rejected": 3
+    },
+    "FFHQ": {
+      "pending_review": 3
+    }
+  },
+  "manifest_path": "C:\\Users\\USERAS\\thesis_project\\outputs\\source_audits\\source_audit_dryrun_20260921.csv",
+  "manifest_sha256": "be6829792c7ced892a6cfa14088a74ba621635f8f3a64bd8a5868635da94a14d",
+  "reason_counts": {
+    "license_review_required": 6,
+    "no_face_detected": 1,
+    "provenance_review_required": 6,
+    "resolution_below_threshold": 3
+  },
+  "rows_written": 6,
+  "source_roots": [
+    "C:\\Users\\USERAS\\thesis_project\\data\\raw\\FFHQ",
+    "C:\\Users\\USERAS\\thesis_project\\data\\raw\\img_align_celeba"
+  ],
+  "status_counts": {
+    "pending_review": 3,
+    "rejected": 3
+  },
+  "warning": "pending_review rows are not approved pristine sources and must not enter generation"
+}

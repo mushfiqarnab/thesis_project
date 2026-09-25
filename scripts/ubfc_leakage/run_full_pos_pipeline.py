@@ -94,24 +94,53 @@ def bandpass_filter(data, fs_target, lowcut=0.7, highcut=4.0, order=4):
     b, a = signal.butter(order, [lowcut / nyq, highcut / nyq], btype='band')
     return signal.filtfilt(b, a, data)
 
-def max_cross_corr(x, y, max_lag_samples):
-    best_r = -1.0
+def point_to_point_corr(x, y):
+    if len(x) > 1 and np.std(x) > 1e-6 and np.std(y) > 1e-6:
+        r, _ = stats.pearsonr(x, y)
+        return r if not np.isnan(r) else 0.0
+    return 0.0
+
+    split_idx = int(len(x) * 0.3)
+    x_calib, y_calib = x[:split_idx], y[:split_idx]
+    
+    best_lag = 0
+    best_calib_r = -1.0
+    
+    # 1. Calibration: Find optimal physiological lag
     for lag in range(-max_lag_samples, max_lag_samples + 1):
         if lag < 0:
-            x_shifted = x[:lag]
-            y_shifted = y[-lag:]
+            xc_shift = x_calib[:lag]
+            yc_shift = y_calib[-lag:]
         elif lag > 0:
-            x_shifted = x[lag:]
-            y_shifted = y[:-lag]
+            xc_shift = x_calib[lag:]
+            yc_shift = y_calib[:-lag]
         else:
-            x_shifted = x
-            y_shifted = y
+            xc_shift = x_calib
+            yc_shift = y_calib
             
-        if len(x_shifted) > 1 and np.std(x_shifted) > 1e-6 and np.std(y_shifted) > 1e-6:
-            r, _ = stats.pearsonr(x_shifted, y_shifted)
-            if not np.isnan(r) and r > best_r:
-                best_r = r
-    return best_r
+        if len(xc_shift) > 1 and np.std(xc_shift) > 1e-6 and np.std(yc_shift) > 1e-6:
+            r, _ = stats.pearsonr(xc_shift, yc_shift)
+            if not np.isnan(r) and r > best_calib_r:
+                best_calib_r = r
+                best_lag = lag
+
+    # 2. Evaluation: Apply fixed lag to the test segment
+    x_eval, y_eval = x[split_idx:], y[split_idx:]
+    
+    if best_lag < 0:
+        xe_shift = x_eval[:best_lag]
+        ye_shift = y_eval[-best_lag:]
+    elif best_lag > 0:
+        xe_shift = x_eval[best_lag:]
+        ye_shift = y_eval[:-best_lag]
+    else:
+        xe_shift = x_eval
+        ye_shift = y_eval
+        
+    if len(xe_shift) > 1 and np.std(xe_shift) > 1e-6 and np.std(ye_shift) > 1e-6:
+        r, _ = stats.pearsonr(xe_shift, ye_shift)
+        return r if not np.isnan(r) else 0.0
+    return 0.0
 
 def main():
     dev_clips_data = []
@@ -157,13 +186,13 @@ def main():
         clip['bvp_filt'] = bandpass_filter(clip['bvp_30hz'], fs_target)
 
     for clip in dev_clips_data:
-        best_r = max_cross_corr(clip['rppg_filt'], clip['bvp_filt'], max_lag_samples)
+        best_r = point_to_point_corr(clip['rppg_filt'], clip['bvp_filt'])
         true_corrs.append(best_r)
         
     for c1, c2 in itertools.permutations(dev_clips_data, 2):
         if c1['subject'] == c2['subject']:
             continue
-        best_r_null = max_cross_corr(c1['rppg_filt'], c2['bvp_filt'], max_lag_samples)
+        best_r_null = point_to_point_corr(c1['rppg_filt'], c2['bvp_filt'])
         null_corrs.append(best_r_null)
         
     pooled_true_mean = np.mean(true_corrs)

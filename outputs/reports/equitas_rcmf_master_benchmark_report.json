@@ -1,0 +1,114 @@
+{
+  "model": "EQUITAS-RCMF (Master Model)",
+  "d_causal": 192,
+  "d_confounder": 64,
+  "best_score": 0.5191473178666459,
+  "autonomous_evaluations": {
+    "Biased In-Distribution (rho=0.85)": {
+      "acc": 0.6169354838709677,
+      "dp_abs": 0.16129032258064513,
+      "eo_max_gap": 0.05302933265018572,
+      "cf_gap": 0.0006359847142331062,
+      "latent_diff": 4.591010926355187e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.8467741935483871
+    },
+    "Unbiased Neutral (rho=0.50)": {
+      "acc": 0.6169354838709677,
+      "dp_abs": 0.048387096774193505,
+      "eo_max_gap": 0.06451612903225801,
+      "cf_gap": 0.0006359847142331062,
+      "latent_diff": 4.591010926355187e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.8467741935483871
+    },
+    "Inverted Adversarial (rho=0.15)": {
+      "acc": 0.6169354838709677,
+      "dp_abs": 0.17741935483870974,
+      "eo_max_gap": 0.042013577558601245,
+      "cf_gap": 0.0006359847142331062,
+      "latent_diff": 4.591010926355187e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.8467741935483871
+    }
+  },
+  "privileged_evaluations": {
+    "Biased In-Distribution (rho=0.85)": {
+      "acc": 0.625,
+      "dp_abs": 0.16935483870967738,
+      "eo_max_gap": 0.02600230562315875,
+      "cf_gap": 0.002403868016816916,
+      "latent_diff": 0.0003168038991486443,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.842741935483871
+    },
+    "Unbiased Neutral (rho=0.50)": {
+      "acc": 0.6270161290322581,
+      "dp_abs": 0.06048387096774199,
+      "eo_max_gap": 0.09677419354838712,
+      "cf_gap": 0.002403868016816916,
+      "latent_diff": 0.0003168038991486443,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.842741935483871
+    },
+    "Inverted Adversarial (rho=0.15)": {
+      "acc": 0.6270161290322581,
+      "dp_abs": 0.189516129032258,
+      "eo_max_gap": 0.03868323299602916,
+      "cf_gap": 0.002403868016816916,
+      "latent_diff": 0.0003168038991486443,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.842741935483871
+    }
+  },
+  "demographic_evaluations": {
+    "Gender_Female": {
+      "acc": 0.625,
+      "dp_abs": 0.040386417240153794,
+      "eo_max_gap": 0.05734302023871307,
+      "cf_gap": 0.0007201828993856907,
+      "latent_diff": 4.787505531567149e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.8352272727272727
+    },
+    "Gender_Male": {
+      "acc": 0.5972222222222222,
+      "dp_abs": 0.058926148478387286,
+      "eo_max_gap": 0.12123552123552128,
+      "cf_gap": 0.0004301669283045663,
+      "latent_diff": 4.1106904771166024e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.875
+    },
+    "Age_18_30": {
+      "acc": 0.6026785714285714,
+      "dp_abs": 0.01866028708133971,
+      "eo_max_gap": 0.058054226475279136,
+      "cf_gap": 0.0006728065865380424,
+      "latent_diff": 6.638728960492049e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.8303571428571429
+    },
+    "Age_30_45": {
+      "acc": 0.6428571428571429,
+      "dp_abs": 0.003409090909090917,
+      "eo_max_gap": 0.06210465784933872,
+      "cf_gap": 0.0005924408989293235,
+      "latent_diff": 2.8504335898019018e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.8571428571428571
+    },
+    "Age_45_65": {
+      "acc": 0.6057692307692307,
+      "dp_abs": 0.19185185185185183,
+      "eo_max_gap": 0.23076923076923084,
+      "cf_gap": 0.0006271298401630842,
+      "latent_diff": 2.9945642521712354e-05,
+      "majority_baseline": 0.5,
+      "minority_recall": 0.8653846153846154
+    }
+  },
+  "stiefel_orthogonality": 1.7149268387584016e-06,
+  "checkpoint_path": "C:\\Users\\USERAS\\thesis_project\\outputs\\checkpoints\\equitas_rcmf_master_best.pt",
+  "checkpoint_hash": "4c2dcad470271ad7109ec302a2e4d31eac429cc054ba3d243ce0d39266b3bc5b"
+}

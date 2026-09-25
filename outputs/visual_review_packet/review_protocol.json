@@ -1,0 +1,16 @@
+{
+  "scale": "1-5 ordinal; 1=very poor, 5=very plausible",
+  "blinding": "Raters receive only images/ratings_template.csv. Do not provide answer_key_private.csv.",
+  "dimensions": [
+    "anatomical_plausibility",
+    "boundary_naturalness",
+    "pigmentation_or_vascular_naturalness",
+    "texture_and_maturation_consistency",
+    "unintended_change_free",
+    "overall_visual_plausibility"
+  ],
+  "interpretation": "This review measures visual plausibility, not clinical diagnosis or biological validity.",
+  "seed": 42,
+  "source_dataset": "data\\publishable_scar_strict_pilot2\\multimodal_publishable.csv",
+  "image_count": 16
+}

@@ -1,19 +1,19 @@
 
 === Per-clip true-match r values ===
-  s1 T1: r = 0.0477
-  s1 T2: r = 0.0912
-  s1 T3: r = 0.1799
-  s2 T1: r = 0.0471
-  s2 T2: r = 0.0987
-  s2 T3: r = 0.0624
-  s3 T1: r = 0.0609
-  s3 T2: r = 0.0249
-  s3 T3: r = 0.0590
-  s4 T1: r = 0.0741
-  s4 T2: r = 0.0579  <-- EXCLUDED IN RETEST
-  s4 T3: r = 0.0989  <-- EXCLUDED IN RETEST
+  s1 T1: r = 0.0519
+  s1 T2: r = 0.0740
+  s1 T3: r = 0.2026
+  s2 T1: r = 0.0427
+  s2 T2: r = 0.1163
+  s2 T3: r = 0.0635
+  s3 T1: r = 0.0495
+  s3 T2: r = 0.0310
+  s3 T3: r = 0.0632
+  s4 T1: r = 0.1067
+  s4 T2: r = 0.0792  <-- EXCLUDED IN RETEST
+  s4 T3: r = 0.0815  <-- EXCLUDED IN RETEST
 
 === RESULTS ===
-ORIGINAL (N=12): U=1029.0, p=0.0437
-EXCLUDING s4 T2/T3 (N=10): U=832.0, p=0.0857
+ORIGINAL (N=12): U=1050.0, p=0.0314
+EXCLUDING s4 T2/T3 (N=10): U=847.0, p=0.0685
 Did removing s4 T2/T3 flip the result above p=0.05? YES

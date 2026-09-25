@@ -1,0 +1,14 @@
+{
+  "design": "camera_off_baseline_mobilenet_seed2026",
+  "camera_off": true,
+  "seed": 2026,
+  "vision_backbone": "mobilenet_v3_small",
+  "fusion": "concat",
+  "epochs": 250,
+  "batch_size": 32,
+  "lr": 0.0001,
+  "best_val_acc": 0.688622754491018,
+  "params_trainable": 1013666,
+  "checkpoint": "C:\\Users\\USERAS\\thesis_project\\outputs\\checkpoints\\camera_off_baseline_mobilenet_seed2026_mobilenet_v3_small_concat_best.pt",
+  "csv_path": "C:\\Users\\USERAS\\thesis_project\\data\\csv\\multimodal_10k_unbiased.csv"
+}

@@ -1,0 +1,13 @@
+Seed,Model,Metric,Value
+42,Model C (CGP Pruned Edge),Accuracy,0.504
+42,Model C (CGP Pruned Edge),DP Gap,0.0565
+42,Model C (CGP Pruned Edge),CF Gap,0.0008
+42,Model D (EQUITAS-RCMF),Accuracy (Female),0.6392
+42,Model D (EQUITAS-RCMF),DP Gap (Female),0.0119
+42,Model D (EQUITAS-RCMF),CF Gap (Female),0.0006
+100,Model C (CGP Pruned Edge),Accuracy,0.504
+100,Model C (CGP Pruned Edge),DP Gap,0.0565
+100,Model C (CGP Pruned Edge),CF Gap,0.0048
+100,Model D (EQUITAS-RCMF),Accuracy (Female),0.5368999999999999
+100,Model D (EQUITAS-RCMF),DP Gap (Female),0.0131
+100,Model D (EQUITAS-RCMF),CF Gap (Female),0.0006

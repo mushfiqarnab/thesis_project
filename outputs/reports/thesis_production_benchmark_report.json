@@ -1,0 +1,157 @@
+{
+  "dataset": "data/publishable_scar_production/multimodal_publishable.csv",
+  "test_samples": 496,
+  "regime_evaluations": {
+    "Biased In-Distribution (rho=0.85)": {
+      "baseline": {
+        "acc": 0.7862903225806451,
+        "dp_abs": 0.7258064516129032,
+        "eo_max_gap": 0.701806071474318,
+        "cf_gap": 0.5141107613040555,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.7862903225806451
+      },
+      "cgf_fair": {
+        "acc": 0.5020161290322581,
+        "dp_abs": 0.0040322580645161255,
+        "eo_max_gap": 0.034584347380555935,
+        "cf_gap": 0.0018512665203982784,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9475806451612904
+      }
+    },
+    "Unbiased Neutral (rho=0.50)": {
+      "baseline": {
+        "acc": 0.532258064516129,
+        "dp_abs": 0.7096774193548387,
+        "eo_max_gap": 0.7661290322580645,
+        "cf_gap": 0.5141107613040555,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.5201612903225806
+      },
+      "cgf_fair": {
+        "acc": 0.5020161290322581,
+        "dp_abs": 0.02016129032258074,
+        "eo_max_gap": 0.048387096774193616,
+        "cf_gap": 0.0018512665203982784,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9475806451612904
+      }
+    },
+    "Inverted Adversarial (rho=0.15)": {
+      "baseline": {
+        "acc": 0.2842741935483871,
+        "dp_abs": 0.6733870967741936,
+        "eo_max_gap": 0.8037658511592161,
+        "cf_gap": 0.5141107613040555,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.2620967741935484
+      },
+      "cgf_fair": {
+        "acc": 0.5020161290322581,
+        "dp_abs": 0.012096774193548376,
+        "eo_max_gap": 0.06161137440758291,
+        "cf_gap": 0.0018512665203982784,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9475806451612904
+      }
+    }
+  },
+  "demographic_evaluations": {
+    "Gender_Female": {
+      "baseline": {
+        "acc": 0.5369318181818182,
+        "dp_abs": 0.7364867047914445,
+        "eo_max_gap": 0.7732919254658386,
+        "cf_gap": 0.5332186276262457,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.48863636363636365
+      },
+      "cgf_fair": {
+        "acc": 0.5056818181818182,
+        "dp_abs": 0.019191625472521068,
+        "eo_max_gap": 0.04391062895518527,
+        "cf_gap": 0.0015815649266270075,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9431818181818182
+      },
+      "count": 352
+    },
+    "Gender_Male": {
+      "baseline": {
+        "acc": 0.5208333333333334,
+        "dp_abs": 0.6313238999806163,
+        "eo_max_gap": 0.7375,
+        "cf_gap": 0.4673522777027554,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.5972222222222222
+      },
+      "cgf_fair": {
+        "acc": 0.4930555555555556,
+        "dp_abs": 0.01880209342895911,
+        "eo_max_gap": 0.05714285714285716,
+        "cf_gap": 0.0025162376049492094,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9583333333333334
+      },
+      "count": 144
+    },
+    "Age_18_30": {
+      "baseline": {
+        "acc": 0.5223214285714286,
+        "dp_abs": 0.7672008291477318,
+        "eo_max_gap": 0.8039654621042533,
+        "cf_gap": 0.5792654497282845,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.48214285714285715
+      },
+      "cgf_fair": {
+        "acc": 0.4955357142857143,
+        "dp_abs": 0.043609981663079056,
+        "eo_max_gap": 0.04700991365526064,
+        "cf_gap": 0.0018828282398836954,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9375
+      },
+      "count": 224
+    },
+    "Age_30_45": {
+      "baseline": {
+        "acc": 0.5595238095238095,
+        "dp_abs": 0.521590909090909,
+        "eo_max_gap": 0.6290971822886717,
+        "cf_gap": 0.352644403775533,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.5952380952380952
+      },
+      "cgf_fair": {
+        "acc": 0.5059523809523809,
+        "dp_abs": 0.018181818181818188,
+        "eo_max_gap": 0.0918888258650028,
+        "cf_gap": 0.001822579385978835,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9404761904761905
+      },
+      "count": 168
+    },
+    "Age_45_65": {
+      "baseline": {
+        "acc": 0.5096153846153846,
+        "dp_abs": 0.8842300556586271,
+        "eo_max_gap": 0.886904761904762,
+        "cf_gap": 0.634554386138916,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.4807692307692308
+      },
+      "cgf_fair": {
+        "acc": 0.5096153846153846,
+        "dp_abs": 0.022634508348794102,
+        "eo_max_gap": 0.04166666666666663,
+        "cf_gap": 0.0018408906001311082,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.9807692307692307
+      },
+      "count": 104
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+    "Regime_EXT": {
+        "Gate_S1 (Mean +/- Std)": "0.8913 +/- 0.0077",
+        "Gate_S0 (Mean +/- Std)": "0.8843 +/- 0.0071",
+        "Status": "ACTIVE"
+    },
+    "Regime_MOD": {
+        "Gate_S1 (Mean +/- Std)": "0.9847 +/- 0.0002",
+        "Gate_S0 (Mean +/- Std)": "0.9848 +/- 0.0001",
+        "Status": "ACTIVE"
+    },
+    "Regime_RND": {
+        "Gate_S1 (Mean +/- Std)": "0.7420 +/- 0.0046",
+        "Gate_S0 (Mean +/- Std)": "0.7494 +/- 0.0035",
+        "Status": "ACTIVE"
+    }
+}

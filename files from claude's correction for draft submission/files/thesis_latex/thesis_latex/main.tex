@@ -1,0 +1,124 @@
+\documentclass[Times,12pt,oneside,openany,print,index]{report}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\pagestyle{plain}
+
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{array}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{threeparttable}
+
+\sisetup{
+  detect-weight=true,
+  detect-family=true
+}
+
+\usepackage[normalem]{ulem}
+
+\setlength{\parindent}{0em}
+
+\usepackage{nomencl}
+\renewcommand{\nompreamble}{The next list describes several symbols \& abbreviation that will be later used within the body of the document}
+\makenomenclature
+
+\usepackage[backend=biber,style=ieee,sorting=ynt]{biblatex}
+\addbibresource{bibliography/references.bib}
+
+\let\cleardoublepage=\clearpage
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=black,
+    citecolor=black,
+}
+\urlstyle{same}
+
+\begin{document}
+
+\thispagestyle{empty}
+\input{core/titlepage}
+\cleardoublepage
+
+\pagenumbering{roman}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Declaration}
+\input{core/declaration}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Approval}
+\input{core/approval}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+\input{core/abstract}
+
+\renewcommand{\contentsname}{Table of Contents}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Nomenclature}
+\printnomenclature
+
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+\input{chapters/chapter_1}
+
+\chapter{Literature Review}
+\input{chapters/chapter_2}
+
+\chapter{Design and Methodology}
+\input{chapters/chapter_3}
+
+\chapter{Results and Discussion}
+\input{chapters/chapter_4}
+
+\chapter{Ethical and Legal Considerations}
+\input{chapters/chapter_5}
+
+\chapter{Conclusion}
+\input{chapters/chapter_6}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\printbibliography
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Appendix A: Repository Structure and Reproducibility}
+\input{appendix/appendix_a}
+
+\end{document}

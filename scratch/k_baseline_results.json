@@ -1,0 +1,14 @@
+{
+    "K1_Physiology_Baseline": {
+        "Mean_Accuracy": 0.6565656565656566,
+        "Std_Accuracy": 0.0142849854785161,
+        "Mean_AUC": 0.6075910621365167,
+        "Std_AUC": 0.133120858492546
+    },
+    "K2_Vision_Baseline": {
+        "Mean_Accuracy": 0.6666666666666666,
+        "Std_Accuracy": 0.0,
+        "Mean_AUC": 0.5,
+        "Std_AUC": 0.0
+    }
+}

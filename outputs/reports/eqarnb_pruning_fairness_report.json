@@ -1,0 +1,143 @@
+{
+  "unpruned": {
+    "sparsity_ratio": 0.0,
+    "regimes": {
+      "Biased In-Distribution (rho=0.85)": {
+        "acc": 0.6330645161290323,
+        "dp_abs": 0.17741935483870963,
+        "eo_max_gap": 0.0471371845779428,
+        "cf_gap": 0.0024111450709883245,
+        "latent_diff": 0.0004459223785107174,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8467741935483871
+      },
+      "Unbiased Neutral (rho=0.50)": {
+        "acc": 0.6330645161290323,
+        "dp_abs": 0.016129032258064502,
+        "eo_max_gap": 0.032258064516129004,
+        "cf_gap": 0.0024111450709883245,
+        "latent_diff": 0.0004459223785107174,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8467741935483871
+      },
+      "Inverted Adversarial (rho=0.15)": {
+        "acc": 0.6350806451612904,
+        "dp_abs": 0.1733870967741935,
+        "eo_max_gap": 0.08479569617010385,
+        "cf_gap": 0.0024111450709883245,
+        "latent_diff": 0.0004459223785107174,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8467741935483871
+      }
+    },
+    "orthogonality": 1.7446816400479292e-06
+  },
+  "pruned_15pct": {
+    "requested_amount": 0.15,
+    "actual_sparsity": 0.008415280127781739,
+    "total_params": 1140069,
+    "sparse_params": 9594,
+    "orthogonality": 1.7446816400479292e-06,
+    "regimes": {
+      "Biased In-Distribution (rho=0.85)": {
+        "acc": 0.6370967741935484,
+        "dp_abs": 0.18548387096774188,
+        "eo_max_gap": 0.037658511592160826,
+        "cf_gap": 0.0024296386738217645,
+        "latent_diff": 0.0004344178080153201,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8467741935483871
+      },
+      "Unbiased Neutral (rho=0.50)": {
+        "acc": 0.6370967741935484,
+        "dp_abs": 0.008064516129032251,
+        "eo_max_gap": 0.016129032258064502,
+        "cf_gap": 0.0024296386738217645,
+        "latent_diff": 0.0004344178080153201,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8467741935483871
+      },
+      "Inverted Adversarial (rho=0.15)": {
+        "acc": 0.6370967741935484,
+        "dp_abs": 0.17741935483870963,
+        "eo_max_gap": 0.08479569617010385,
+        "cf_gap": 0.0024296386738217645,
+        "latent_diff": 0.0004344178080153201,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8467741935483871
+      }
+    }
+  },
+  "pruned_30pct": {
+    "requested_amount": 0.3,
+    "actual_sparsity": 0.016832314535348298,
+    "total_params": 1140069,
+    "sparse_params": 19190,
+    "orthogonality": 1.7446816400479292e-06,
+    "regimes": {
+      "Biased In-Distribution (rho=0.85)": {
+        "acc": 0.6290322580645161,
+        "dp_abs": 0.17741935483870963,
+        "eo_max_gap": 0.037658511592160826,
+        "cf_gap": 0.0025290547149075617,
+        "latent_diff": 0.0004461303169298316,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8306451612903226
+      },
+      "Unbiased Neutral (rho=0.50)": {
+        "acc": 0.6290322580645161,
+        "dp_abs": 0.008064516129032251,
+        "eo_max_gap": 0.016129032258064502,
+        "cf_gap": 0.0025290547149075617,
+        "latent_diff": 0.0004461303169298316,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8306451612903226
+      },
+      "Inverted Adversarial (rho=0.15)": {
+        "acc": 0.6290322580645161,
+        "dp_abs": 0.16935483870967738,
+        "eo_max_gap": 0.07198667862174968,
+        "cf_gap": 0.0025290547149075617,
+        "latent_diff": 0.0004461303169298316,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8306451612903226
+      }
+    }
+  },
+  "pruned_45pct": {
+    "requested_amount": 0.45,
+    "actual_sparsity": 0.02524934894291486,
+    "total_params": 1140069,
+    "sparse_params": 28786,
+    "orthogonality": 1.7446816400479292e-06,
+    "regimes": {
+      "Biased In-Distribution (rho=0.85)": {
+        "acc": 0.6370967741935484,
+        "dp_abs": 0.17741935483870974,
+        "eo_max_gap": 0.039067503522479896,
+        "cf_gap": 0.0021763957976814238,
+        "latent_diff": 0.0003699895835691883,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.875
+      },
+      "Unbiased Neutral (rho=0.50)": {
+        "acc": 0.6370967741935484,
+        "dp_abs": 0.032258064516129004,
+        "eo_max_gap": 0.040322580645161255,
+        "cf_gap": 0.0021763957976814238,
+        "latent_diff": 0.0003699895835691883,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.875
+      },
+      "Inverted Adversarial (rho=0.15)": {
+        "acc": 0.6411290322580645,
+        "dp_abs": 0.17741935483870974,
+        "eo_max_gap": 0.0739080312540028,
+        "cf_gap": 0.0021763957976814238,
+        "latent_diff": 0.0003699895835691883,
+        "majority_baseline": 0.5,
+        "minority_recall": 0.8830645161290323
+      }
+    }
+  }
+}

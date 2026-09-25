@@ -1,0 +1,57 @@
+subject,gender,condition,bvp_s_T1,eda_s_T1,vid_bytes_T1,bvp_s_T2,eda_s_T2,vid_bytes_T2,bvp_s_T3,eda_s_T3,vid_bytes_T3,issues
+s1,m,test,180.0,180.0,4954673952,180.0,180.0,4915308442,180.0,180.0,5001552262,
+s2,m,ctrl,180.0,180.0,4758969466,180.0,180.0,4792109906,180.0,180.0,4828010278,
+s3,f,ctrl,180.0,180.0,5112529772,180.0,180.0,5140265610,180.0,180.0,5017134180,
+s4,f,test,180.0,180.0,5165362266,180.0,180.0,5174332222,180.0,180.0,5288346362,
+s5,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s6,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s7,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s8,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s9,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s10,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s11,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s12,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s13,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s14,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s15,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s16,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s17,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s18,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s19,m,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s20,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s21,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s22,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s23,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s24,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s25,m,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s26,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s27,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s28,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s29,m,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s30,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s31,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s32,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s33,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s34,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s35,m,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s36,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s37,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s38,m,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s39,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s40,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s41,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s42,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s43,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s44,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s45,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s46,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s47,m,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s48,m,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s49,m,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s50,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s51,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s52,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s53,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s54,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s55,f,test,180.0,180.0,,180.0,180.0,,180.0,180.0,,missing vid T1; missing vid T2; missing vid T3
+s56,f,ctrl,180.0,180.0,,180.0,180.0,,180.0,180.0,,anxiety file selfReportedAnx_s55.csv found in container s56 (id mismatch - likely mislabeled); missing vid T1; missing vid T2; missing vid T3

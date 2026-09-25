@@ -1,0 +1,41 @@
+{
+  "config": {
+    "detect_faces": true,
+    "max_images": 200,
+    "min_face_px": 64,
+    "min_height": 224,
+    "min_width": 224,
+    "run_id": "adult_curation_pool"
+  },
+  "created_at_utc": "2026-09-20T21:32:19.403873+00:00",
+  "decode_counts": {
+    "ok": 200
+  },
+  "domain_status_counts": {
+    "FFHQ": {
+      "pending_review": 68,
+      "rejected": 132
+    }
+  },
+  "manifest_path": "C:\\Users\\USERAS\\thesis_project\\outputs\\source_audits\\source_audit_adult_curation_pool.csv",
+  "manifest_sha256": "31ee2a00687466011d496c098deac486c88888abe49c3b6a7cfe71009dd0ce37",
+  "metadata_files": {
+    "FFHQ": []
+  },
+  "reason_counts": {
+    "face_below_size_threshold": 5,
+    "face_count_not_one": 2,
+    "license_review_required": 200,
+    "no_face_detected": 125,
+    "provenance_review_required": 200
+  },
+  "rows_written": 200,
+  "source_roots": [
+    "C:\\Users\\USERAS\\thesis_project\\data\\raw\\FFHQ"
+  ],
+  "status_counts": {
+    "pending_review": 68,
+    "rejected": 132
+  },
+  "warning": "pending_review rows are not approved pristine sources and must not enter generation"
+}

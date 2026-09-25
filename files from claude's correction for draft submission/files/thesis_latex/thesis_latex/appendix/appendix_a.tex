@@ -1,0 +1,60 @@
+\chapter*{Appendix A: Repository Structure and Reproducibility}
+
+\section*{A.1 Pre-Registered Dataset}
+\begin{itemize}
+    \item \textbf{File:} \texttt{data/publishable\_scar\_production/multimodal\_publishable.csv}
+    \item \textbf{SHA-256:} \texttt{2035777f957fa4c5cc830989f4fe40fb9190589f17c567cb29a3ef0e6b2acae2}, verified on 23 September 2026.
+    \item \textbf{Cohort:} eight participants with video (s1--s8), 24 clips (three tasks per participant).
+    % TODO(authors): The markdown also lists "N=15 WESAD physiology subjects" here.
+    % Keep this only if WESAD data are actually used, and describe how in Chapter 3.
+    \item \textbf{Windows:} 3,344 in total; 2,344 for training, 504 for validation, and 496 for testing.
+    \item \textbf{Labels:} T1 (rest) $\rightarrow Y = 0$ (non-stress); T2 and T3 (TSST speech and arithmetic) $\rightarrow Y = 1$ (stress).
+\end{itemize}
+
+\section*{A.2 Core Source Files}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{File} & \textbf{Purpose} \\
+\midrule
+\texttt{src/models/equitas\_rcmf.py} & EQUITAS-RCMF architecture \\
+\texttt{src/train\_equitas\_rcmf.py} & Training loop and loss functional \\
+\texttt{src/train\_ultimate\_sweep.py} & Orchestration of the 20-run sweep \\
+\texttt{src/benchmark\_edge\_latency.py} & CPU latency benchmark \\
+\texttt{src/generate\_xai\_proof.py} & Integrated Gradients attributions \\
+\texttt{src/evaluation/sham\_edit\_probe.py} & Perturbation-based sanity check \\
+\texttt{src/deployment/export\_edge\_graph.py} & JIT compilation for deployment \\
+\bottomrule
+\end{tabular}
+\caption{Core source files.}
+\end{table}
+
+\section*{A.3 Key Outputs}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{File} & \textbf{Content} \\
+\midrule
+\texttt{outputs/reports/XAI\_Causal\_Blindness\_Proof.png} & Integrated Gradients figure \\
+\texttt{outputs/deployment/equitas\_rcmf\_edge\_compiled.pt} & Compiled deployment model \\
+\texttt{outputs/interim\_secured\_metrics.csv} & Metrics for seeds 42 and 100 \\
+\texttt{outputs/reports/equitas\_rcmf\_master\_benchmark\_report.json} & Demographic audit \\
+\texttt{outputs/reports/equitas\_rcmf\_edge\_benchmark\_report.json} & Latency benchmark \\
+\bottomrule
+\end{tabular}
+\caption{Key output files.}
+\end{table}
+
+\paragraph{Master checkpoint.} The master checkpoint (\texttt{equitas\_rcmf\_master\_best.pt}, SHA-256 \texttt{4c2dcad4\ldots b3bc5b}) was present when the benchmark reports were generated on 21 September 2026 but could not be located when this document was prepared. The reported metrics come from the committed output files generated from it; recovery of the checkpoint for full reproducibility is in progress.
+
+\section*{A.4 Training Configuration}
+\begin{itemize}
+    \item Seeds: 42, 100, 2026, 777, and 888; 250 epochs per run; batch size 32; learning rate $10^{-4}$.
+    \item Backbone: MobileNetV3-Small for all models.
+    \item Hardware: RTX~4060 GPU for training; x86-64 CPU for the latency benchmark.
+\end{itemize}
+
+\section*{A.5 Orthogonality Verification}
+The orthogonality error $\|W_{\text{causal}} W_{\text{conf}}^{\top}\|_F$ can be computed for any checkpoint with \texttt{model.stiefel\_decomp.verify\_mutual\_orthogonality()}. Its measured value at initialization was $1.7149 \times 10^{-6}$.

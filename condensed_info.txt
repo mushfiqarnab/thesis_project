@@ -1,0 +1,2335 @@
+--- FILE: 00_FINAL_STATUS_READY_FOR_ANALYSIS.md ---
+First lines: # 🎯 COMPLETE THESIS PROJECT STATUS (February 27, 2026) | ## Executive Summary | Your thesis project is **production-ready** with: | - ✅ **3 improved architectures** (Design A, B, C) with academic justification | - ✅ **TIER 1-3 XAI enhancements** (5 new classes, 719 new lines, 45+ test assertions)
+--- FILE: 00_PHASE3_GW_CD_MASTER_MANIFEST.md ---
+First lines: # PHASE 3: MASTER ARCHITECTURE MANIFEST | **Status:** 100% EXECUTED, AUDITED, AND LOCKED FOR PRODUCTION | **Framework:** Grassmannian-Wasserstein Causal Disentanglement ($\mathcal{GW}$-CD) | ## The Standard of Execution | This repository was subjected to a microscopic, uncompromising engineering audit. Every line of legacy, statistically vulnerable code was purged. The resulting architecture represents a verifiable, unprecedented innovation in the field of Causal Affective Computing.
+--- FILE: analysis_with_tier3.py ---
+Docstring: XAI Data Analysis Script - TIER 3 Enhanced Analysis
+
+This script demonstrates how to use the improved XAI module with TIER 3 enhancements:
+- GradientFlowAnalyzer: Monitor gradient health during IG com
+Imports: ['sys', 'pathlib.Path', 'argparse', 'json', 'torch']
+Classes: ['TierIIIAnalyzer']
+Functions: ['create_dummy_dataloader', 'main']
+
+--- FILE: analyze_dump.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: append_amendment.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: audit.sh ---
+First lines: #!/bin/bash | echo '========== PHASE 0A ==========' | find . -type f -name '*.py' | sort | echo '========== PHASE 0B ==========' | find . -type f \( -name '*.csv' -o -name '*.mp4' -o -name '*.avi' -o -name '*.pth' \) | sort
+--- FILE: audit2.sh ---
+First lines: #!/bin/bash | echo '========== PHASE 0A ==========' | find . -type f -name '*.py' | grep -v 'site-packages' | sort | echo '========== PHASE 0B ==========' | find . -type f \( -name '*.csv' -o -name '*.mp4' -o -name '*.avi' -o -name '*.pth' \) | grep -v 'site-packages' | sort
+--- FILE: commercial_diffusion_engine_worldclass.py ---
+Docstring: World-class research pipeline for identity-preserving facial scar augmentation.
+
+Design basis:
+- SDXL inpainting for high-resolution local editing.
+- Exact pixel compositing outside a context mask: th
+Imports: ['__future__.annotations', 'argparse', 'hashlib', 'json', 'logging']
+Classes: ['GenerationConfig', 'FaceEngine', 'LPIPSEngine', 'OrganicMaskGenerator', 'WorldClassDiffusionEngine']
+Functions: ['configure_logging', 'sha256_file', 'stable_int_seed', 'clamp01', 'cosine_similarity', 'normalized_landmark_rmse', 'masked_mae', 'masked_max_abs', 'roi_replaced', 'ssim_outside_region']
+
+--- FILE: COMPREHENSIVE_CODEBASE_DIAGNOSTIC.py ---
+Docstring: COMPREHENSIVE CODEBASE DIAGNOSTIC SCRIPT
+
+This script systematically audits the entire codebase for:
+1. Device handling issues
+2. Tensor shape/dtype mismatches
+3. Numerical stability problems
+4. Data 
+Imports: ['sys', 'pathlib.Path', 'inspect', 'torch', 'torch.nn']
+Classes: ['DiagnosticReport']
+Functions: ['check_models_py', 'check_dataset_fair_py', 'check_train_cgf_fair_py', 'check_prune_quantize', 'run_xai_readiness_checks', 'main']
+
+--- FILE: dataset_audit.py ---
+Docstring: None
+Imports: ['pandas']
+Classes: []
+Functions: []
+
+--- FILE: DEEP_RD_INVESTIGATION_REPORT.md ---
+First lines: # DEEP R&D INVESTIGATION REPORT | ## Every Claim Tested. Every Script Run. Every Constant Traced to Source Code. | > **This document contains ONLY empirically verified findings.** | > Every number comes from an actual script execution logged in this session. | > Every code reference cites the exact file and line number.
+--- FILE: deploy_empirical_pipeline.py ---
+Docstring: None
+Imports: ['os', 'sys']
+Classes: []
+Functions: []
+
+--- FILE: diagnose_collapse.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn', 'torch.optim', 'torch.utils.data.DataLoader', 'numpy']
+Classes: []
+Functions: ['get_10_samples', 'main']
+
+--- FILE: dump.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: edge_env_audit.py ---
+Docstring: None
+Imports: ['os', 'importlib']
+Classes: []
+Functions: ['run_edge_audit']
+
+--- FILE: experiment_ablation_suite.py ---
+Docstring: experiment_ablation_suite.py
+==============================
+Complete publication-quality ablation study for GWPACDNet.
+
+Scientific Questions:
+    Q1: What is the DP gap when ONLY physiological feature
+Imports: ['os', 'sys', 'numpy', 'pandas', 'torch']
+Classes: ['PhysioMLP']
+Functions: ['compute_dp_gap', 'pareto_score', 'print_result']
+
+--- FILE: experiment_lambda_sweep.py ---
+Docstring: experiment_lambda_sweep.py
+===========================
+Publication-quality lambda_dp ablation sweep for GWPACDNet.
+
+Scientific Purpose:
+    Maps the complete fairness-accuracy Pareto frontier across l
+Imports: ['os', 'sys', 'csv', 'time', 'torch']
+Classes: []
+Functions: ['differentiable_dp_penalty', 'run_lambda']
+
+--- FILE: export_line_a_metrics.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: extract_kill_switches.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: fast_grep.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: FINAL_COMPLETION_SUMMARY.md ---
+First lines: # ✅ FINAL SUMMARY: Your Thesis Project is Complete and Ready | ## What Was Done Today (February 27, 2026) | ### Timeline: 6 Hours from "Broken" to "Production-Ready" | ``` | Morning:   XAI module had 3 critical bugs, no analysis pipeline
+--- FILE: final_verification.py ---
+Docstring: Final comprehensive project verification report
+Imports: ['sys', 'pathlib.Path', 'subprocess']
+Classes: []
+Functions: []
+
+--- FILE: find_redundant.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: generate_final_comprehensive_analysis.py ---
+Docstring: COMPREHENSIVE THESIS ANALYSIS - CORRECT MODEL NAMES & ALL REQUIRED OUTPUTS
+Uses exact checkpoint files and generates complete analysis:
+- Results: AUC-ROC, F1, Precision, Accuracy
+- Outputs: Graphs, c
+Imports: ['pandas', 'numpy', 'matplotlib.pyplot', 'seaborn', 'json']
+Classes: []
+Functions: ['compute_confusion_matrix']
+
+--- FILE: generate_roc_auc_comprehensive.py ---
+Docstring: Comprehensive ROC, AUC, Confusion Matrix, and Correlation Analysis
+Using sklearn with multiple model architectures
+Imports: ['pandas', 'numpy', 'matplotlib.pyplot', 'seaborn', 'sklearn.impute.SimpleImputer']
+Classes: []
+Functions: []
+
+--- FILE: generate_thesis_models_analysis.py ---
+Docstring: CORRECTED: ROC, AUC, Confusion Matrix Analysis - Using ACTUAL Thesis Models (A, B, C)
+Loads trained model checkpoints and evaluates with correct names
+Imports: ['pandas', 'numpy', 'matplotlib.pyplot', 'seaborn', 'torch']
+Classes: []
+Functions: []
+
+--- FILE: health_audit.py ---
+Docstring: None
+Imports: ['psutil', 'time', 'sys']
+Classes: []
+Functions: ['run_health_audit']
+
+--- FILE: hostile_peer_review_report.md ---
+First lines: # Defense Board Audit: Critical Scientific Limitations | You asked me to step into the role of the International Defense Board. I will strip away the engineering polish and attack the fundamental scientific and mathematical foundation of your thesis. | If you present this thesis claiming it is "perfect," a competent review board will dismantle it. Here are the **four vital, potentially fatal scientific limitations** of your work that you must preemptively address in your defense. | --- | ### 1. The Statistical Fallacy: Absence of Evidence is Not Evidence of Absence
+--- FILE: jse_benchmark_generator.py ---
+Docstring: jse_benchmark_generator.py — Joint Subspace Estimation Benchmark
+================================================================
+This script generates the 500MB Mock Benchmark for the GW-CD framework
+Imports: ['os', 'torch', 'numpy', 'pandas', 'logging']
+Classes: []
+Functions: ['generate_jse_mock_benchmark']
+
+--- FILE: manifold_deviation_audit.py ---
+Docstring: manifold_deviation_audit.py
+============================
+Empirically quantifies the deviation between the true Stiefel retraction (QR)
+and the edge deployment approximation (L2 normalization) on the h
+Imports: ['torch', 'torch.nn', 'numpy', 'sys', 'pathlib.Path']
+Classes: []
+Functions: []
+
+--- FILE: mitl_proof.py ---
+Docstring: mitl_proof.py
+=============
+Cross-toolchain proof of Manifold-Induced Topological Locking (MITL).
+Demonstrates that the MITL phenomenon is not a torch-pruning bug
+but a fundamental constraint by showi
+Imports: ['torch', 'sys', 'pathlib.Path', 'src.models.pacd_net.GWPACDNet']
+Classes: []
+Functions: []
+
+--- FILE: MODEL_ARCHITECTURE_COMPARISON_FRAMEWORK.md ---
+First lines: # 🏗️ Model Architecture Comparison Framework | ## Executive Summary | Your thesis compares **3 distinct multimodal threat detection architectures**: | 1. **Design A (Baseline)**: Simple concatenation fusion | 2. **Design B (CGF - Causal Gated Fusion)**: Physics-aware gating
+--- FILE: onnx_benchmark.py ---
+Docstring: onnx_benchmark.py
+
+A strictly honest, executable benchmark harness using ONNX Runtime.
+
+This script measures the actual hardware-accelerated latency of an ONNX model,
+bypassing PyTorch's heavy Python 
+Imports: ['os', 'time', 'argparse', 'numpy', 'onnxruntime']
+Classes: []
+Functions: ['create_dummy_onnx', 'benchmark_onnx', 'main']
+
+--- FILE: patch_thesis.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: phase1.py ---
+Docstring: None
+Imports: ['os', 'hashlib', 'torch']
+Classes: []
+Functions: []
+
+--- FILE: phase2.py ---
+Docstring: None
+Imports: ['pandas', 'os']
+Classes: []
+Functions: []
+
+--- FILE: phase_c_benchmark.py ---
+Docstring: None
+Imports: ['onnxruntime', 'numpy', 'time', 'os']
+Classes: []
+Functions: []
+
+--- FILE: preview_diff.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: quarantine_ckpts.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: QUICK_START_COMMANDS.md ---
+First lines: # 🚀 Quick Start: Run Your Analysis Now | ## Copy-Paste Ready Commands | ### Step 1: Quick Test (Do This First!) - 2 minutes | ```powershell | cd "c:\Users\USERAS\thesis_project"
+--- FILE: README.md ---
+First lines: # Fair Multimodal Threat Detection with Causal Gated Fusion | > A machine learning framework for fair threat detection using facial images + physiological signals with counterfactual fairness constraints and edge deployment optimization. | **Paper**: [Thesis Title - To be updated] | **Authors**: [Your Name(s)] | **Status**:
+--- FILE: REAL_DATA_ANALYSIS_GUIDE.md ---
+First lines: # 🚀 Real Data Analysis Guide: Step-by-Step | ## Overview | This guide will walk you through running the TIER 3 analysis on your **real threat detection data**. The script will: | 1. Load your real dataset (faces + physiological signals) | 2. Generate explanations using 3 XAI methods
+--- FILE: reanalyze_o7.py ---
+Docstring: reanalyze_o7.py
+Re-runs the alpha=1.0 leakage test excluding s4 T2 and s4 T3,
+to check whether the earlier p=0.0437 result depended on those
+two anomalous clips.
+
+Writes the full result to outputs/lea
+Imports: ['sys', 'importlib.util', 'itertools', 'pathlib.Path', 'numpy']
+Classes: []
+Functions: ['emit']
+
+--- FILE: rehydrate_and_kill.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: rr and dd.md ---
+First lines: Phase 1 Publishing R&D Roadmap: Adversarial Scrutiny and Experimental Redesign of the EQARNB Architecture | Executive Overview of Project Integrity | The investigation into the EQARNB (Equivariant Q-Attention with a Thermodynamic Gate and Stiefel-constrained causal layer) architecture represents a highly ambitious intersection of multimodal physiological sensing, representation learning, and algorithmic fairness. The core thesis posits that a Stiefel-constrained causal layer can dynamically suppress a highly correlated synthetic visual confounder—specifically, a rendered facial scar with a correlation coefficient of ρ=0.85 to the target label—while preserving multimodal stress classification accuracy across physiological and visual branches. Theoretically, this hypothesis navigates the complex problem of shortcut learning in deep neural networks, attempting to force a model to learn causal physiological features rather than relying on superficial, biased correlations. | However, a rigorous adversarial review of the repository in its currently locked, finalized thesis state reveals that the empirical claims cannot withstand peer scrutiny at the level expected by top-tier venues such as CVPR, NeurIPS, or IEEE T-BME. The project is fundamentally compromised by a series of fatal methodological flaws, statistical fragility, and severe data leakage. The research is bifurcated into two distinct trajectories: Line A (The UBFC-Phys Leakage Analysis) and Line B (The CCB Benchmark). Both lines exhibit critical vulnerabilities that invalidate their current findings. | Line A relies on a critically underpowered sample size of N=4 subjects and a statistically fragile temporal smoothing parameter to assert a negative result regarding the impact of video compression on Remote Photoplethysmography (rPPG) signals. Line B is entirely invalidated by the "Stranger-Pairing Flaw," an experimental design failure wherein the dataset pairs unrelated facial images with independent physiological data. This pairing destroys all true mutual information in the visual branch, reducing the proposed confounder suppression to trivial artifact detection.
+--- FILE: run_batch_suite.py ---
+Docstring: None
+Imports: ['subprocess', 'os']
+Classes: []
+Functions: []
+
+--- FILE: run_comprehensive_analysis.py ---
+Docstring: Main script to run comprehensive dataset analysis and model evaluation
+
+Usage:
+    python run_comprehensive_analysis.py                    # Dataset analysis only
+    python run_comprehensive_analysis
+Imports: ['argparse', 'pathlib.Path', 'sys', 'os', 'src.comprehensive_analysis.DatasetAnalyzer']
+Classes: []
+Functions: ['main']
+
+--- FILE: run_n7_pipeline.py ---
+Docstring: None
+Imports: ['os', 'subprocess', 'shutil', 'pathlib.Path']
+Classes: []
+Functions: ['main']
+
+--- FILE: run_strict_eval.py ---
+Docstring: thesis_diagnostics_strict.py
+=====================================================================
+Final zero-compromise empirical extraction for thesis pp33.
+Features:
+  1. Strict Subject-Leakage-Fre
+Imports: ['__future__.annotations', 'sys', 'json', 'os', 'pathlib.Path']
+Classes: []
+Functions: ['get_normalization_stats', 'simple_collate', 'load_biased_eval_loader', 'load_model_securely', 'run_inference', 'audit_equalized_odds', 'audit_bootstrap_dp', 'audit_gate_stats', 'main']
+
+--- FILE: run_worldclass.ps1 ---
+First lines: param( | [switch]$Pilot, | [switch]$Full, | [switch]$NoInstall, | [int]$MaxSamples = 0,
+--- FILE: run_worldclass.py ---
+Docstring: One-command bootstrap/runner for the world-class diffusion engine.
+
+Usage:
+  python run_worldclass.py --pilot
+  python run_worldclass.py --full
+  python run_worldclass.py --full -- --num-variants 2 --
+Imports: ['__future__.annotations', 'argparse', 'os', 'platform', 'subprocess']
+Classes: []
+Functions: ['run', 'ensure_venv', 'install_deps', 'verify', 'main']
+
+--- FILE: scratch_derive_iod.py ---
+Docstring: None
+Imports: ['cv2', 'mediapipe', 'numpy', 'sys']
+Classes: []
+Functions: ['run_iod_audit']
+
+--- FILE: scratch_doc_search.py ---
+Docstring: None
+Imports: ['os', 're']
+Classes: []
+Functions: ['search_text']
+
+--- FILE: scratch_eval.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn.functional', 'numpy', 'sys', 'os']
+Classes: []
+Functions: ['get_mode_fraction', 'evaluate_checkpoint']
+
+--- FILE: scratch_eval2.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn.functional', 'numpy', 'sys', 'os']
+Classes: []
+Functions: ['get_mode_fraction', 'evaluate_checkpoint']
+
+--- FILE: scratch_eval3.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn.functional', 'numpy', 'sys', 'os']
+Classes: []
+Functions: ['get_mode_fraction', 'evaluate_checkpoint']
+
+--- FILE: scratch_eval4.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn.functional', 'numpy', 'sys', 'os']
+Classes: []
+Functions: ['get_mode_fraction', 'evaluate_checkpoint']
+
+--- FILE: scratch_eval_definitive.py ---
+Docstring: None
+Imports: ['os', 'sys', 'json', 'torch', 'torch.nn.functional']
+Classes: ['PublishableDataset']
+Functions: ['evaluate_model', 'main']
+
+--- FILE: scratch_k1_baseline.py ---
+Docstring: None
+Imports: ['pandas', 'numpy', 'sklearn.model_selection.LeaveOneGroupOut', 'sklearn.preprocessing.StandardScaler', 'sklearn.neural_network.MLPClassifier']
+Classes: []
+Functions: ['run_k1_baseline']
+
+--- FILE: scratch_k1_baseline_rigorous.py ---
+Docstring: None
+Imports: ['pandas', 'numpy', 'sklearn.model_selection.LeaveOneGroupOut', 'sklearn.preprocessing.StandardScaler', 'sklearn.neural_network.MLPClassifier']
+Classes: []
+Functions: ['run_rigorous_k1_baseline']
+
+--- FILE: scratch_sham_edit.py ---
+Docstring: None
+Imports: ['os', 'sys', 'json', 'torch', 'torch.nn.functional']
+Classes: []
+Functions: ['get_features', 'apply_sham_blur', 'jsd', 'main']
+
+--- FILE: script1.py ---
+Docstring: None
+Imports: ['cv2', 'numpy', 'mediapipe']
+Classes: []
+Functions: ['derive_spatial_averaging_constant']
+
+--- FILE: script2.py ---
+Docstring: None
+Imports: ['numpy', 'pandas']
+Classes: []
+Functions: ['stratified_bootstrap_dp_gap']
+
+--- FILE: script3.py ---
+Docstring: None
+Imports: ['torch']
+Classes: []
+Functions: ['test_nsmr_bfloat16_stability']
+
+--- FILE: SESSION_COMPLETION_SUMMARY.md ---
+First lines: # 📊 PROJECT COMPLETION SUMMARY | ## Timeline: From "Needs Fixes" to "Production Ready" | ``` | Session Start (Day 1) | ↓
+--- FILE: setup_dataset.sh ---
+First lines: mkdir -p src/data | cat << 'EOF' > src/data/clinical_dataloader.py | import os | import torch | import logging
+--- FILE: START_HERE_THESIS_READY.md ---
+First lines: # START HERE - Your Thesis is Ready! | ## Welcome! Here's What You Need to Know in 5 Minutes | Your XAI thesis project just went from **"needs critical fixes"** to **"production-ready"** in 6 hours. Everything is done, tested, and documented. | --- | ## The Situation
+--- FILE: test_tier1_changes.py ---
+Docstring: Test script to verify TIER 1 changes work correctly
+Purpose: Ensure the modified src/xai/__init__.py imports and runs without errors
+Imports: ['sys', 'torch', 'torch.nn', 'pathlib.Path']
+Classes: []
+Functions: []
+
+--- FILE: test_tier2_improvements.py ---
+Docstring: TIER 2 Test Suite: Comprehensive tests for all improvements
+Tests new classes: ImageNormalizer, IGValidator
+Tests updated functionality: L2 norm saliency
+Imports: ['sys', 'torch', 'torch.nn', 'numpy', 'pathlib.Path']
+Classes: []
+Functions: []
+
+--- FILE: test_tier3_enhancements.py ---
+Docstring: TIER 3 Test Suite: Advanced Enhancements
+Tests for GradientFlowAnalyzer, ExplanationComparator, and PerformanceProfiler
+Imports: ['torch', 'torch.nn', 'numpy', 'typing.Dict', 'sys']
+Classes: []
+Functions: []
+
+--- FILE: Thesis Architecture Mathematical Defense.md ---
+First lines: # **Edge-Friendly Debiasing for Scar-Mediated Threat Profiling Using Emotion-Physiology Fusion: Mathematical and Architectural Defenses** | ## **Executive Overview and Architectural Posture** | The deployment of multimodal threat profiling architectures within constrained edge computing environments demands a rigorous, multi-vector defense of both algorithmic fairness and hardware-level numerical stability. The architecture under review, formally designated as the Grassmannian Wasserstein Projection with Attention-Causal Debiasing Network (GWPACDNet), presents a Technology Readiness Level 3 (TRL-3) proof-of-concept. This architecture is engineered to fuse facial vision telemetry—specifically video-based remote photoplethysmography (rPPG) and micro-expression detection—with physiological telemetry derived from the WESAD (Wearable Stress and Affect Detection) dataset. However, the theoretical integrity of the GWPACDNet faces three distinct methodological vulnerabilities that must be resolved prior to peer-review submission. | First, the extraction of rPPG signals from facial video is highly susceptible to the macroblock artifacts introduced by H.264 video compression, requiring a geometrically precise spatial averaging bounding box to preserve the signal-to-noise ratio. The spatial averaging constant utilized in the thesis must be mathematically derived from canonical facial geometry to prove it is not an arbitrary hyperparameter. Second, the validation dataset suffers from a "stranger-pairing" flaw and an artificial base-rate bias, necessitating a non-parametric statistical defense to prove that the architecture's debiasing gate actively suppresses spurious confounding variables (e.g., facial scars) without relying on invalid parametric assumptions. Finally, the initial latency and stability benchmarks were executed on x86 central processing units using 32-bit floating-point (FP32) arithmetic. True edge neural processing units (NPUs) accelerate matrix operations using truncated low-precision formats such as bfloat16. It is imperative to mathematically prove that the GWPACDNet's orthogonal manifold projections survive this aggressive numerical truncation without catastrophic precision loss or gradient overflow. | This comprehensive engineering report provides the exhaustive theoretical analysis, mathematical derivations, and three standalone, zero-dependency analytical Python scripts required to extract the final defensive telemetry for the manuscript.
+--- FILE: thesis_diagnostics.py ---
+Docstring: thesis_diagnostics.py
+=====================================================================
+Final empirical extraction for thesis pp33.
+Executes three independent audits on the saved checkpoints:
+  1.
+Imports: ['__future__.annotations', 'sys', 'pathlib.Path', 'numpy', 'torch']
+Classes: []
+Functions: ['load_biased_dataset', 'load_model', 'run_inference', 'audit_clinical', 'stratified_bootstrap_dp', 'audit_bootstrap', 'cohens_d', 'audit_gate']
+
+--- FILE: thesis_diagnostics_strict.py ---
+Docstring: thesis_diagnostics_strict.py
+=====================================================================
+Final zero-compromise empirical extraction for thesis pp33.
+Features:
+  1. Strict Subject-Leakage-Fre
+Imports: ['__future__.annotations', 'sys', 'json', 'os', 'pathlib.Path']
+Classes: []
+Functions: ['get_normalization_stats', 'load_biased_eval_loader', 'load_model_securely', 'run_inference', 'audit_equalized_odds', 'audit_bootstrap_dp', 'audit_gate_stats', 'main']
+
+--- FILE: THESIS_MATHEMATICAL_DEFENSE_MASTER_PLAN.md ---
+First lines: # THESIS MATHEMATICAL DEFENSE — MASTER EXECUTION PLAN | ## Exhaustive Analysis, Logical Deconstruction, and Action Roadmap | > **Self-Contained Design:** This document is written so that any AI agent, researcher, or collaborator | > can read it cold — without prior session context — and immediately understand what needs to be done, | > why it needs to be done, and exactly how to do it. Every claim is grounded. Every term is defined.
+--- FILE: ULTIMATE_SUCCESS_ANALYSIS_AND_RD_PLAN.md ---
+First lines: # ULTIMATE SUCCESS ANALYSIS & DEEP R&D PLAN | ## Forensic Reality Check + 100% Logically-Grounded Execution Roadmap | > **This document is the result of reading every single result file, every JSON benchmark, | > every CSV of experimental data, and the complete source code — and then reasoning rigorously | > about what is TRUE, what is ACHIEVABLE, and what must be done next.**
+--- FILE: update_eval.py ---
+Docstring: None
+Imports: ['os']
+Classes: []
+Functions: []
+
+--- FILE: update_pipeline.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: VERIFIED_THESIS_RESULTS_AND_METHODOLOGY.md ---
+First lines: # VERIFIED THESIS RESULTS AND METHODOLOGY SUMMARY | *This document contains the final, empirically verified methodology and results for the thesis, replacing all previous theoretical or unverified claims.* | --- | ## 1. METHODOLOGY IN BRIEF | ### 1.1 Dataset and Preprocessing
+--- FILE: verify_metrics.py ---
+Docstring: None
+Imports: ['sys', 'pathlib.Path', 'json', 'models.MultimodalThreatModel']
+Classes: []
+Functions: []
+
+--- FILE: verify_sanity_check.py ---
+Docstring: None
+Imports: ['json']
+Classes: []
+Functions: []
+
+--- FILE: VIVA_QUICK_REFERENCE_CHEATSHEET.md ---
+First lines: # QUICK REFERENCE VIVA CHEAT SHEET | ## Key Numbers & Responses (Glance at this during viva breaks) | --- | ## KEY NUMBERS TO MEMORIZE | | Metric | Baseline | CGF Best | CGF Pruned | CGF Repaired |
+--- FILE: 🚀_START_HERE_THESIS_READY.md ---
+First lines: # 📖 READ ME FIRST - Your Thesis is Ready! | ## Welcome! Here's What You Need to Know in 5 Minutes | Your XAI thesis project just went from **"needs critical fixes"** to **"production-ready"** in 6 hours. Everything is done, tested, and documented. | --- | ## The Situation
+--- FILE: configs\config.py ---
+Docstring: None
+Imports: ['torch']
+Classes: ['Config']
+Functions: []
+
+--- FILE: data\README.md ---
+First lines: 
+--- FILE: docs\experiment_preregistration.md ---
+First lines: # EQARNB: Experiment Pre-Registration Plan | **Task:** Acute Stress Classification (Research Only) | **Date:** September 2026 | ## Core Hypothesis | If the FFHQ (Vision) and WESAD (Physiology) datasets are completely independent, the visual modality contains zero true signal for the Acute Stress label ($Y$). Therefore, the EQARNB architecture's ability to suppress the visual confounder ($S$, the scar) should yield performance identical to a model that never sees the visual data at all.
+--- FILE: docs\FULL_THESIS_PAPER.md ---
+First lines: # EQUITAS-RCMF: Riemannian Causal Manifold Fusion for Counterfactually Fair, Autonomous Physiological Stress Detection on the Edge | **A Full Thesis Paper** | *Prepared from forensic analysis of the live repository, pre-registered dataset hash, empirically secured benchmark reports, and cross-validated training logs.* | --- | ## Abstract
+--- FILE: docs\negative_result_writeup_legacy.md ---
+First lines: # Vision-Side Physiological Leakage in a Small Naturally-Multimodal Stress Cohort | **A pre-registered negative result, and the limits of equivalence testing at acquisition-bounded N** | Status: **Complete draft** (2026-09-23). All §8 open items are resolved (see §8 for the record); figures are from artifacts produced 2026-09-22/23; provenance in §7. Pending advisor sign-off before submission. | --- | ## 0. Summary
+--- FILE: docs\SCAR_ARTIFACT_VALIDATION_PROTOCOL.md ---
+First lines: # Synthetic Scar-Like Artifact Validation Protocol | ## Scope | This protocol evaluates a controlled visual intervention for fairness and shortcut-learning experiments. It does not treat generated pixels as clinical evidence and does not claim that procedural artifacts are equivalent to real scars. | ## Evidence Basis | The clinical descriptors are adapted from validated scar-assessment literature:
+--- FILE: docs\thesis_chapter4_results.md ---
+First lines: # Chapter 4: Empirical Proof of Causal Invariance | This chapter empirically validates the EQUITAS-RCMF architecture. We present a pre-registered negative result proving that physiological signal inherently leaks through the visual modality in naturally-multimodal architectures, establishing the mandatory requirement for causal disentanglement. We then demonstrate that EQUITAS-RCMF successfully enforces this causal invariance while maintaining suitability for Autonomous Edge Deployment. | ## 4.1 The Prerequisite Failure: Vision-Side Physiological Leakage | A core premise of standard Empirical Risk Minimization (ERM) multimodal models is that they can suppress reliance on synthetic visual confounders (e.g., procedural facial scars) without destroying true physiological predictive signals. This premise assumes the visual modality carries no *true* physiological signal for the stress label. | To test this, we isolated the video-derived vision pipeline using a full naturally-multimodal cohort (UBFC-Phys; **N=8 subjects, 24 clips**). If the pipeline admits recoverable physiological signal, the premise fails, and the vision modality is irrecoverably entangled with the physiological target.
+--- FILE: docs\thesis_chapter5_ethical_mandate.md ---
+First lines: # Chapter 5: Ethical Implications, Legal Compliance, and the Algorithmic Mandate of EQUITAS-RCMF in Autonomous Edge Architectures | ## 5.1 Introduction: The Transition from Empirical Proof to Socio-Legal Mandate | The deployment of autonomous machine learning systems on edge computing devices represents a profound intersection of mathematical optimization, hardware engineering, and socio-legal responsibility. As demonstrated in the rigorous computational evaluations preceding this analysis, the empirical convergence of the MobileNetV3 architecture under the EQUITAS-RCMF (Robust Counterfactual Margin Framework) establishes a mathematically flawless defense against algorithmic cheating. The comprehensive 5,000-epoch cross-validation sweep, executed across multiple random seeds (42, 100, 2026, 777, 888), has yielded an unassailable wall of statistical evidence. This exhaustive computational rigor confirms a critical vulnerability in standard learning paradigms: Naive Empirical Risk Minimization (ERM) structurally fails by latching onto spurious correlations, whereas EQUITAS-RCMF physically severs this biased confounder to preserve causal integrity. | However, empirical superiority and algorithmic convergence alone do not satisfy the stringent requirements for real-world deployment in highly sensitive biometric domains. When an autonomous stress-detection system, an intelligent surveillance node, or a wearable physiological sensor array is deployed on the edge, it operates within a complex, highly scrutinized web of ethical mandates and legal frameworks. Most notable among these are the European Union’s General Data Protection Regulation (GDPR) and emerging, highly localized statutory frameworks such as the Bangladesh Personal Data Protection Act (PDPA) of 2026. Furthermore, the deployment of such unmitigated systems introduces the severe risk of algorithmic bias and discrimination—a pathology extensively documented by Buzatu (2024) in the context of responsible technology use and digital human rights. | This analysis bridges the critical gap between computational theory and stringent legal compliance. It posits that the utilization of EQUITAS-RCMF is not merely an engineering optimization meant to enhance test set accuracy, but rather a strict legal and ethical imperative. By systematically leveraging Vladimir Vapnik’s Learning Using Privileged Information (LUPI) paradigm, this treatise will formally prove how the Autonomous Mode of EQUITAS-RCMF surgically isolates and neutralizes biased confounders at the fundamental level of the loss function. In doing so, it elevates the MobileNetV3 edge architecture from a purely predictive, statistical engine into a legally compliant, ethically responsible system that is structurally immune to algorithmic discrimination and privacy violations.
+--- FILE: docs\thesis_chapter6_conclusion.md ---
+First lines: # Chapter 6: Conclusion, Limitations, and Horizon Architectures | ## 6.1 The Mathematical Eradication of Algorithmic Bias | The deployment of autonomous physiological sensing networks on edge hardware represents a critical juncture in biomedical engineering. However, as demonstrated throughout this thesis, transitioning these architectures from theoretical environments to real-world deployment exposes a catastrophic vulnerability: the inherent susceptibility of Naive Empirical Risk Minimization (ERM) to shortcut learning. | This thesis successfully engineered and validated EQUITAS-RCMF (Equivariant Q-Attention with Thermodynamic Gate and Stiefel-Constrained Causal Layers). By abandoning standard scalar tuning and instead imposing a strict Riemannian topological constraint (the Stiefel Manifold $St(n, p)$) combined with Vapnik's Learning Using Privileged Information (LUPI) paradigm, this research achieved a fundamental breakthrough. We did not merely suppress algorithmic bias; we physically severed the confounder pathway at the architectural level. | The successful JIT-compilation and subsequent Dead-Code Elimination (DCE) of the causal graph proved that the deployed silicon instructions inherently lack the arithmetic capacity to process the spurious artifact. The resulting architecture achieved a latency of 7.54ms (132 FPS) on edge hardware, satisfying both the strict operational constraints of wearable sensors and the stringent legal mandates of the GDPR and PDPA 2026.
+--- FILE: scratch\audit_baseline_calibration.py ---
+Docstring: None
+Imports: ['os', 'pandas', 'numpy', 'torch', 'torch.utils.data.DataLoader']
+Classes: ['TestDataset']
+Functions: ['run_audit']
+
+--- FILE: scratch\audit_gate_dynamics.py ---
+Docstring: None
+Imports: ['os', 'torch', 'pandas', 'numpy', 'torch.utils.data.DataLoader']
+Classes: []
+Functions: ['main']
+
+--- FILE: scratch\audit_pilot_cohort.py ---
+Docstring: None
+Imports: ['os', 'cv2', 'pandas', 'numpy']
+Classes: []
+Functions: ['audit_cohort']
+
+--- FILE: scratch\audit_pilot_eqarnb.py ---
+Docstring: None
+Imports: ['os', 'json', 'torch', 'torch.nn.functional', 'pandas']
+Classes: []
+Functions: ['get_youden_threshold', 'main']
+
+--- FILE: scratch\build_ubfc_schema.py ---
+Docstring: None
+Imports: ['os', 'glob', 'cv2', 'json', 'numpy']
+Classes: []
+Functions: ['build_schema']
+
+--- FILE: scratch\cheap_checks.py ---
+Docstring: None
+Imports: ['pandas', 'sklearn.linear_model.LogisticRegression', 'sklearn.model_selection.GroupKFold']
+Classes: []
+Functions: []
+
+--- FILE: scratch\check_image_overlap.py ---
+Docstring: None
+Imports: ['json', 'pandas']
+Classes: []
+Functions: []
+
+--- FILE: scratch\check_overlap.py ---
+Docstring: None
+Imports: ['json', 'pandas']
+Classes: []
+Functions: []
+
+--- FILE: scratch\derive_iod.py ---
+Docstring: None
+Imports: ['cv2', 'mediapipe', 'numpy', 'glob', 'os']
+Classes: []
+Functions: ['derive_iod']
+
+--- FILE: scratch\diagnose_nsmr.py ---
+Docstring: Diagnose and fix the NSMR scaling — find correct initialization.
+Imports: ['torch']
+Classes: []
+Functions: []
+
+--- FILE: scratch\dry_run.py ---
+Docstring: None
+Imports: ['os', 'argparse', 'json', 'random', 'sys']
+Classes: []
+Functions: ['set_seed', 'eo_rates_strict', 'eval_metrics_per_subject', 'test_stiefel_toggle', 'run_one_epoch', 'main']
+
+--- FILE: scratch\extract.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: scratch\fast_probe.py ---
+Docstring: None
+Imports: ['os', 'torch', 'torch.nn.functional', 'pandas', 'numpy']
+Classes: []
+Functions: ['jsd_stable', 'main']
+
+--- FILE: scratch\final_smoke_test.py ---
+Docstring: None
+Imports: ['os', 'torch', 'torch.nn.functional', 'pandas', 'numpy']
+Classes: []
+Functions: ['jsd_stable', 'run_rigorous_smoke_test']
+
+--- FILE: scratch\full_pipeline_audit.py ---
+Docstring: None
+Imports: ['os', 'time', 'torch', 'torch.nn', 'torch.nn.functional']
+Classes: ['ExtendedThreatModel']
+Functions: ['jsd_stable', 'calc_fairness', 'benchmark_hardware', 'run_pipeline']
+
+--- FILE: scratch\generate_ubfc_multimodal.py ---
+Docstring: None
+Imports: ['os', 'cv2', 'json', 'numpy', 'pandas']
+Classes: []
+Functions: ['compute_hrv_gsr', 'inject_scar', 'main']
+
+--- FILE: scratch\k1_baseline.py ---
+Docstring: None
+Imports: ['pandas', 'numpy', 'sklearn.neural_network.MLPClassifier', 'sklearn.preprocessing.StandardScaler', 'sklearn.model_selection.LeaveOneGroupOut']
+Classes: []
+Functions: ['run_k1_baseline']
+
+--- FILE: scratch\phase0c.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: scratch\phase1.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: scratch\prepare_folds.py ---
+Docstring: None
+Imports: ['json', 'hashlib', 'pandas', 'numpy']
+Classes: []
+Functions: ['get_hash']
+
+--- FILE: scratch\remediation_audit.py ---
+Docstring: None
+Imports: ['os', 'time', 'torch', 'torch.nn.functional', 'pandas']
+Classes: ['AuditThreatModel']
+Functions: ['calc_dp', 'run_audit']
+
+--- FILE: scratch\rigorous_diagnostics.py ---
+Docstring: None
+Imports: ['os', 'json', 'sys', 'subprocess', 'pandas']
+Classes: []
+Functions: ['get_subset_loader', 'train_baseline', 'eval_cf_isolated', 'borrowed_blur', 'worst_group_acc', 'eval_model']
+
+--- FILE: scratch\run_baseline.py ---
+Docstring: None
+Imports: ['os', 'sys', 'json', 'pathlib.Path', 'numpy']
+Classes: []
+Functions: ['run_one_epoch', 'run_experiment']
+
+--- FILE: scratch\run_script1_blazeface_constant.py ---
+Docstring: None
+Imports: ['cv2', 'numpy', 'mediapipe', 'sys', 'pathlib.Path']
+Classes: []
+Functions: ['derive_blazeface_spatial_constant']
+
+--- FILE: scratch\run_script2_bootstrap.py ---
+Docstring: Script 2: Stratified Bootstrap DP Gap CI on Real Model Predictions
+Imports: ['numpy', 'pandas']
+Classes: []
+Functions: []
+
+--- FILE: scratch\run_script3_bfloat16.py ---
+Docstring: Script 3: bfloat16 NSMR Stability Proof + Geometry Constant Analysis
+Imports: ['torch']
+Classes: []
+Functions: []
+
+--- FILE: scratch\secure_metrics.py ---
+Docstring: None
+Imports: ['re', 'pathlib.Path', 'csv']
+Classes: []
+Functions: ['extract']
+
+--- FILE: scratch\sham_edit_control.py ---
+Docstring: None
+Imports: ['os', 'pandas', 'numpy', 'torch', 'cv2']
+Classes: []
+Functions: ['apply_sham_blur', 'run_sham_control']
+
+--- FILE: scratch\split_script.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: scratch\stiefel_qdyn_stress_test.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'sys', 'pathlib.Path']
+Classes: []
+Functions: ['simulate_8bit_quantization', 'stress_test_stiefel_layer']
+
+--- FILE: scratch\test_generative_scar.py ---
+Docstring: None
+Imports: ['os', 'cv2', 'numpy']
+Classes: []
+Functions: ['compute_hf_energy', 'test_scar_injection']
+
+--- FILE: scratch\train_anchored_gate.py ---
+Docstring: None
+Imports: ['os', 'torch', 'torch.nn.functional', 'pandas', 'numpy']
+Classes: []
+Functions: ['jsd_stable', 'main']
+
+--- FILE: scratch\train_k_baselines.py ---
+Docstring: None
+Imports: ['os', 'json', 'torch', 'pandas', 'numpy']
+Classes: ['UBFCVisionDataset']
+Functions: ['train_k2_fold', 'main']
+
+--- FILE: scratch\train_pilot_baselines.py ---
+Docstring: None
+Imports: ['os', 'json', 'torch', 'pandas', 'numpy']
+Classes: ['UBFCVisionDataset']
+Functions: ['train_k2_fold', 'main']
+
+--- FILE: scratch\train_pilot_eqarnb.py ---
+Docstring: None
+Imports: ['os', 'torch', 'torch.nn.functional', 'pandas', 'numpy']
+Classes: ['UBFC_CF_Dataset']
+Functions: ['jsd', 'main']
+
+--- FILE: scratch\train_pilot_eqarnb_linear_probe.py ---
+Docstring: None
+Imports: ['os', 'torch', 'torch.nn.functional', 'pandas', 'numpy']
+Classes: []
+Functions: ['jsd_stable', 'main']
+
+--- FILE: scratch\train_pilot_eqarnb_regularized.py ---
+Docstring: None
+Imports: ['os', 'torch', 'torch.nn.functional', 'pandas', 'numpy']
+Classes: []
+Functions: ['jsd_stable', 'main']
+
+--- FILE: scratch\true_biased_eval.py ---
+Docstring: None
+Imports: ['os', 'json', 'sys', 'subprocess', 'math']
+Classes: []
+Functions: ['safe_divide', 'js_divergence_stable', 'dp_gap_prob', 'eo_gap_prob', 'eval_metrics_custom', 'train_eval_config']
+
+--- FILE: scratch\verify_pipeline_alignment.py ---
+Docstring: None
+Imports: ['pandas']
+Classes: []
+Functions: ['prob_stats']
+
+--- FILE: scratch\rPPG-Toolbox\config.py ---
+Docstring: None
+Imports: ['os', 're', 'yaml', 'yacs.config.CfgNode']
+Classes: []
+Functions: ['_update_config_from_file', 'update_config', 'get_config']
+
+--- FILE: scratch\rPPG-Toolbox\main.py ---
+Docstring: The main function of rPPG deep learning pipeline.
+Imports: ['argparse', 'random', 'time', 'numpy', 'torch']
+Classes: []
+Functions: ['seed_worker', 'add_args', 'train_and_test', 'test', 'unsupervised_method_inference']
+
+--- FILE: scratch\rPPG-Toolbox\README.md ---
+First lines: <p align="center"> | :fire: Please remember to :star: this repo if you find it useful and cite our work if you end up using it in your work! :fire: | </p> | <p align="center"> | :fire: If you have any questions or concerns, please create an <a href="https://github.com/ubicomplab/rPPG-Toolbox/issues">issue</a> :memo:! :fire:
+--- FILE: scratch\rPPG-Toolbox\setup.sh ---
+First lines: #!/bin/bash | # Check if a mode argument is provided | if [ -z "$1" ]; then | echo "Usage: $0 {conda|uv}" | exit 1
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\iBVP_PURE_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\iBVP_PURE_iBVPNet_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\iBVP_UBFC-rPPG_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\iBVP_UNSUPERVISED.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "unsupervised_method"      # "train_and_test"  or "only_test" or "unsupervised_method" | UNSUPERVISED: | METHOD: ["ICA", "POS", "CHROM", "GREEN", "LGI", "PBV", "OMIT"] | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA']
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\MMPD_UNSUPERVISED.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "unsupervised_method"      # "train_and_test"  or "only_test" or "unsupervised_method" | UNSUPERVISED: | METHOD: ["ICA", "POS", "CHROM", "GREEN", "LGI", "PBV", "OMIT"] | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA']
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_iBVP_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_iBVP_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_iBVP_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_iBVP_iBVPNet_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_iBVP_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_MMPD_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_MMPD_PHYSMAMBA.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | VALID: | DATA: | FS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_MMPD_RHYTHMFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_MMPD_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-PHYS_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-PHYS_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-PHYS_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-PHYS_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-PHYS_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_iBVPNet_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                     # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_PHYSMAMBA_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | VALID: | DATA: | FS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_RHYTHMFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UBFC-rPPG_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\PURE_UNSUPERVISED.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "unsupervised_method"      # "train_and_test"  or "only_test" or "unsupervised_method" | UNSUPERVISED: | METHOD: ["ICA", "POS", "CHROM", "GREEN", "LGI", "PBV", "OMIT"] | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA']
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_iBVP_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_MMPD_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_MMPD_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_PURE_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_PURE_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_PURE_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_PURE_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                     # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_PURE_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_PURE_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_UBFC-PHYS_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_UBFC-rPPG_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_UBFC-rPPG_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_UBFC-rPPG_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_UBFC-rPPG_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                     # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_UBFC-rPPG_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\SCAMPS_UBFC-rPPG_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-PHYS_UNSUPERVISED.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "unsupervised_method"      # "train_and_test"  or "only_test" or "unsupervised_method" | UNSUPERVISED: | METHOD: ["ICA", "POS", "CHROM", "GREEN", "LGI", "PBV", "OMIT"] | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA']
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_iBVP_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test" # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_MMPD_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_MMPD_PHYSMAMBA_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test" # "train_and_test"  or "only_test" | VALID: | DATA: | FS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_MMPD_RHYTHMFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_MMPD_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"  # "train_and_test" or "only_train" or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'MACC', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                     # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_PHYSMAMBA_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test" # "train_and_test"  or "only_test" | VALID: | DATA: | FS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test" # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_RHYTHMFORMER.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                      # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_PURE_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_UBFC-PHYS_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_UBFC-PHYS_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_UBFC-PHYS_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: False                   # to use provided validation dataset to find the best epoch, should be false
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_UBFC-PHYS_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test" # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_UBFC-PHYS_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "only_test"      # "train_and_test"  or "only_test" | TEST: | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA'] | USE_LAST_EPOCH: True
+--- FILE: scratch\rPPG-Toolbox\configs\infer_configs\UBFC-rPPG_UNSUPERVISED.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "unsupervised_method"      # "train_and_test"  or "only_test" or "unsupervised_method" | UNSUPERVISED: | METHOD: ["ICA", "POS", "CHROM", "GREEN", "LGI", "PBV", "OMIT"] | METRICS: ['MAE', 'RMSE', 'MAPE', 'Pearson', 'SNR', 'BA']
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_BIGSMALL_FOLD1.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 180 | EPOCHS: 5
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_BIGSMALL_FOLD2.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 180 | EPOCHS: 5
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_BIGSMALL_FOLD3.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 180 | EPOCHS: 5
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_PURE_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_PURE_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_PURE_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_PURE_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_UBFC-rPPG_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_UBFC-rPPG_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_UBFC-rPPG_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\BP4D_BP4D_UBFC-rPPG_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\iBVP_iBVP_PURE_EFFICIENTPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\iBVP_iBVP_PURE_iBVPNet_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\iBVP_PURE_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test" or "only_train" or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\LADH_LADH_SUMS_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE:  16 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\MMPD_MMPD_UBFC-rPPG_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PhysDrive_PhysDrive_PhysDrive_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 32 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PhysDrive_PhysDrive_UBFC-rPPG_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_iBVP_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test" or "only_train" or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_iBVP_iBVPNet_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_MMPD_PHYSFORMER_BASIC .yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_MMPD_RHYTHMFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_MMPD_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-PHYS_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-PHYS_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-PHYS_PHYSFORMER_BASIC .yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-PHYS_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-PHYS_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-rPPG_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-rPPG_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-rPPG_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-rPPG_PHYSMAMBA_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 20
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-rPPG_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-rPPG_RHYTHMFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\PURE_PURE_UBFC-rPPG_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_iBVP_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test" or "only_train" or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 1
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_MMPD_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_MMPD_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_PURE_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_PURE_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_PURE_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_PURE_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_UBFC-PHYS_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_UBFC-rPPG_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_UBFC-rPPG_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_UBFC-rPPG_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_UBFC-rPPG_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\SCAMPS_SCAMPS_UBFC-rPPG_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_PURE_FactorizePhys_FSAM_Res.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"  # "train_and_test" or "only_train" or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_MMPD_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_MMPD_RHYTHMFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_MMPD_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_PURE_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_PURE_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_PURE_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_PURE_PHYSMAMBA.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test" # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 20
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_PURE_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test" # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_PURE_RHYTHMFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_PURE_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_UBFC-PHYS_DEEPPHYS_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_UBFC-PHYS_EFFICIENTPHYS.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_UBFC-PHYS_PHYSFORMER_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 10
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_UBFC-PHYS_PHYSNET_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test" # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\configs\train_configs\UBFC-rPPG_UBFC-rPPG_UBFC-PHYS_TSCAN_BASIC.yaml ---
+First lines: BASE: [''] | TOOLBOX_MODE: "train_and_test"      # "train_and_test"  or "only_test" | TRAIN: | BATCH_SIZE: 4 | EPOCHS: 30
+--- FILE: scratch\rPPG-Toolbox\dataset\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\BaseLoader.py ---
+Docstring: The Base Class for data-loading.
+
+Provides a pytorch-style data-loader for end-to-end training pipelines.
+Extend the class to support specific datasets.
+Dataset already supported: UBFC-rPPG, PURE, SCA
+Imports: ['csv', 'glob', 'os', 're', 'math.ceil']
+Classes: ['BaseLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\BP4DPlusBigSmallLoader.py ---
+Docstring: The dataloader for BP4D+ Big Small datasets. This dataloader was adapted from the following git repository 
+based on rPPG Toolbox: https://github.com/girishvn/BigSmall
+
+Details on the BigSmall model c
+Imports: ['glob', 'zipfile', 'os', 're', 'cv2']
+Classes: ['BP4DPlusBigSmallLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\BP4DPlusLoader.py ---
+Docstring: The dataloader for BP4D+ datasets.
+
+Details for the BP4D+ Dataset see https://www.cs.binghamton.edu/~lijun/Research/3DFE/3DFE_Analysis.html
+If you use this dataset, please cite the following publicati
+Imports: ['glob', 'zipfile', 'os', 're', 'cv2']
+Classes: ['BP4DPlusLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\COHFACELoader.py ---
+Docstring: The dataloader for COHFACE datasets.
+
+Details for the COHFACE Dataset see https://www.idiap.ch/en/dataset/cohface
+If you use this dataset, please cite the following publication:
+Guillaume Heusch, Andr
+Imports: ['glob', 'os', 're', 'cv2', 'h5py']
+Classes: ['COHFACELoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\iBVPLoader.py ---
+Docstring: The dataloader for iBVP datasets.
+
+Details for the iBVP Dataset see https://doi.org/10.3390/electronics13071334
+If you use this dataset, please cite the following publications:
+
+Joshi, Jitesh, and You
+Imports: ['glob', 'os', 're', 'cv2', 'numpy']
+Classes: ['iBVPLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\LADHLoader.py ---
+Docstring: None
+Imports: ['numpy', 'pandas', 'cv2', 'glob', 'os']
+Classes: ['LADHLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\MMPDLoader.py ---
+Docstring: The dataloader for MMPD datasets.
+Imports: ['os', 'cv2', 'glob', 'numpy', 're']
+Classes: ['MMPDLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\PhysDriveLoader.py ---
+Docstring: The dataloader for PhysDrive datasets.
+PhysDrive: https://github.com/WJULYW/PhysDrive-Dataset
+Jiyao Wang, Xiao Yang, Qingyong Hu, Jiankai Tang, Can Liu, Dengbo He, Yuntao Wang, Ying-Cong Chen, Kaishun
+Imports: ['glob', 'os', 're', 'scipy.io', 'cv2']
+Classes: ['PhysDriveLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\PURELoader.py ---
+Docstring: The dataloader for PURE datasets.
+
+Details for the PURE Dataset see https://www.tu-ilmenau.de/universitaet/fakultaeten/fakultaet-informatik-und-automatisierung/profil/institute-und-fachgebiete/institu
+Imports: ['glob', 'glob', 'json', 'os', 're']
+Classes: ['PURELoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\SCAMPSLoader.py ---
+Docstring: The dataloader for SCAMPS datasets.
+
+Details for the SCAMPS Dataset see https://github.com/danmcduff/scampsdataset
+If you use this dataset, please cite the following publication:
+McDuff, Daniel and Wa
+Imports: ['glob', 'json', 'os', 're', 'multiprocessing.Pool']
+Classes: ['SCAMPSLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\SUMSLoader.py ---
+Docstring: None
+Imports: ['numpy', 'pandas', 'cv2', 'glob', 'os']
+Classes: ['SUMSLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\UBFCPHYSLoader.py ---
+Docstring: The dataloader for the UBFC-PHYS dataset.
+
+Details for the UBFC-PHYS Dataset see https://sites.google.com/view/ybenezeth/ubfc-phys.
+If you use this dataset, please cite this paper:
+R. Meziati Sabour, 
+Imports: ['glob', 'os', 're', 'multiprocessing.Pool', 'cv2']
+Classes: ['UBFCPHYSLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\UBFCrPPGLoader.py ---
+Docstring: The dataloader for UBFC-rPPG dataset.
+
+Details for the UBFC-rPPG Dataset see https://sites.google.com/view/ybenezeth/ubfcrppg.
+If you use this dataset, please cite this paper:
+S. Bobbia, R. Macwan, Y.
+Imports: ['glob', 'os', 're', 'multiprocessing.Pool', 'cv2']
+Classes: ['UBFCrPPGLoader']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\__init__.py ---
+Docstring: None
+Imports: ['dataset.data_loader.BaseLoader', 'dataset.data_loader.COHFACELoader', 'dataset.data_loader.UBFCrPPGLoader', 'dataset.data_loader.PURELoader', 'dataset.data_loader.iBVPLoader']
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\YOLO5Face.py ---
+Docstring: None
+Imports: ['copy.deepcopy', 'os', 'cv2', 'torch', 'torch.nn']
+Classes: ['YOLO5Face']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\model\yolo.py ---
+Docstring: None
+Imports: ['argparse', 'logging', 'math', 'sys', 'copy.deepcopy']
+Classes: ['Detect', 'Model']
+Functions: ['parse_model']
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\model\yolo5face.yaml ---
+First lines: # parameters | nc: 1  # number of classes | depth_multiple: 0.33  # model depth multiple | width_multiple: 0.5  # layer channel multiple | # anchors
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\utils\common.py ---
+Docstring: None
+Imports: ['math', 'numpy', 'requests', 'torch', 'torch.nn']
+Classes: ['Conv', 'StemBlock', 'Bottleneck', 'BottleneckCSP', 'C3']
+Functions: ['color_list', 'autopad', 'channel_shuffle', 'DWConv']
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\utils\data_ops.py ---
+Docstring: None
+Imports: ['math', 'time', 'numpy', 'torch', 'torchvision']
+Classes: []
+Functions: ['letterbox', 'scale_coords_landmarks', 'show_results', 'make_divisible', 'check_img_size', 'xyxy2xywh', 'xywh2xyxy', 'xywhn2xyxy', 'scale_coords', 'clip_coords']
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\utils\experimental.py ---
+Docstring: None
+Imports: ['numpy', 'torch', 'torch.nn', 'dataset.data_loader.face_detector.utils.common.Conv']
+Classes: ['CrossConv', 'Sum', 'GhostConv', 'GhostBottleneck', 'MixConv2d']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\utils\general.py ---
+Docstring: None
+Imports: ['glob', 'logging', 'math', 'os', 'random']
+Classes: []
+Functions: ['set_logging', 'init_seeds', 'check_file']
+
+--- FILE: scratch\rPPG-Toolbox\dataset\data_loader\face_detector\utils\torch_utils.py ---
+Docstring: None
+Imports: ['logging', 'math', 'os', 'subprocess', 'time']
+Classes: ['ModelEMA']
+Functions: ['torch_distributed_zero_first', 'init_torch_seeds', 'git_describe', 'select_device', 'time_synchronized', 'profile', 'is_parallel', 'intersect_dicts', 'initialize_weights', 'find_modules']
+
+--- FILE: scratch\rPPG-Toolbox\evaluation\bigsmall_multitask_metrics.py ---
+Docstring: None
+Imports: ['numpy', 'scipy', 'scipy.io', 'scipy.signal.butter', 'sklearn.metrics.f1_score']
+Classes: []
+Functions: ['calculate_bvp_metrics', '_calculate_fft_rr', '_calculate_peak_rr', 'calculate_resp_metrics_per_video', 'calculate_resp_metrics', '_reform_au_data_from_dict', 'calculate_bp4d_au_metrics']
+
+--- FILE: scratch\rPPG-Toolbox\evaluation\BlandAltmanPy.py ---
+Docstring: None
+Imports: ['os', 'pandas', 'numpy', 'matplotlib', 'matplotlib.pyplot']
+Classes: ['BlandAltman']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\evaluation\metrics.py ---
+Docstring: None
+Imports: ['numpy', 'pandas', 'torch', 'evaluation.post_process.*', 'tqdm.tqdm']
+Classes: []
+Functions: ['read_label', 'read_hr_label', '_reform_data_from_dict', 'calculate_metrics']
+
+--- FILE: scratch\rPPG-Toolbox\evaluation\post_process.py ---
+Docstring: The post processing files for caluclating heart rate using FFT or peak detection.
+The file also  includes helper funcs such as detrend, power2db etc.
+Imports: ['numpy', 'scipy', 'scipy.io', 'scipy.signal.butter', 'scipy.sparse.spdiags']
+Classes: []
+Functions: ['_next_power_of_2', '_detrend', 'power2db', '_calculate_fft_hr', '_calculate_peak_hr', '_compute_macc', '_calculate_SNR', 'calculate_metric_per_video']
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\loss\NegPearsonLoss.py ---
+Docstring: None
+Imports: ['__future__.print_function', 'torch', 'matplotlib.pyplot', 'argparse', 'os']
+Classes: ['Neg_Pearson']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\loss\PhysFormerLossComputer.py ---
+Docstring: Adapted from here: https://github.com/ZitongYu/PhysFormer/blob/main/TorchLossComputer.py
+Modifed based on the HR-CNN here: https://github.com/radimspetlik/hr-cnn
+Imports: ['math', 'torch', 'torch.autograd.Variable', 'numpy', 'torch.nn.functional']
+Classes: ['TorchLossComputer']
+Functions: ['normal_sampling', 'kl_loss']
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\loss\PhysNetNegPearsonLoss.py ---
+Docstring: None
+Imports: ['__future__.print_function', 'torch', 'matplotlib.pyplot', 'argparse', 'os']
+Classes: ['Neg_Pearson']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\loss\RythmFormerLossComputer.py ---
+Docstring: Adapted from here: https://github.com/ZitongYu/PhysFormer/TorchLossComputer.py
+Modifed based on the HR-CNN here: https://github.com/radimspetlik/hr-cnn
+Imports: ['math', 'torch', 'torch.autograd.Variable', 'numpy', 'torch.nn.functional']
+Classes: ['Neg_Pearson', 'RhythmFormer_Loss', 'TorchLossComputer']
+Functions: ['normal_sampling', 'kl_loss']
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\loss\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\BigSmall.py ---
+Docstring: BigSmall: Multitask Network for AU / Respiration / PPG
+
+BigSmall: Efficient Multi-Task Learning
+For Physiological Measurements
+Girish Narayanswamy, Yujia (Nancy) Liu, Yuzhe Yang, Chengqian (Jack) Ma, 
+Imports: ['torch', 'torch.nn']
+Classes: ['WTSM', 'BigSmall']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\DeepPhys.py ---
+Docstring: DeepPhys - 2D Convolutional Attention Network.
+DeepPhys: Video-Based Physiological Measurement Using Convolutional Attention Networks
+ECCV, 2018
+Weixuan Chen, Daniel McDuff
+Imports: ['torch', 'torch.nn']
+Classes: ['Attention_mask', 'DeepPhys']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\EfficientPhys.py ---
+Docstring: EfficientPhys: Enabling Simple, Fast and Accurate Camera-Based Vitals Measurement
+Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2023)
+Xin Liu, Brial Hill, Zihe
+Imports: ['torch', 'torch.nn']
+Classes: ['Attention_mask', 'TSM', 'EfficientPhys']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\iBVPNet.py ---
+Docstring: iBVPNet - 3D Convolutional Network.
+Proposed along with the iBVP Dataset, see https://doi.org/10.3390/electronics13071334
+
+Joshi, Jitesh, and Youngjun Cho. 2024. "iBVP Dataset: RGB-Thermal rPPG Datase
+Imports: ['torch', 'torch.nn', 'torch.nn.functional']
+Classes: ['ConvBlock3D', 'DeConvBlock3D', 'encoder_block', 'decoder_block', 'iBVPNet']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\PhysFormer.py ---
+Docstring: This file is a combination of Physformer.py and transformer_layer.py
+in the official PhysFormer implementation here:
+https://github.com/ZitongYu/PhysFormer
+
+model.py - Model and module class for ViT.
+
+Imports: ['numpy', 'typing.Optional', 'torch', 'torch.nn', 'torch.Tensor']
+Classes: ['CDC_T', 'MultiHeadedSelfAttention_TDC_gra_sharp', 'PositionWiseFeedForward_ST', 'Block_ST_TDC_gra_sharp', 'Transformer_ST_TDC_gra_sharp']
+Functions: ['as_tuple', 'split_last', 'merge_last']
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\PhysMamba.py ---
+Docstring: None
+Imports: ['math', 'torch', 'torch.nn', 'timm.models.layers.trunc_normal_', 'mamba_ssm.Mamba']
+Classes: ['ChannelAttention3D', 'LateralConnection', 'CDC_T', 'MambaLayer', 'PhysMamba']
+Functions: ['conv_block']
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\PhysNet.py ---
+Docstring: PhysNet
+We repulicate the net pipeline of the orginal paper, but set the input as diffnormalized data.
+orginal source:
+Remote Photoplethysmograph Signal Measurement from Facial Videos Using Spatio-Tem
+Imports: ['math', 'pdb', 'torch', 'torch.nn', 'torch.nn.modules.utils._triple']
+Classes: ['PhysNet_padding_Encoder_Decoder_MAX']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\RhythmFormer.py ---
+Docstring: RhythmFormer:Extracting rPPG Signals Based on Hierarchical Temporal Periodic Transformer
+Imports: ['typing.Optional', 'torch', 'torch.nn', 'torch.nn.functional', 'math']
+Classes: ['CDC_T', 'video_BRA', 'video_BiFormerBlock', 'Fusion_Stem', 'TPT_Block']
+Functions: ['_grid2seq', '_seq2grid', 'video_regional_routing_attention_torch']
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\TS_CAN.py ---
+Docstring: Temporal Shift Convolutional Attention Network (TS-CAN).
+Multi-Task Temporal Shift Attention Networks for On-Device Contactless Vitals Measurement
+NeurIPS, 2020
+Xin Liu, Josh Fromm, Shwetak Patel, Dan
+Imports: ['torch', 'torch.nn']
+Classes: ['Attention_mask', 'TSM', 'TSCAN', 'MTTS_CAN']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\FactorizePhys\FactorizePhys.py ---
+Docstring: FactorizePhys: Matrix Factorization for Multidimensional Attention in Remote Physiological Sensing
+NeurIPS 2024
+Jitesh Joshi, Sos S. Agaian, and Youngjun Cho
+Imports: ['torch', 'torch.nn', 'neural_methods.model.FactorizePhys.FSAM.FeaturesFactorizationModule']
+Classes: ['ConvBlock3D', 'rPPG_FeatureExtractor', 'BVP_Head', 'FactorizePhys']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\FactorizePhys\FactorizePhysBig.py ---
+Docstring: FactorizePhys: Matrix Factorization for Multidimensional Attention in Remote Physiological Sensing
+NeurIPS 2024
+Jitesh Joshi, Sos S. Agaian, and Youngjun Cho
+Imports: ['torch', 'torch.nn', 'neural_methods.model.FactorizePhys.FSAM.FeaturesFactorizationModule']
+Classes: ['ConvBlock3D', 'rPPG_FeatureExtractor', 'BVP_Head', 'FactorizePhysBig']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\FactorizePhys\FSAM.py ---
+Docstring: FactorizePhys: Matrix Factorization for Multidimensional Attention in Remote Physiological Sensing
+NeurIPS 2024
+Jitesh Joshi, Sos S. Agaian, and Youngjun Cho
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'torch.nn.modules.batchnorm._BatchNorm', 'numpy']
+Classes: ['_MatrixDecompositionBase', 'NMF', 'VQ', 'ConvBNReLU', 'FeaturesFactorizationModule']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\FactorizePhys\test_FactorizePhys.py ---
+Docstring: FactorizePhys: Matrix Factorization for Multidimensional Attention in Remote Physiological Sensing
+NeurIPS 2024
+Jitesh Joshi, Sos S. Agaian, and Youngjun Cho
+Imports: ['time', 'numpy', 'pathlib.Path', 'matplotlib.pyplot', 'matplotlib.cm']
+Classes: ['TestFactorizePhysBig']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\FactorizePhys\test_FactorizePhysBig.py ---
+Docstring: FactorizePhys: Matrix Factorization for Multidimensional Attention in Remote Physiological Sensing
+NeurIPS 2024
+Jitesh Joshi, Sos S. Agaian, and Youngjun Cho
+Imports: ['time', 'numpy', 'pathlib.Path', 'matplotlib.pyplot', 'matplotlib.cm']
+Classes: ['TestFactorizePhysBig']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\model\FactorizePhys\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\BaseTrainer.py ---
+Docstring: None
+Imports: ['torch', 'torch.autograd.Variable', 'matplotlib.pyplot', 'matplotlib.ticker.ScalarFormatter', 'os']
+Classes: ['BaseTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\BigSmallTrainer.py ---
+Docstring: Trainer for BigSmall Multitask Models
+Imports: ['torch', 'torch.optim', 'neural_methods.trainer.BaseTrainer.BaseTrainer', 'neural_methods.loss', 'neural_methods.model.BigSmall.BigSmall']
+Classes: ['BigSmallTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\DeepPhysTrainer.py ---
+Docstring: Trainer for DeepPhys.
+Imports: ['logging', 'os', 'collections.OrderedDict', 'numpy', 'torch']
+Classes: ['DeepPhysTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\EfficientPhysTrainer.py ---
+Docstring: Trainer for EfficientPhys.
+Imports: ['logging', 'os', 'collections.OrderedDict', 'numpy', 'torch']
+Classes: ['EfficientPhysTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\FactorizePhysTrainer.py ---
+Docstring: FactorizePhys: Matrix Factorization for Multidimensional Attention in Remote Physiological Sensing
+NeurIPS 2024
+Jitesh Joshi, Sos S. Agaian, and Youngjun Cho
+Imports: ['os', 'numpy', 'torch', 'torch.optim', 'evaluation.metrics.calculate_metrics']
+Classes: ['FactorizePhysTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\iBVPNetTrainer.py ---
+Docstring: Trainer for iBVPNet.
+Imports: ['os', 'collections.OrderedDict', 'numpy', 'torch', 'torch.optim']
+Classes: ['iBVPNetTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\PhysFormerTrainer.py ---
+Docstring: Trainer for Physformer.
+
+Based on open-source code from the original PhysFormer authors below:
+https://github.com/ZitongYu/PhysFormer/blob/main/train_Physformer_160_VIPL.py
+
+We also thank the PhysBenc
+Imports: ['os', 'numpy', 'math', 'torch', 'torch.optim']
+Classes: ['PhysFormerTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\PhysMambaTrainer.py ---
+Docstring: PhysMamba Trainer.
+Imports: ['os', 'collections.OrderedDict', 'math', 'numpy', 'torch']
+Classes: ['PhysMambaTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\PhysnetTrainer.py ---
+Docstring: PhysNet Trainer.
+Imports: ['os', 'collections.OrderedDict', 'numpy', 'torch', 'torch.optim']
+Classes: ['PhysnetTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\RhythmFormerTrainer.py ---
+Docstring: Trainer for RhythmFormer.
+Imports: ['os', 'numpy', 'torch', 'torch.optim', 'random']
+Classes: ['RhythmFormerTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\TscanTrainer.py ---
+Docstring: Trainer for TSCAN.
+Imports: ['logging', 'os', 'collections.OrderedDict', 'numpy', 'torch']
+Classes: ['TscanTrainer']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\neural_methods\trainer\__init__.py ---
+Docstring: None
+Imports: ['neural_methods.trainer.BaseTrainer', 'neural_methods.trainer.PhysnetTrainer', 'neural_methods.trainer.iBVPNetTrainer', 'neural_methods.trainer.TscanTrainer', 'neural_methods.trainer.DeepPhysTrainer']
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\README.md ---
+First lines: # Mamba | ![Mamba](assets/selection.png "Selective State Space") | > **Mamba: Linear-Time Sequence Modeling with Selective State Spaces**\ | > Albert Gu*, Tri Dao*\ | > Paper: https://arxiv.org/abs/2312.00752
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\setup.py ---
+Docstring: None
+Imports: ['sys', 'warnings', 'os', 're', 'ast']
+Classes: ['CachedWheelsCommand']
+Functions: ['get_platform', 'get_cuda_bare_metal_version', 'check_if_cuda_home_none', 'append_nvcc_threads', 'get_package_version', 'get_wheel_url']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\test_mamba_module.py ---
+Docstring: None
+Imports: ['torch', 'mamba_ssm.Mamba']
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\benchmarks\benchmark_generation_mamba_simple.py ---
+Docstring: None
+Imports: ['argparse', 'time', 'json', 'torch', 'torch.nn.functional']
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\evals\lm_harness_eval.py ---
+Docstring: None
+Imports: ['torch', 'transformers', 'transformers.AutoTokenizer', 'mamba_ssm.models.mixer_seq_simple.MambaLMHeadModel', 'lm_eval.api.model.LM']
+Classes: ['MambaEvalWrapper']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\__init__.py ---
+Docstring: None
+Imports: ['mamba_ssm.ops.selective_scan_interface.selective_scan_fn', 'mamba_ssm.modules.mamba_simple.Mamba', 'mamba_ssm.models.mixer_seq_simple.MambaLMHeadModel']
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\models\mixer_seq_simple.py ---
+Docstring: None
+Imports: ['math', 'functools.partial', 'collections.namedtuple', 'torch', 'torch.nn']
+Classes: ['MixerModel', 'MambaLMHeadModel']
+Functions: ['create_block', '_init_weights']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\models\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\modules\mamba_simple.py ---
+Docstring: None
+Imports: ['math', 'typing.Optional', 'torch', 'torch.nn', 'torch.nn.functional']
+Classes: ['Mamba', 'Block']
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\modules\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\ops\selective_scan_interface.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn.functional', 'torch.cuda.amp.custom_bwd', 'einops.rearrange', 'causal_conv1d.causal_conv1d_fn']
+Classes: ['SelectiveScanFn', 'MambaInnerFnNoOutProj', 'MambaInnerFn', 'BiMambaInnerFn']
+Functions: ['selective_scan_fn', 'selective_scan_ref', 'mamba_inner_fn', 'bimamba_inner_fn', 'mamba_inner_fn_no_out_proj', 'mamba_inner_ref', 'bimamba_inner_ref']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\ops\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\ops\triton\layernorm.py ---
+Docstring: None
+Imports: ['math', 'torch', 'torch.nn.functional', 'torch.cuda.amp.custom_fwd', 'triton']
+Classes: ['LayerNormFn', 'RMSNorm', 'LayerNormLinearFn']
+Functions: ['layer_norm_ref', 'rms_norm_ref', '_layer_norm_fwd_1pass_kernel', '_layer_norm_fwd', '_layer_norm_bwd_kernel', '_layer_norm_bwd', 'layer_norm_fn', 'rms_norm_fn', 'layer_norm_linear_fn']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\ops\triton\selective_state_update.py ---
+Docstring: We want triton==2.1.0 for this
+Imports: ['math', 'torch', 'torch.nn.functional', 'triton', 'triton.language']
+Classes: []
+Functions: ['_selective_scan_update_kernel', 'selective_state_update', 'selective_state_update_ref']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\ops\triton\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\utils\generation.py ---
+Docstring: None
+Imports: ['gc', 'time', 'collections.namedtuple', 'dataclasses.dataclass', 'functools.partial']
+Classes: ['InferenceParams', 'GenerationMixin', 'DecodingCGCache']
+Functions: ['modify_logits_for_top_k_filtering', 'modify_logits_for_top_p_filtering', 'sample', 'decode', 'allocate_inference_cache', 'update_graph_cache', 'capture_graph']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\utils\hf.py ---
+Docstring: None
+Imports: ['json', 'torch', 'transformers.utils.WEIGHTS_NAME', 'transformers.utils.hub.cached_file']
+Classes: []
+Functions: ['load_config_hf', 'load_state_dict_hf']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\mamba_ssm\utils\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\tests\ops\test_selective_scan.py ---
+Docstring: None
+Imports: ['math', 'torch', 'torch.nn.functional', 'torch.autograd.gradcheck', 'pytest']
+Classes: []
+Functions: ['test_selective_scan', 'test_mamba_inner_fn', 'test_bimamba_inner_fn', 'test_bimamba_inner_fn_grad_check']
+
+--- FILE: scratch\rPPG-Toolbox\tools\mamba\tests\ops\triton\test_selective_state_update.py ---
+Docstring: None
+Imports: ['math', 'torch', 'torch.nn.functional', 'pytest', 'einops.rearrange']
+Classes: []
+Functions: ['test_causal_conv1d_update']
+
+--- FILE: scratch\rPPG-Toolbox\tools\motion_analysis\compare_AU_and_Pose.py ---
+Docstring: None
+Imports: ['os', 'pandas', 'matplotlib.pyplot', 'numpy']
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\tools\motion_analysis\convert_dataset_to_mp4.py ---
+Docstring: None
+Imports: ['os', 'glob', 'cv2', 'numpy', 'scipy.io']
+Classes: []
+Functions: ['read_video', 'read_png_frames', 'read_mat', 'read_npy_video', 'save_video_frames', 'process_ubfc_folder', 'process_phys_folder', 'process_pure_folder', 'process_afrl_folder', 'process_mmpd_folder']
+
+--- FILE: scratch\rPPG-Toolbox\tools\motion_analysis\get_aus_and_pose.sh ---
+First lines: #!/bin/bash | export OMP_NUM_THREADS=4 | export VECLIB_MAXIMUM_THREADS=4 | # Update this path to point to a dataset folder of MP4 videos you'd like to analyze | input_dir="/path/to/converted_mp4_videos"
+--- FILE: scratch\rPPG-Toolbox\tools\motion_analysis\README.md ---
+First lines: # Motion Analysis Tools | In this folder, we provide scripts that ultimately leverage OpenFace for extracting, visualizing, and analyzing motion in rPPG video datasets. Specifically, we include a Python script to convert datasets into the .mp4 format for subsequent analysis by OpenFace, a shell script that levereges OpenFace to perform both rigid and non-rigid head motion analysis, and a separate Python script that plots an exemplar plot that showcases the comparison of different types of motion between two datasets. | Please follow the [Unix installation instructions](https://github.com/TadasBaltrusaitis/OpenFace/wiki/Unix-Installation) in the [OpenFace GitHub Repo](https://github.com/TadasBaltrusaitis/OpenFace) to successfully install OpenFace and utilize the aforementioned scripts. Remember to [cite appropriately](https://github.com/TadasBaltrusaitis/OpenFace#citation) if you use OpenFace in your research. | The provided scripts are: | * `convert_dataset_to_mp4.py`: converts an rPPG dataset of interest into a folder of MP4 video files that can ultimately be used with OpenFace for further analysis.
+--- FILE: scratch\rPPG-Toolbox\tools\output_signal_viz\data_out_viz.ipynb ---
+Cells: MD: # Model Output Data Visualization | MD: ### Read Me | MD: This notebook vizualizes model outputs for supervised neural methods from the rPPG Toolbox. To use t
+--- FILE: scratch\rPPG-Toolbox\tools\output_signal_viz\README.md ---
+First lines: # Neural Method Output Visualization Tool | In this folder, we provide an interactive Jupyter notebook to visualize test-set neural method output predictions and labels. The notebook, `data_out_viz.ipynb`, given a `.pickle` output file, generated by setting `TEST.OUTPUT_SAVE_DIR` in an experiment config file to a directory path, will assist in plotting the predicted PPG signal against the ground-truth PPG signal label. | Below is an example of what the visualization looks like: | ![Prediction Visualization Example](./sample_model_output_viz.png)
+--- FILE: scratch\rPPG-Toolbox\tools\preprocessing_viz\README.md ---
+First lines: # Preprocessing Visualization Tool | In this folder, we provide an interactive Jupyter notebook to visualize data preprocessed by this toolbox. The notebook, `viz_preprocessed_data.ipynb`, automatically will provide a frame-by-frame visualization of the data, alongside the corresponding plot of the ground truth label and the average heart rate (for that chunk). | Below is an example of what the visualization looks like: | ![Data Visualization Example](./preprocessing_viz_example.png)
+--- FILE: scratch\rPPG-Toolbox\tools\preprocessing_viz\viz_preprocessed_data.ipynb ---
+Cells: Code: import numpy as np import os import matplotlib.pyplot as plt import cv2 import re import warnings fr | Code: # FILL THIS IN! This is the path to your preprocessed dataset folder. preprocessed_dataset_path = '/ | Code: class Visualizer:     def __init__(self, preprocessed_dataset_path, input_files, label_files):      
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\unsupervised_predictor.py ---
+Docstring: Unsupervised learning methods including POS, GREEN, CHROME, ICA, LGI and PBV.
+Imports: ['numpy', 'evaluation.post_process.*', 'unsupervised_methods.methods.CHROME_DEHAAN.*', 'unsupervised_methods.methods.GREEN.*', 'unsupervised_methods.methods.ICA_POH.*']
+Classes: []
+Functions: ['unsupervised_predict']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\utils.py ---
+Docstring: None
+Imports: ['math', 'cv2', 'numpy', 'scipy.io', 'scipy.linalg']
+Classes: []
+Functions: ['detrend', 'process_video']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\__init__.py ---
+Docstring: None
+Imports: ['unsupervised_methods.methods.CHROME_DEHAAN.*', 'unsupervised_methods.methods.ICA_POH.*', 'unsupervised_methods.methods.POS_WANG.*', 'unsupervised_methods.methods.LGI.*', 'unsupervised_methods.methods.GREEN.*']
+Classes: []
+Functions: []
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\methods\CHROME_DEHAAN.py ---
+Docstring: None
+Imports: ['numpy', 'math', 'scipy.signal', 'unsupervised_methods.utils']
+Classes: []
+Functions: ['CHROME_DEHAAN', 'process_video']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\methods\GREEN.py ---
+Docstring: GREEN
+Verkruysse, W., Svaasand, L. O. & Nelson, J. S.
+Remote plethysmographic imaging using ambient light.
+Optical. Express 16, 21434–21445 (2008).
+Imports: ['numpy', 'math', 'scipy.signal', 'scipy.linalg', 'unsupervised_methods.utils']
+Classes: []
+Functions: ['GREEN']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\methods\ICA_POH.py ---
+Docstring: ICA
+Non-contact, automated cardiac pulse measurements using video imaging and blind source separation.
+Poh, M. Z., McDuff, D. J., & Picard, R. W. (2010).
+Optics express, 18(10), 10762-10774. DOI: 10.1
+Imports: ['math', 'numpy', 'scipy.linalg', 'scipy.signal', 'unsupervised_methods.utils']
+Classes: []
+Functions: ['ICA_POH', 'process_video', 'ica', 'jade']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\methods\LGI.py ---
+Docstring: LGI
+Local group invariance for heart rate estimation from face videos.
+Pilz, C. S., Zaunseder, S., Krajewski, J. & Blazek, V.
+In Proceedings of the IEEE conference on computer vision and pattern recog
+Imports: ['math', 'numpy', 'scipy.linalg', 'scipy.signal', 'unsupervised_methods.utils']
+Classes: []
+Functions: ['LGI']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\methods\OMIT.py ---
+Docstring: OMIT
+Face2PPG: An unsupervised pipeline for blood volume pulse extraction from faces.
+Álvarez Casado, C., & Bordallo López, M.
+IEEE Journal of Biomedical and Health Informatics.
+(2023).
+Imports: ['numpy', 'unsupervised_methods.utils']
+Classes: []
+Functions: ['OMIT']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\methods\PBV.py ---
+Docstring: PBV
+Improved motion robustness of remote-ppg by using the blood volume pulse signature.
+De Haan, G. & Van Leest, A.
+Physiol. measurement 35, 1913 (2014)
+Imports: ['math', 'numpy', 'scipy.linalg', 'scipy.signal', 'unsupervised_methods.utils']
+Classes: []
+Functions: ['PBV', 'PBV2']
+
+--- FILE: scratch\rPPG-Toolbox\unsupervised_methods\methods\POS_WANG.py ---
+Docstring: POS
+Wang, W., den Brinker, A. C., Stuijk, S., & de Haan, G. (2017). 
+Algorithmic principles of remote PPG. 
+IEEE Transactions on Biomedical Engineering, 64(7), 1479-1491. 
+Imports: ['math', 'numpy', 'scipy.signal', 'unsupervised_methods.utils']
+Classes: []
+Functions: ['_process_video', 'POS_WANG']
+
+--- FILE: scratch\rPPG-Toolbox\wip\label\read_gt_hr.py ---
+Docstring: None
+Imports: ['pandas']
+Classes: []
+Functions: ['read_label']
+
+--- FILE: scratch\rPPG-Toolbox\wip\label\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: scripts\sanity_check.py ---
+Docstring: None
+Imports: ['torch', 'cv2', 'numpy', 'neurokit2']
+Classes: []
+Functions: []
+
+--- FILE: scripts\ubfc_leakage\audit_manifest_geometry.py ---
+Docstring: Forensic audit of manifest box geometry (2026-09-23).
+
+Motivated by two questions raised during final review:
+
+1. The `3.566283` scale constant has a documented broken chain of custody
+   (preregistra
+Imports: ['__future__.annotations', 'csv', 'math', 'statistics', 'pathlib.Path']
+Classes: []
+Functions: ['per_clip', 'main']
+
+--- FILE: scripts\ubfc_leakage\check_nondeterminism.py ---
+Docstring: None
+Imports: ['pandas', 'pathlib.Path', 'sys']
+Classes: []
+Functions: []
+
+--- FILE: scripts\ubfc_leakage\preprocess_video_mediapipe.py ---
+Docstring: None
+Imports: ['cv2', 'sys', 'pathlib.Path', 'mediapipe']
+Classes: []
+Functions: ['process_video']
+
+--- FILE: scripts\ubfc_leakage\run_ablation.py ---
+Docstring: None
+Imports: ['subprocess', 'os']
+Classes: []
+Functions: []
+
+--- FILE: scripts\ubfc_leakage\run_full_pos_pipeline.py ---
+Docstring: None
+Imports: ['cv2', 'numpy', 'scipy.signal', 'scipy.stats', 'itertools']
+Classes: []
+Functions: ['compute_pos_rppg', 'extract_rgb_from_pngs', 'load_bvp', 'resample_to_common', 'bandpass_filter', 'point_to_point_corr', 'main']
+
+--- FILE: scripts\ubfc_leakage\save_per_clip_results.py ---
+Docstring: Persist the full per-clip estimator table to outputs/leakage_run/.
+
+The writeup (docs/negative_result_writeup.md, section 4.5) previously recorded
+only the two highest CHROM clips. This script re-runs
+Imports: ['__future__.annotations', 'csv', 'sys', 'pathlib.Path', 'src.evaluation.leakage_estimator_comparison.build_clips']
+Classes: []
+Functions: ['main']
+
+--- FILE: scripts\ubfc_leakage\spectral_verification.py ---
+Docstring: Spectral verification for open item 5 of docs/negative_result_writeup.md.
+
+Question: are the two high CHROM recoveries (s2 T1 r=0.8487, s3 T1 r=0.4865)
+genuine cardiac pulse recovered from the facial 
+Imports: ['__future__.annotations', 'csv', 'sys', 'pathlib.Path', 'numpy']
+Classes: []
+Functions: ['band_metrics', 'main']
+
+--- FILE: scripts\ubfc_leakage\ubfc_n56_extraction_pipeline.py ---
+Docstring: None
+Imports: ['os', 'glob', 'subprocess', 'pathlib.Path']
+Classes: []
+Functions: ['run_n56_pipeline']
+
+--- FILE: src\analyze_visual_review.py ---
+Docstring: Analyze blinded visual-review ratings without fabricating incomplete evidence.
+Imports: ['__future__.annotations', 'argparse', 'json', 'itertools.combinations', 'pathlib.Path']
+Classes: []
+Functions: ['validate_ratings', 'pairwise_agreement', 'main']
+
+--- FILE: src\audit_pristine_sources.py ---
+Docstring: Audit candidate pristine face sources without modifying raw data.
+
+This stage intentionally does not generate scars. It produces a row-level audit
+manifest and a summary that must be reviewed before a
+Imports: ['__future__.annotations', 'argparse', 'csv', 'hashlib', 'json']
+Classes: ['AuditConfig', 'AuditRow', 'ManifestWriter']
+Functions: ['sha256_file', 'pixel_sha256', 'perceptual_hash', 'domain_for_root', 'discover_metadata', 'reject_unsafe_root', 'image_paths', 'face_measurements', 'license_and_provenance', 'audit_image']
+
+--- FILE: src\benchmark_edge_latency.py ---
+Docstring: None
+Imports: ['sys', 'pathlib.Path', 'time', 'torch', 'numpy']
+Classes: []
+Functions: ['main']
+
+--- FILE: src\build_approved_manifest.py ---
+Docstring: Build an immutable, vetted pristine manifest for thesis pp33.
+
+Filters raw FFHQ candidates to enforce:
+1. Exactly one isolated human face (zero photobombers).
+2. Adult cohort only (age 18 to 65).
+3. N
+Imports: ['__future__.annotations', 'argparse', 'logging', 'pathlib.Path', 'cv2']
+Classes: []
+Functions: ['parse_args', 'is_valid_candidate', 'main']
+
+--- FILE: src\build_multimodal_csv.py ---
+Error parsing py: invalid non-printable character U+FEFF (<unknown>, line 1)
+--- FILE: src\build_publishable_scar_dataset.py ---
+Docstring: Build paired, provenance-tracked scar-like artifacts from raw faces and WESAD windows.
+Imports: ['__future__.annotations', 'argparse', 'hashlib', 'json', 'random']
+Classes: []
+Functions: ['sha256_file', 'stable_seed', 'render_scar', 'mask_passes_geometry', 'assign_balanced_morphologies', 'assign_stratified_scar_labels', 'detect_face', 'allocate_subjects', 'select_windows', 'main']
+
+--- FILE: src\build_strict_manifest.py ---
+Docstring: Build a deterministic subject- and content-disjoint dataset manifest.
+Imports: ['__future__.annotations', 'argparse', 'hashlib', 'json', 'pathlib.Path']
+Classes: ['UnionFind']
+Functions: ['sha256_file', 'build_components', 'score_assignment', 'choose_assignment', 'validate_manifest', 'main']
+
+--- FILE: src\check_focus_gate.py ---
+Docstring: None
+Imports: ['sys', 'numpy', 'torch', 'dataset_fair.MultimodalCSVDatasetWithCF', 'models.MultimodalThreatModel']
+Classes: []
+Functions: ['main']
+
+--- FILE: src\comprehensive_analysis.py ---
+Docstring: Comprehensive Dataset Analysis and Results Visualization Script
+
+This script provides:
+1. Dataset analysis (features, samples, class distribution)
+2. Before/After preprocessing comparison
+3. Train/Tes
+Imports: ['pandas', 'numpy', 'matplotlib.pyplot', 'seaborn', 'pathlib.Path']
+Classes: ['DatasetAnalyzer', 'ModelEvaluator']
+Functions: ['main']
+
+--- FILE: src\create_visual_review_packet.py ---
+Docstring: Create a blinded, stratified visual-review packet from a validated pilot.
+Imports: ['__future__.annotations', 'argparse', 'hashlib', 'json', 'random']
+Classes: []
+Functions: ['stable_id', 'main']
+
+--- FILE: src\dataset_fair.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'dataclasses.dataclass', 'typing.Any', 'pathlib.Path', 'numpy']
+Classes: ['Sample', 'MultimodalCSVDatasetWithCF']
+Functions: ['_safe_str', '_infer_phys_cols', 'remove_scar_pil', '_normalize_mask_to_255', 'collate_samples']
+
+--- FILE: src\diagnostic_cf_collapse.py ---
+Docstring: None
+Imports: ['sys', 'pathlib.Path', 'json', 'torch', 'numpy']
+Classes: []
+Functions: ['diagnose_collapse']
+
+--- FILE: src\experiment_fine_lambda_sweep.py ---
+Docstring: experiment_fine_lambda_sweep.py
+======================================================
+Strict, empirical verification of the Fairness-Accuracy tradeoff frontier.
+
+This script executes a fine-grained h
+Imports: ['subprocess', 'json', 'time', 'pathlib.Path', 'os']
+Classes: []
+Functions: ['run_fine_sweep']
+
+--- FILE: src\fair_repair_finetune.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'argparse', 'json', 'random']
+Classes: []
+Functions: ['_resolve_path', 'parse_args', 'set_seed', 'load_state_dict_any', 'js_divergence', 'dp_gap_prob', 'eo_gap_prob', 'eval_metrics', 'get_amp', '_validate_split_indices']
+
+--- FILE: src\generate_xai_proof.py ---
+Docstring: None
+Imports: ['argparse', 'sys', 'os', 'pathlib.Path', 'torch']
+Classes: ['IntegratedGradients']
+Functions: ['normalize_heatmap', 'main']
+
+--- FILE: src\models_arch.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'dataclasses.dataclass', 'typing.Optional', 'torch', 'torch.nn']
+Classes: ['ModelOut', 'PhysMLP', 'VisionEncoder', 'FusionConcat', 'CausalGatedFusion']
+Functions: ['count_trainable_params']
+
+--- FILE: src\prepare_faces.py ---
+Docstring: None
+Imports: ['os', 'random', 'pathlib.Path', 'cv2', 'numpy']
+Classes: []
+Functions: ['ensure_dirs', 'list_images', 'resize_to_square', 'draw_scar_mask', 'apply_scar', 'main']
+
+--- FILE: src\prepare_wesad.py ---
+Docstring: None
+Imports: ['pickle', 'os', 'pathlib.Path', 'numpy', 'pandas']
+Classes: []
+Functions: ['find_subject_pickles', 'safe_mean', 'safe_std', 'main']
+
+--- FILE: src\prove_thesis_perfection.py ---
+Docstring: None
+Imports: ['sys', 'json', 'torch', 'numpy', 'pandas']
+Classes: []
+Functions: ['run_perfection_audit']
+
+--- FILE: src\randd.md ---
+First lines: 
+--- FILE: src\run_thesis_production_benchmark.py ---
+Docstring: Master Execution Suite for Thesis Production Benchmark.
+
+Orchestrates:
+1. Baseline (Concat) Multimodal Model Training (35 epochs)
+2. Causal Gated Fusion (CGF Fair) Multimodal Model Training (35 epochs
+Imports: ['__future__.annotations', 'argparse', 'hashlib', 'json', 'logging']
+Classes: []
+Functions: ['restratify_test_frame', 'evaluate_regime', 'run_training_command', 'main']
+
+--- FILE: src\train_baseline.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'json', 'random', 'numpy']
+Classes: []
+Functions: ['set_seed', 'make_or_load_split', 'eval_acc', 'main']
+
+--- FILE: src\train_cgf_fair.py ---
+Docstring: train_cgf_fair.py (V4 Final: Zero-Compromise Apex Architecture)
+================================================================
+This is the definitive, publication-grade training script for the Count
+Imports: ['__future__.annotations', 'os', 'pathlib.Path', 'argparse', 'json']
+Classes: []
+Functions: ['parse_args', 'set_seed', 'make_or_load_split', 'load_state_dict_safely', 'make_amp', 'safe_divide', 'js_divergence_stable', 'dp_gap_prob', 'eo_gap_prob', 'get_annealing_factor']
+
+--- FILE: src\train_cgrn_phase4.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'pathlib.Path', 'src.models.cgrn_arch.CGRN']
+Classes: []
+Functions: ['compute_hsic_loss', 'train_phase4_step']
+
+--- FILE: src\train_equitas_rcmf.py ---
+Docstring: train_equitas_rcmf.py
+================================================================================
+Master Trainer for EQUITAS-RCMF:
+Riemannian Causal Manifold Fusion with Orthogonal Subspace Disen
+Imports: ['__future__.annotations', 'argparse', 'hashlib', 'json', 'logging']
+Classes: []
+Functions: ['eval_rcmf_metrics', 'restratify_test_frame', 'evaluate_regime', 'main']
+
+--- FILE: src\train_production_suite.py ---
+Docstring: None
+Imports: ['subprocess', 'sys', 'time', 'pathlib.Path']
+Classes: []
+Functions: ['run_command', 'main']
+
+--- FILE: src\train_ultimate_sweep.py ---
+Docstring: None
+Imports: ['subprocess', 'sys', 'time', 'pathlib.Path']
+Classes: []
+Functions: ['run_command', 'main']
+
+--- FILE: src\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: src\data\causal_scar_synthesizer.py ---
+Docstring: causal_scar_synthesizer.py — Generative Causal Synthesis with MEIL
+====================================================================
+This script implements the Tier-2 Latent Diffusion Pipeline with
+Imports: ['cv2', 'torch', 'numpy', 'PIL.Image', 'typing.Tuple']
+Classes: ['MEILVerificationGate', 'CausalScarSynthesizer']
+Functions: []
+
+--- FILE: src\data\clinical_dataloader.py ---
+Docstring: None
+Imports: ['os', 'torch', 'logging', 'pandas', 'PIL.Image']
+Classes: ['MultimodalClinicalDataset']
+Functions: []
+
+--- FILE: src\data\commercial_diffusion_engine.py ---
+Docstring: None
+Imports: ['os', 'cv2', 'torch', 'numpy', 'PIL.Image']
+Classes: ['OrganicMaskGenerator', 'SourceImageDataset']
+Functions: ['compute_ssim_unmasked', 'main']
+
+--- FILE: src\data\dataset_builder.py ---
+Docstring: None
+Imports: ['logging', 'numpy', 'pandas', 'pathlib.Path', 'typing.List']
+Classes: ['BP4DStreamProcessor', 'ScarBenchGenerator']
+Functions: ['main']
+
+--- FILE: src\data\empathic_school_processor.py ---
+Docstring: empathic_school_processor.py — Real Multimodal Ingestion & Causal Injection
+=============================================================================
+This is the master bridging script that connec
+Imports: ['os', 'torch', 'numpy', 'pandas', 'PIL.Image']
+Classes: ['NormPreservingCausalInjector']
+Functions: ['process_empathic_dataset']
+
+--- FILE: src\data\run_diffusion_cluster.py ---
+Docstring: run_diffusion_cluster.py — Mass Execution Engine for Causal Synthesis
+=======================================================================
+This orchestrator script processes the raw BP4D+ dataset a
+Imports: ['os', 'argparse', 'pandas', 'tqdm.tqdm', 'logging']
+Classes: []
+Functions: ['process_massive_dataset']
+
+--- FILE: src\data\scarbench_generator.py ---
+Docstring: None
+Imports: ['numpy', 'pandas', 'torch', 'torch.nn', 'scipy.interpolate.interp1d']
+Classes: ['AutonomicNeuralODE', 'ContinuousTemporalAligner', 'LaToScarGenerator']
+Functions: []
+
+--- FILE: src\data\scarbench_ode.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn', 'numpy', 'pandas', 'typing.Tuple']
+Classes: ['AutonomicNeuralODE', 'OfflineBiophysicsEngine']
+Functions: ['build_dataset_alignment']
+
+--- FILE: src\data\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: src\deployment\export_edge_graph.py ---
+Docstring: None
+Imports: ['sys', 'pathlib.Path', 'torch', 'models.equitas_rcmf.EquitasRCMFModel']
+Classes: ['EdgeExportWrapper']
+Functions: ['main']
+
+--- FILE: src\edge\cgp_pruner.py ---
+Docstring: cgp_pruner.py — Counterfactual-Gradient Pruning (CGP)
+=====================================================
+Executes the CGP algorithm to violently compact the MobileNet-V3/PACD-Net backbone 
+to <800K
+Imports: ['os', 'argparse', 'logging', 'torch', 'torch.nn.utils.prune']
+Classes: []
+Functions: ['calculate_parameters', 'main']
+
+--- FILE: src\edge\edge_benchmark.py ---
+Docstring: None
+Imports: ['argparse', 'torch', 'torch.nn', 'time', 'os']
+Classes: []
+Functions: ['main']
+
+--- FILE: src\edge\edge_inference_engine.py ---
+Docstring: edge_inference_engine.py
+================================================================================
+Production Standalone Edge Inference Engine for EQARNB
+ZERO-PYTORCH RUNTIME: Built exclusively
+Imports: ['__future__.annotations', 'argparse', 'json', 'logging', 'os']
+Classes: ['EQARNBEdgeEngine']
+Functions: ['main']
+
+--- FILE: src\edge\equitas_runtime.py ---
+Docstring: equitas_runtime.py
+====================================================
+The MITL Edge Inference Micro-Engine
+
+This is the production-grade deployment harness for the Equitas-MITL Platform.
+It requires
+Imports: ['time', 'numpy', 'onnxruntime', 'json', 'pathlib.Path']
+Classes: ['MITLEdgeRuntime']
+Functions: []
+
+--- FILE: src\edge\export_edge_onnx.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn', 'pathlib.Path', 'sys']
+Classes: ['StaticMahalanobisReferee', 'EdgeCGRN']
+Functions: ['compile_edge_artifact']
+
+--- FILE: src\edge\export_equitas_onnx.py ---
+Docstring: export_equitas_onnx.py
+================================================================================
+EQUITAS-RCMF Hardware Compilation and Edge Deployment Suite
+Target: ONNX Opset 14 + INT8 Dynamic
+Imports: ['__future__.annotations', 'argparse', 'json', 'logging', 'os']
+Classes: ['EquitasEdgeWrapper']
+Functions: ['compile_and_benchmark']
+
+--- FILE: src\edge\export_v4_onnx.py ---
+Docstring: export_v4_onnx.py
+======================================================
+Compiles the Golden Software Master (V4 Checkpoint) into a static Edge ONNX graph.
+Enforces strict Opset 14 (LayerNorm native) 
+Imports: ['torch', 'sys', 'pathlib.Path', 'models_arch.MultimodalThreatModel']
+Classes: []
+Functions: ['export_to_onnx']
+
+--- FILE: src\edge\prune_checkpoint.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'argparse', 'typing.Dict', 'torch']
+Classes: []
+Functions: ['_resolve_path', 'load_state_dict_safely', 'infer_phys_dim_from_state_dict', 'should_prune_module', 'main']
+
+--- FILE: src\edge\prune_eqarnb.py ---
+Docstring: prune_eqarnb.py
+================================================================================
+Fair Pruning & Sparsity Audit Suite for EQARNB
+Investigating the Hooker et al. (NeurIPS 2019) Compressi
+Imports: ['__future__.annotations', 'argparse', 'copy', 'json', 'logging']
+Classes: []
+Functions: ['apply_selective_pruning', 'measure_model_sparsity', 'run_pruning_audit']
+
+--- FILE: src\edge\quantize_export.py ---
+Docstring: None
+Imports: ['argparse', 'torch', 'torch.nn', 'os', 'sys']
+Classes: []
+Functions: ['main']
+
+--- FILE: src\edge\run_final_edge_inference.py ---
+Docstring: run_final_edge_inference.py
+======================================================
+The final empirical proof of the MITL platform.
+Instantiates the single-threaded IoT runtime and executes 
+a benchmar
+Imports: ['numpy', 'time', 'equitas_runtime.MITLEdgeRuntime']
+Classes: []
+Functions: ['main']
+
+--- FILE: src\edge\structural_compressor.py ---
+Docstring: None
+Imports: ['os', 'torch', 'torch_pruning', 'logging', 'src.models.pacd_net.GWPACDNet']
+Classes: []
+Functions: ['compress_and_export']
+
+--- FILE: src\edge\structural_compressor_v10_cayley.py ---
+Docstring: structural_compressor_v10_cayley.py
+=====================================
+The V10 Newton-Schulz Bounded Edge AI Structural Compressor.
+
+Mathematical Foundation:
+    The naive L2 normalization patch (V
+Imports: ['os', 'torch', 'torch.nn', 'torch_pruning', 'logging']
+Classes: ['ONNXExportWrapper']
+Functions: ['newton_schulz_orthogonalize', 'rebuild_mismatched_linears', 'run_deviation_audit', 'compress_and_export']
+
+--- FILE: src\edge\structural_compressor_v5.py ---
+Docstring: structural_compressor_v5.py
+===========================
+Zero-compromise structural compressor for Edge NPU deployment.
+1. Shields ONLY the final classification head (out_features==2).
+2. Dynamically c
+Imports: ['os', 'torch', 'torch.nn', 'torch_pruning', 'logging']
+Classes: []
+Functions: ['rebuild_mismatched_linears', 'compress_and_export']
+
+--- FILE: src\edge\structural_compressor_v6.py ---
+Docstring: structural_compressor_v6.py
+===========================
+The ultimate Zero-Compromise Structural Compressor.
+1. Shields the final classification head (out_features==2).
+2. Shields custom 1D/scalar gati
+Imports: ['os', 'torch', 'torch.nn', 'torch_pruning', 'logging']
+Classes: []
+Functions: ['rebuild_mismatched_linears', 'compress_and_export']
+
+--- FILE: src\edge\structural_compressor_v7_master.py ---
+Docstring: structural_compressor_v7_master.py
+==================================
+The Zero-Compromise Structural Compressor for Multimodal Edge NPU Deployment.
+1. Employs the Ultimate Topological Shield (protects
+Imports: ['os', 'torch', 'torch.nn', 'torch_pruning', 'logging']
+Classes: []
+Functions: ['rebuild_mismatched_linears', 'compress_and_export']
+
+--- FILE: src\edge\structural_compressor_v8_apex.py ---
+Docstring: structural_compressor_v8_apex.py
+================================
+The Apex Edge AI Structural Compressor.
+1. ONNX Keyword Wrapper: Bypasses JIT positional tracer collapse.
+2. Semantic Shielding: Expos
+Imports: ['os', 'torch', 'torch.nn', 'torch_pruning', 'logging']
+Classes: ['ONNXExportWrapper']
+Functions: ['rebuild_mismatched_linears', 'compress_and_export']
+
+--- FILE: src\edge\structural_compressor_v9_apex.py ---
+Docstring: structural_compressor_v9_apex.py
+================================
+The Final Edge AI Structural Compressor.
+1. Opset 13 Native: Supports edge-friendly aten::diagonal operations natively.
+2. Surgical Sh
+Imports: ['os', 'torch', 'torch.nn', 'torch_pruning', 'logging']
+Classes: ['ONNXExportWrapper']
+Functions: ['rebuild_mismatched_linears', 'compress_and_export']
+
+--- FILE: src\edge\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: src\evaluation\evaluate_model_comprehensive.py ---
+Docstring: Comprehensive Model Evaluation Script
+
+This script evaluates a trained model and generates:
+- Accuracy, Precision, Recall, F1 Score, AUC-ROC
+- Confusion Matrix
+- ROC Curve
+- All visualizations
+Imports: ['torch', 'numpy', 'pandas', 'pathlib.Path', 'json']
+Classes: []
+Functions: ['load_model', 'evaluate_model', 'main']
+
+--- FILE: src\evaluation\eval_fairness.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'argparse', 'json', 'types.SimpleNamespace']
+Classes: ['LegacyViTConcatModel']
+Functions: ['parse_args', 'resolve_split_path', '_clean_indices', 'compute_phys_zscore_from_train', 'dp_gap_signed', 'eo_gaps', 'f1_score_binary', 'balanced_accuracy', 'auc_roc_np', 'load_raw_state_dict']
+
+--- FILE: src\evaluation\eval_shift.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'argparse', 'json', 'types.SimpleNamespace']
+Classes: ['LegacyViTConcatModel']
+Functions: ['parse_args', 'dp_gap_signed', 'eo_gaps', 'f1_score', 'balanced_accuracy', 'auc_roc', 'load_raw_state_dict', 'is_legacy_checkpoint', 'denorm', 'renorm']
+
+--- FILE: src\evaluation\leakage_estimator_comparison.py ---
+Docstring: Estimator-specificity check for the vision-side leakage finding.
+
+Re-runs the pre-registered leakage test (docs/negative_result_writeup.md, sections
+3.3 and 3.4) with three rPPG estimators on *identic
+Imports: ['__future__.annotations', 'csv', 'itertools', 'pathlib.Path', 'cv2']
+Classes: []
+Functions: ['_overlap_add', '_temporal_normalise', 'rppg_pos', 'rppg_chrom', 'rppg_pbv', 'extract_rgb_means', 'load_bvp', 'resample_to', 'bandpass', 'max_cross_corr']
+
+--- FILE: src\evaluation\run_compression_audit.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'argparse', 'csv', 'json']
+Classes: []
+Functions: ['run', 'read_json', 'main']
+
+--- FILE: src\evaluation\sham_edit_probe.py ---
+Docstring: None
+Imports: ['sys', 'time', 'pathlib.Path', 'torch', 'torch.nn.functional']
+Classes: []
+Functions: ['apply_sham_edit', 'evaluate_condition', 'main']
+
+--- FILE: src\evaluation\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: src\models\cgrn_arch.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'typing.Tuple']
+Classes: ['RiemannianHSICDebiaser', 'SPDRiemannianRefereeNetwork', 'CounterfactualNTKPruningHooks', 'CGRN']
+Functions: []
+
+--- FILE: src\models\dr_ps_zocr.py ---
+Docstring: Module: dr_ps_zocr.py
+Author: Thesis Engineering Team
+Description: Distributionally Robust Path-Specific Zero-Overhead Causal Referee (DR-PS-ZOCR).
+             Implements minimax adversarial training
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'typing.Dict']
+Classes: ['BoundedKappaAdversary', 'DRPSZOCRModule']
+Functions: ['perform_dr_ps_zocr_minimax_step']
+
+--- FILE: src\models\equitas_rcmf.py ---
+Docstring: equitas_rcmf.py
+================================================================================
+Riemannian Causal Manifold Fusion with Orthogonal Subspace Disentanglement
+(EQUITAS-RCMF)
+
+Core Mathema
+Imports: ['__future__.annotations', 'math', 'dataclasses.dataclass', 'typing.Optional', 'torch']
+Classes: ['RCMFOutput', 'StiefelOrthogonalDecomposition', 'ThermodynamicAttentionGate', 'EquitasRCMFModel']
+Functions: []
+
+--- FILE: src\models\ntk_pruner.py ---
+Docstring: None
+Imports: ['torch', 'torch.nn', 'typing.Dict']
+Classes: ['CounterfactualNTKExtractor']
+Functions: []
+
+--- FILE: src\models\pacd_net.py ---
+Docstring: gw_cd.py — Grassmannian-Wasserstein Causal Disentanglement Engine
+===================================================================
+A highly optimized PyTorch implementation of the GW-CD framework f
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'torchvision.models.mobilenet_v3_small', 'math']
+Classes: ['GrassmannProjection', 'GrassmannDistance', 'SinkhornWassersteinDiscriminator', 'GWPACDNet']
+Functions: []
+
+--- FILE: src\models\stiefel_causal_layer.py ---
+Docstring: stiefel_causal_layer.py
+======================================================
+Riemannian Causal Disentanglement via Newton-Schulz
+
+This is a fundamental architectural innovation. Instead of fighting 
+Imports: ['torch', 'torch.nn', 'torch.nn.functional']
+Classes: ['StiefelCausalLinear']
+Functions: []
+
+--- FILE: src\models\train_empirical.py ---
+Docstring: train_production_gw_cd.py — HPC Production Engine for EmpathicSchool GW-CD + ZOCR
+============================================================================
+This is the uncompromising, cluster-ready
+Imports: ['os', 'argparse', 'logging', 'torch', 'torch.nn']
+Classes: ['ZOCRWrapperModel']
+Functions: ['evaluate_production', 'main']
+
+--- FILE: src\models\train_fair_empirical.py ---
+Docstring: train_fair_empirical.py
+=======================
+Standalone fair training script. Inherits the real MultimodalClinicalDataset
+and GWPACDNet backbone, but fixes the critical flaw in train_empirical.py:
+
+Imports: ['os', 'logging', 'torch', 'torch.nn', 'torch.optim']
+Classes: []
+Functions: ['differentiable_dp_penalty', 'evaluate', 'main']
+
+--- FILE: src\models\train_gw_cd.py ---
+Docstring: train_gw_cd.py — Training Loop for the GW-CD Framework
+======================================================
+Executes the Grassmannian-Wasserstein Causal Disentanglement training.
+Proves Theorem 1 an
+Imports: ['os', 'torch', 'torch.nn', 'torch.optim', 'torch.utils.data.Dataset']
+Classes: ['TopologicalScarDataset']
+Functions: ['evaluate', 'main']
+
+--- FILE: src\models\train_production_gw_cd.py ---
+Docstring: train_production_gw_cd.py — HPC Production Engine for EmpathicSchool GW-CD + ZOCR
+============================================================================
+This is the uncompromising, cluster-ready
+Imports: ['os', 'argparse', 'logging', 'torch', 'torch.nn']
+Classes: ['TopologicalScarDataset', 'ZOCRWrapperModel']
+Functions: ['evaluate_production', 'main']
+
+--- FILE: src\models\zocr_net.py ---
+Docstring: zocr_net.py — Zero-Overhead Causal Referee (ZOCR)
+=================================================
+Placeholder for the upcoming cross-attention fusion module.
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: src\models\__init__.py ---
+Docstring: None
+Imports: []
+Classes: []
+Functions: []
+
+--- FILE: src\xai\demo.py ---
+Docstring: XAI Demo and Tutorial
+
+This script demonstrates how to use the XAI module to explain predictions.
+
+Usage:
+    python src/xai/demo.py --ckpt <checkpoint_path> --csv <csv_path> --sample_idx <index>
+Imports: ['sys', 'pathlib.Path', 'argparse', 'json', 'torch']
+Classes: []
+Functions: ['load_checkpoint', 'main']
+
+--- FILE: src\xai\README.md ---
+First lines: # Explainable AI (XAI) for Multimodal Threat Model | ## Overview | This module provides **four complementary XAI techniques** to explain predictions from the multimodal threat model: | 1. **Integrated Gradients**: Attribution of predictions to input features (pixels and physiology) | 2. **Saliency Maps**: Gradient-based visualization of critical image regions
+--- FILE: src\xai\visualization.py ---
+Docstring: XAI Visualization Utilities
+
+Provides functions to visualize:
+- Saliency maps overlaid on original images
+- Attribution heatmaps
+- Gate/focus activation values
+- Fairness risk indicators
+Imports: ['numpy', 'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.colors.Normalize', 'pathlib.Path']
+Classes: []
+Functions: ['normalize_attribution', 'denormalize_image', 'visualize_saliency', 'visualize_integrated_gradients', 'visualize_attention', 'visualize_fairness_xai', 'create_explanation_report']
+
+--- FILE: src\xai\__init__.py ---
+Docstring: Explainable AI (XAI) Module for Multimodal Threat Model
+
+This module provides multiple XAI techniques to explain predictions:
+1. Integrated Gradients: Attribution of predictions to input features
+2. S
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'numpy', 'pathlib.Path']
+Classes: ['ExplanationOutput', 'ImageNormalizer', 'IGValidator', 'GradientFlowAnalyzer', 'IntegratedGradients']
+Functions: []
+
+--- FILE: src\xai.backup\demo.py ---
+Docstring: XAI Demo and Tutorial
+
+This script demonstrates how to use the XAI module to explain predictions.
+
+Usage:
+    python src/xai/demo.py --ckpt <checkpoint_path> --csv <csv_path> --sample_idx <index>
+Imports: ['sys', 'pathlib.Path', 'argparse', 'json', 'torch']
+Classes: []
+Functions: ['load_checkpoint', 'main']
+
+--- FILE: src\xai.backup\README.md ---
+First lines: # Explainable AI (XAI) for Multimodal Threat Model | ## Overview | This module provides **four complementary XAI techniques** to explain predictions from the multimodal threat model: | 1. **Integrated Gradients**: Attribution of predictions to input features (pixels and physiology) | 2. **Saliency Maps**: Gradient-based visualization of critical image regions
+--- FILE: src\xai.backup\visualization.py ---
+Docstring: XAI Visualization Utilities
+
+Provides functions to visualize:
+- Saliency maps overlaid on original images
+- Attribution heatmaps
+- Gate/focus activation values
+- Fairness risk indicators
+Imports: ['numpy', 'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.colors.Normalize', 'pathlib.Path']
+Classes: []
+Functions: ['normalize_attribution', 'denormalize_image', 'visualize_saliency', 'visualize_integrated_gradients', 'visualize_attention', 'visualize_fairness_xai', 'create_explanation_report']
+
+--- FILE: src\xai.backup\__init__.py ---
+Docstring: Explainable AI (XAI) Module for Multimodal Threat Model
+
+This module provides multiple XAI techniques to explain predictions:
+1. Integrated Gradients: Attribution of predictions to input features
+2. S
+Imports: ['torch', 'torch.nn', 'torch.nn.functional', 'numpy', 'pathlib.Path']
+Classes: ['ExplanationOutput', 'IntegratedGradients', 'SaliencyMap', 'FairnessXAI', 'AttentionVisualizer']
+Functions: []
+
+--- FILE: _legacy_phase2_archive\make_multimodal_10k.py ---
+Docstring: None
+Imports: ['pathlib.Path', 'argparse', 'pandas']
+Classes: []
+Functions: ['main']
+
+--- FILE: _legacy_phase2_archive\make_multimodal_wesad_faces.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'argparse', 'csv', 'os', 'pathlib.Path']
+Classes: []
+Functions: ['_list_images', '_to_rel_posix', '_load_wesad_windows', '_zscore_inplace', '_make_scar_mask', '_apply_visible_scar', '_balanced_counts', 'main']
+
+--- FILE: _legacy_phase2_archive\train_cgf_fair.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'argparse', 'json', 'random']
+Classes: []
+Functions: ['parse_args', 'set_seed', 'make_or_load_split', 'load_state_dict_safely', 'make_amp', 'js_divergence', 'dp_gap_prob', 'eo_gap_prob', 'eval_metrics', 'main']
+
+--- FILE: _legacy_phase2_archive\train_counterfactual_fair.py ---
+Docstring: None
+Imports: ['__future__.annotations', 'pathlib.Path', 'json', 'random', 'numpy']
+Classes: []
+Functions: ['set_seed', 'make_or_load_split', 'js_divergence', 'eval_acc', 'main']

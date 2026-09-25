@@ -1,0 +1,102 @@
+\section{Physiological Information in the Visual Modality}
+The first experiment tests whether the facial video contains physiological information. Three remote photoplethysmography (rPPG) estimators were applied to the raw video frames of the UBFC-Phys cohort (eight participants, 24 clips; pre-registered dataset SHA-256 \texttt{2035777f\ldots b2acae2}), and the resulting pulse estimates were compared between stress and non-stress conditions with one-sided Mann--Whitney $U$ tests.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{rPPG estimator} & \textbf{$U$} & \textbf{$p$-value} & \textbf{Status} \\
+\midrule
+POS ($I = 0.5$) & 1050.0 & 0.0314 & Primary pre-registered test \\
+CHROM & 1318.0 & 0.0001 & Exploratory (post hoc) \\
+PBV & 1113.0 & 0.0103 & Exploratory (post hoc) \\
+\bottomrule
+\end{tabular}
+\caption{Tests for physiological information recoverable from facial video.}
+\label{tab:leakage}
+\end{table}
+
+The pre-registered primary test (POS, $U = 1050.0$, $p = 0.0314$) rejects, at the pre-registered threshold $p \le 0.05$, the null hypothesis that video compression removes all recoverable physiological signal. The two exploratory estimators point in the same direction but are not treated as independent confirmation. In a per-clip analysis, the CHROM estimate for participant s2 during T1 correlated with the ground-truth wrist BVP at $r = 0.849$, with matching cardiac frequency and a spectral signal-to-noise ratio of 53.5, indicating that the recovered signal is physiological rather than a statistical artifact.
+
+This result has two implications. First, the visual branch has access to genuine physiological information, which a model can legitimately use. Second, because the same branch also sees the scar, a model trained by ERM can use either cue, and nothing in standard training prevents it from preferring the spurious one.
+
+\paragraph{Sensitivity analysis.} A post hoc audit found that two clips (s4 T2 and s4 T3) in the $I = 1.0$ ablation arm had face crops about 37\% smaller than the pre-registered crop-size rule required, because of a detection anomaly. Excluding them from that arm gives $U = 832.0$, $p = 0.0857$, above the threshold, so the $I = 1.0$ result ($p = 0.0437$) is fragile and is not cited as independent evidence. The primary $I = 0.5$ result and the exploratory CHROM and PBV results are unaffected by this anomaly.
+
+\section{Ablation Results}
+\paragraph{Model A (Naive ERM).} The best validation accuracies were 79.94\% (seed 42), 80.98\% (seed 100), and 80.98\% (seed 2026), approximately 7.8 percentage points above the camera-off physiology-only model (approximately 72.15\%). Because the only systematic visual difference between classes in the training data is the scar and the physiological information in the video, this margin is consistent with reliance on the scar, although these validation figures do not isolate the scar's contribution on their own.
+% TODO(authors): The markdown attributes the 7.8-point gap "exclusively" to the scar.
+% That requires evidence such as Model A's accuracy on scar-removed or inverted
+% (rho = 0.15) test data; add that result, or keep the more cautious wording above.
+
+\paragraph{Model C (CGF, counterfactual penalty without Stiefel decomposition).} On the neutral test regime ($\rho = 0.50$), Model C reached 50.20\% accuracy with a DP gap of 0.0202, an EO gap of 0.0484, and a CF gap of 0.0019. A counterfactual penalty alone therefore reduced the counterfactual gap but brought accuracy to chance level.
+
+\paragraph{Model D (EQUITAS-RCMF).} Table~\ref{tab:demographic_audit} reports the demographic audit of the seed-42 model in autonomous mode on the neutral regime.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Group} & \textbf{Accuracy} & \textbf{DP gap} & \textbf{EO gap} & \textbf{CF gap} \\
+\midrule
+Female & 62.50\% & 0.0404 & 0.0573 & 0.0007 \\
+Male & 59.72\% & 0.0589 & 0.1212 & 0.0004 \\
+Age 18--30 & 60.27\% & 0.0187 & 0.0581 & 0.0007 \\
+Age 30--45 & 64.29\% & 0.0034 & 0.0621 & 0.0006 \\
+Age 45--65 & 60.58\% & 0.1919 & 0.2308 & 0.0006 \\
+\bottomrule
+\end{tabular}
+\caption{Demographic audit of EQUITAS-RCMF (seed 42, autonomous mode, $\rho = 0.50$). Source: \texttt{equitas\_rcmf\_master\_benchmark\_report.json}.}
+\label{tab:demographic_audit}
+\end{table}
+
+Across these groups, the counterfactual gap remained between 0.0004 and 0.0007, meaning that removing the scar changed the model's predictions very little. The demographic-parity and equalized-odds gaps varied more widely, reaching 0.1919 and 0.2308 for the 45--65 age group. These subgroup figures should be interpreted cautiously, since the cohort contains only eight participants and some groups are represented by very few of them.
+
+% TODO(authors): The markdown states that EQUITAS-RCMF maintains "consistent
+% performance" in all three regimes and both modes, and that the CF gap holds "across
+% seeds", but gives no numbers for these claims. Add a table with accuracy, DP, EO and
+% CF gap for each regime (rho = 0.85, 0.50, 0.15), each mode, and each seed (mean and
+% standard deviation), or remove the claims.
+
+\section{Explainability Analysis}
+Integrated Gradients~\cite{sundararajan2017} attributions were computed for the ERM baseline and for EQUITAS-RCMF. For the ERM model, attribution was concentrated on the brow-line scar; for EQUITAS-RCMF, attribution on the scar was negligible and was concentrated instead on cheek and forehead skin, the regions that carry the pulse signal used by rPPG. These maps are consistent with the counterfactual results, but they are treated as supporting evidence rather than proof: Integrated Gradients maps can remain visually plausible even when they no longer reflect what a model has learned, and thin, high-contrast structures such as a scar are the kind of edge that input-dominated attributions tend to highlight~\cite{adebayo2018}.
+
+\section{Perturbation-Based Sanity Check}
+A sanity-check protocol was implemented (\texttt{src/evaluation/sham\_edit\_probe.py}) that applies a $30 \times 30$-pixel non-semantic perturbation at a fixed location of clean test images and measures the change in prediction and attribution. This protocol complements, but differs from, the parameter- and label-randomization tests of Adebayo et al.~\cite{adebayo2018}. Its numerical results require the master checkpoint (\texttt{equitas\_rcmf\_master\_best.pt}), which was not recoverable at the time of writing; results will be reported once the checkpoint is recovered, and no conclusion is drawn from this check here.
+
+\section{Edge Deployment Benchmark}
+\label{sec:deployment}
+For deployment, the model was compiled with \texttt{torch.jit.trace} in autonomous mode, with no mask provided. Tracing records only the operations executed for this input, so the mask input and the privileged focus computation are absent from the compiled graph (\texttt{equitas\_rcmf\_edge\_compiled.pt}). The deployed model therefore does not require or accept a scar mask. It still processes the full facial image, including the scar region, through the backbone and both subspace projections; its invariance to the scar depends on what the network learned during training, not on the absence of operations in the graph.
+
+Latency was measured on an x86-64 CPU after 50 warm-up iterations, over 1,000 iterations:
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Mean latency & 0.90 ms/frame \\
+95th-percentile latency & 1.30 ms/frame \\
+Throughput & 1112.7 frames/s \\
+Real-time budget (30 frames/s) & 33.3 ms/frame \\
+Margin relative to budget & 37.0$\times$ \\
+\bottomrule
+\end{tabular}
+\caption{Inference latency of the compiled EQUITAS-RCMF model on an x86-64 CPU.}
+\label{tab:latency}
+\end{table}
+These measurements were taken on a desktop-class CPU, so they indicate that the model is computationally light rather than establishing performance on a specific embedded device.
+% TODO(authors): State the CPU model, batch size, number of threads, and whether the
+% latency includes preprocessing (face detection, cropping) or only the network.
+
+\section{Limitations}
+\label{sec:limitations}
+Several limitations bound these results.
+\begin{itemize}
+    \item \textbf{Cohort size.} The visual dataset contains eight participants, so significance tests were carried out at the clip level rather than the participant level, and the planned equivalence tests were withdrawn because the cohort was below the pre-registered power threshold.
+    \item \textbf{Accuracy relative to the physiology-only model.} The subgroup accuracies of EQUITAS-RCMF (59.72--64.29\%) are below the reported accuracy of the camera-off physiology-only model (approximately 72.15\%). If this comparison holds on the same test data, the fused model does not yet benefit from the visual modality, and a small counterfactual gap could partly reflect reduced reliance on visual input in general rather than selective invariance to the scar. Reporting gate values and a vision-only variant of EQUITAS-RCMF would clarify this.
+    % TODO(authors): Confirm whether the 72.15% camera-off figure is on the same split
+    % and test regime as Table~\ref{tab:demographic_audit}.
+    \item \textbf{Reproducibility.} The master checkpoint could not be recovered at the time of writing. All reported metrics come from output files generated from it and committed to the repository, but they cannot currently be regenerated.
+    \item \textbf{Sanity checks.} A true sham condition, such as synthetically fixing the heart rate across otherwise identical videos, has not been implemented, so residual confounding cannot be fully ruled out.
+\end{itemize}
+These limitations call for caution in extrapolating the results to larger cohorts and uncontrolled deployment conditions.

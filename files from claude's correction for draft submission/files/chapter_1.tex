@@ -1,0 +1,36 @@
+\section{Background and Motivation}
+Wearable biometric sensors and edge-deployed physiological monitoring systems require models that satisfy two demanding constraints at once: they must run in real time on limited hardware, and their decisions must not depend on attributes that have no causal bearing on the outcome. Most deep learning pipelines are trained by empirical risk minimization (ERM), which minimizes average error on the training data and implicitly assumes that deployment data follow the same distribution. In physiological sensing, where the signals of interest are weak and easily confounded by environmental and visual artifacts, this assumption is frequently violated. If a training set contains a visual artifact that happens to correlate with the label, such as a facial scar, a sensor mark, or a distinctive background, ERM can reduce its loss by exploiting that artifact rather than learning the underlying physiological signal, a failure mode known as shortcut learning~\cite{geirhos2020}.
+
+This concern is not only theoretical. In the experiments reported in Chapter~4, a MobileNetV3-Small network trained by ERM on a multimodal dataset containing a synthetic brow-line scar produces Integrated Gradients attributions concentrated on the scar rather than on the skin regions that carry the pulse signal. Attribution maps must be interpreted with care~\cite{adebayo2018}, but this observation is consistent with a model that relies on the scar as a shortcut.
+
+\section{Research Objective and Structural Causal Model}
+This thesis addresses the following research question: \emph{can an edge-deployable deep learning architecture be designed whose predictions are invariant to a known spurious visual attribute, in a data-scarce regime where ERM is especially prone to exploiting such attributes?}
+
+The problem is formalized with a structural causal model~\cite{pearl2009}. The assumed causal relationships are
+\begin{equation}
+S \not\to Y, \qquad C \to X_V, \qquad C \to Y, \qquad S \to X_V,
+\end{equation}
+where
+\begin{itemize}
+    \item $S \in \{0,1\}$ is the sensitive attribute, the presence of a brow-line facial scar;
+    \item $Y \in \{0,1\}$ is the target label, the acute-stress state;
+    \item $C$ is the underlying physiological arousal state, the true cause of $Y$; and
+    \item $X_V$ is the visual observation recorded by the camera.
+\end{itemize}
+The central causal assumption is $S \not\to Y$: a facial scar does not cause acute stress. Any association a model learns between $S$ and its prediction $\hat{Y}$ is therefore spurious and should be removed.
+
+The fairness objective follows the counterfactual fairness criterion of Kusner et al.~\cite{kusner2017}. With $X_F$ denoting the facial input and $X_P$ the physiological input, the prediction should satisfy
+\begin{equation}
+P\bigl(f(X_F, X_P) = y \mid X, S = s\bigr) = P\bigl(f(X_F^{S \leftarrow s'}, X_P) = y \mid X, S = s\bigr),
+\end{equation}
+so that the prediction is unchanged when the scar is counterfactually removed while the physiological input is held fixed.
+
+\section{Contributions}
+This thesis makes the following contributions:
+\begin{enumerate}
+    \item \textbf{The EQUITAS-RCMF architecture.} A multimodal architecture that combines a MobileNetV3-Small vision encoder with a Stiefel orthogonal subspace decomposition, a focus-driven gate that reduces reliance on visual features concentrated on the scar, and a LUPI-based confounder branch that uses the scar mask only during training.
+    \item \textbf{Evidence of physiological information in the visual modality.} A pre-registered test showing that facial video in the UBFC-Phys cohort contains recoverable physiological information, so that the assumption that the visual branch carries no physiological signal does not hold.
+    \item \textbf{Counterfactual evaluation of scar reliance.} An evaluation of the counterfactual gap, demographic parity, and equalized odds under training and test distributions in which the scar is positively correlated, uncorrelated, or negatively correlated with the label.
+    \item \textbf{Explainability analysis.} Integrated Gradients~\cite{sundararajan2017} attributions comparing the ERM baseline with EQUITAS-RCMF, together with an implemented perturbation-based sanity-check protocol whose numerical results are pending recovery of the master checkpoint.
+    \item \textbf{Edge deployment.} A JIT-compiled inference graph in which the mask input pathway is removed, benchmarked for latency and throughput on CPU hardware.
+\end{enumerate}
