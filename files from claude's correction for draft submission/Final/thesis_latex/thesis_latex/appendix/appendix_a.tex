@@ -1,15 +1,19 @@
 \chapter*{Appendix A: Repository Structure and Reproducibility}
 
-\section*{A.1 Pre-Registered Dataset}
+\section*{A.1 Datasets}
+\paragraph{Line B benchmark (pre-registered dataset).}
 \begin{itemize}
     \item \textbf{File:} \texttt{data/publishable\_scar\_production/multimodal\_publishable.csv}
-    \item \textbf{SHA-256:} \texttt{2035777f957fa4c5cc830989f4fe40fb9190589f17c567cb29a3ef0e6b2acae2}, verified on 23 September 2026.
-    \item \textbf{Cohort:} eight participants with video (s1--s8), 24 clips (three tasks per participant).
-    % Note: an earlier draft listed "N=15 WESAD physiology subjects" (a legacy artifact).
-    % If the final physiological encoder is pre-trained on WESAD, restore this line and
-    % describe the pre-training in Chapter 3.
-    \item \textbf{Windows:} 3,344 in total; 2,344 for training, 504 for validation, and 496 for testing.
-    \item \textbf{Labels:} T1 (rest) $\rightarrow Y = 0$ (non-stress); T2 and T3 (TSST speech and arithmetic) $\rightarrow Y = 1$ (stress).
+    \item \textbf{SHA-256:} \texttt{2035777f957fa4c5cc830989f4fe40fb9190589f17c567cb29a3ef0e6b2acae2}.
+    \item \textbf{Physiology:} WESAD chest ECG and EDA from 15 participants (S2--S17, excluding S1 and S12), 30-second windows with a 15-second stride, prepared by \texttt{src/prepare\_wesad.py}.
+    \item \textbf{Faces:} 418 FFHQ images accepted by an InsightFace screen, with synthetic brow-line scars, masks, and clean counterfactuals, built by \texttt{src/build\_publishable\_scar\_dataset.py}.
+    \item \textbf{Split (by participant):} training S2, S3, S4, S7, S8, S9, S13, S14, S16, S17 (2,344 samples); validation S6, S15 (504); test S5, S10, S11 (496).
+    \item \textbf{Training association:} $\rho = 0.85$ between scar and stress.
+\end{itemize}
+\paragraph{Line A cohort.}
+\begin{itemize}
+    \item UBFC-Phys participants s1--s4, three tasks each (12 clips); T1 (rest) $\rightarrow Y = 0$; T2 and T3 (speech and arithmetic) $\rightarrow Y = 1$.
+    \item Outputs: \texttt{outputs/leakage\_run/}.
 \end{itemize}
 
 \section*{A.2 Core Source Files}
@@ -48,7 +52,7 @@
 \caption{Key output files.}
 \end{table}
 
-\paragraph{Master checkpoint.} The master checkpoint (\texttt{equitas\_rcmf\_master\_best.pt}, SHA-256 \texttt{4c2dcad4\ldots b3bc5b}) was present when the benchmark reports were generated on 21 September 2026 but could not be located when this document was prepared. The reported metrics come from the committed output files generated from it; recovery of the checkpoint for full reproducibility is in progress.
+\paragraph{Master checkpoint.} The master checkpoint (\texttt{equitas\_rcmf\_master\_best.pt}, SHA-256 \texttt{4c2dcad4\ldots b3bc5b}) is stored at \texttt{outputs/quarantine\_checkpoints\_20260924/}; its hash matches the one recorded in the benchmark report.
 
 \section*{A.4 Training Configuration}
 \begin{itemize}

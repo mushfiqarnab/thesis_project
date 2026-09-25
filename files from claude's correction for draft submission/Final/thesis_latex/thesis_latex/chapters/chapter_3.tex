@@ -1,27 +1,28 @@
-\section{System Overview}
-EQUITAS-RCMF takes two inputs: a $224 \times 224$ RGB facial video frame $X_V$ and a physiological feature vector $X_P$ derived from wrist-worn blood volume pulse (BVP) and electrodermal activity (EDA) sensors. The forward pass proceeds as
+\section{Overview}
+This chapter describes the two lines of work introduced in Chapter~1. Line~A (Section~\ref{sec:lineA}) tests whether facial video contains physiological information. Line~B (Sections~\ref{sec:arch_overview}--\ref{sec:lineB_protocol}) introduces EQUITAS-RCMF and the controlled benchmark on which it is evaluated.
+
+\section{Line A: Physiological Information in Facial Video}
+\label{sec:lineA}
+Line~A uses UBFC-Phys~\cite{sabour2023}, a public dataset of 56 participants recorded during a three-task protocol inspired by the Trier Social Stress Test: rest (T1), speech (T2), and arithmetic (T3). Participants were filmed at $1024 \times 1024$ pixels and 35 frames per second while wearing an Empatica E4 wristband that recorded blood volume pulse (BVP) and electrodermal activity (EDA). The pre-registered analysis uses four participants (s1--s4), giving 12 clips. Faces are cropped using a width of $3.566 \times 1.5$ times the inter-ocular distance, a value chosen to reproduce the crop geometry used in the pre-registered extraction. Three remote photoplethysmography (rPPG) estimators (POS, CHROM, and PBV) are applied to the cropped video, and their pulse estimates are compared between stress (T2, T3) and rest (T1) with one-sided Mann--Whitney $U$ tests. The POS estimator with smoothing parameter $I = 0.5$ is the pre-registered primary test; CHROM and PBV are exploratory. Because a cohort of four participants falls below the pre-registered power threshold, the study follows the pre-registered fallback to estimation only: tests are carried out at the clip level, and the planned equivalence tests are withdrawn.
+
+\section{Line B: EQUITAS-RCMF Architecture}
+\label{sec:arch_overview}
+EQUITAS-RCMF takes two inputs: a $224 \times 224$ RGB face image $X_V$ and a physiological feature vector $X_P$. The forward pass proceeds as
 \begin{equation}
 X_V \xrightarrow{\text{MobileNetV3}} \mathbf{v}_{\text{raw}}
 \xrightarrow{\text{Stiefel}} (\mathbf{v}_{\text{causal}}, \mathbf{v}_{\text{conf}})
 \xrightarrow{\text{Gate}} \mathbf{z}_{\text{fused}}
 \xrightarrow{\text{Classifier}} \hat{Y},
 \end{equation}
-with the physiological embedding joining at the gating stage. The stages are described below.
+with the physiological embedding joining at the gating stage. The model has 1,140,069 parameters, all of which are trained.
 
-\section{Vision Encoder}
-The vision branch uses a MobileNetV3-Small backbone~\cite{howard2019} pretrained on ImageNet-1K. It produces a spatial feature map $\mathbf{A} \in \mathbb{R}^{576 \times h \times w}$, which adaptive average pooling reduces to a vector:
-\begin{equation}
-\mathbf{v}_{\text{raw}} = \operatorname{Pool}(\mathbf{A}) \in \mathbb{R}^{576}.
-\end{equation}
-% TODO(authors): The markdown states 1,140,133 trainable parameters in one place and
-% "approximately 2.5M parameters" for MobileNetV3-Small in another. Report the full
-% model's parameter count and, if part of the backbone is frozen, the trainable count,
-% so the two figures are not read as contradictory.
+\subsection{Vision Encoder}
+The vision branch uses a MobileNetV3-Small backbone~\cite{howard2019} pretrained on ImageNet-1K. It produces a spatial feature map $\mathbf{A} \in \mathbb{R}^{576 \times h \times w}$, which adaptive average pooling reduces to a vector $\mathbf{v}_{\text{raw}} = \operatorname{Pool}(\mathbf{A}) \in \mathbb{R}^{576}$.
 
-\section{Physiological Encoder}
-The physiological branch processes the BVP and EDA feature vector with a two-layer multilayer perceptron using layer normalization and SiLU activations, producing an embedding $\mathbf{p}_{\text{emb}} \in \mathbb{R}^{d}$ with $d = 192$.
+\subsection{Physiological Encoder}
+The physiological branch processes $X_P$ with a two-layer multilayer perceptron using layer normalization and SiLU activations, producing an embedding $\mathbf{p}_{\text{emb}} \in \mathbb{R}^{192}$.
 
-\section{Stiefel Orthogonal Subspace Decomposition}
+\subsection{Stiefel Orthogonal Subspace Decomposition}
 A learnable matrix $W_{\text{raw}} \in \mathbb{R}^{256 \times 576}$ is projected at every forward pass onto the set of matrices with orthonormal rows. Using the thin QR decomposition $W_{\text{raw}}^{\top} = QR$ with $Q \in \mathbb{R}^{576 \times 256}$~\cite{edelman1998},
 \begin{equation}
 W_{\text{St}} = Q^{\top}, \qquad W_{\text{St}} W_{\text{St}}^{\top} = I_{256}.
@@ -30,49 +31,45 @@ The rows of $W_{\text{St}}$ are split into a causal block and a confounder block
 \begin{equation}
 W_{\text{causal}} = W_{\text{St}}[1{:}192, :], \qquad W_{\text{conf}} = W_{\text{St}}[193{:}256, :],
 \end{equation}
-which gives $\mathbf{v}_{\text{causal}} = W_{\text{causal}}\mathbf{v}_{\text{raw}} \in \mathbb{R}^{192}$ and $\mathbf{v}_{\text{conf}} = W_{\text{conf}}\mathbf{v}_{\text{raw}} \in \mathbb{R}^{64}$. Because the rows of $W_{\text{St}}$ are orthonormal,
+which gives $\mathbf{v}_{\text{causal}} = W_{\text{causal}}\mathbf{v}_{\text{raw}} \in \mathbb{R}^{192}$ and $\mathbf{v}_{\text{conf}} = W_{\text{conf}}\mathbf{v}_{\text{raw}} \in \mathbb{R}^{64}$. Because the rows of $W_{\text{St}}$ are orthonormal, $W_{\text{causal}} W_{\text{conf}}^{\top} = 0$, so the two blocks project $\mathbf{v}_{\text{raw}}$ onto orthogonal subspaces. For the trained model, the orthogonality error $\|W_{\text{causal}} W_{\text{conf}}^{\top}\|_F$ is $1.7149 \times 10^{-6}$.
+% TODO(authors): Confirm that the 1.7149e-6 in the benchmark report was measured on the
+% trained checkpoint (the report stores it next to the checkpoint hash); if it was
+% measured at initialization, say so instead.
+
+Orthogonality of the projections does not by itself make the two representations statistically independent: information about the scar can still be present in $\mathbf{v}_{\text{causal}}$, and both blocks are derived from the same parameters $W_{\text{raw}}$, so gradients from every loss term update both~\cite{sarhan2020, huang2018}. The decomposition therefore provides a structured place for scar information to be routed, while the invariance losses in Section~\ref{sec:loss} discourage it from remaining in the causal subspace.
+
+\subsection{Confounder Focus: Training and Inference Modes}
+Following the learning-using-privileged-information paradigm~\cite{vapnik2009, vapnik2015}, the scar mask is used only during training.
+
+\paragraph{Privileged mode (training).} The activation energy at each location of the feature map is its absolute value, $|\mathbf{A}|$, and the scar mask $M$ is resized to the feature-map resolution by nearest-neighbour interpolation. The focus is the log-normalized ratio of mean energy inside the mask to mean energy over the whole map:
 \begin{equation}
-W_{\text{causal}} W_{\text{conf}}^{\top} = 0,
-\end{equation}
-so the two blocks project $\mathbf{v}_{\text{raw}}$ onto orthogonal subspaces. The orthogonality error $\|W_{\text{causal}} W_{\text{conf}}^{\top}\|_F$ was measured as $1.7149 \times 10^{-6}$ at initialization.
-
-Orthogonality of the projections does not by itself make the two representations statistically independent: information about the scar can still be present in $\mathbf{v}_{\text{causal}}$, and both blocks are derived from the same parameters $W_{\text{raw}}$, so gradients from all loss terms update both~\cite{sarhan2020, huang2018}. The decomposition therefore provides a structured place for scar information to be routed, while the invariance losses in Section~\ref{sec:loss} discourage it from remaining in the causal subspace.
-
-\section{LUPI Confounder Focus: Training and Inference Modes}
-The model estimates how strongly the visual features concentrate on the scar region. Following the learning-using-privileged-information paradigm~\cite{vapnik2009, vapnik2015}, this estimate uses the ground-truth scar mask only during training.
-
-\paragraph{Privileged mode (training).} With the scar mask $M$ available, the focus is the log-normalized ratio of feature-map energy inside the mask to the energy over the whole map:
-\begin{equation}
-\text{Focus} = \log\!\left(1 + \frac{\text{mean activation energy of } \mathbf{A} \text{ inside } M}{\text{mean activation energy of } \mathbf{A} + \epsilon}\right).
+\text{Focus} = \log\!\left(1 + \frac{\operatorname{mean}_{M}\,|\mathbf{A}|}{\operatorname{mean}\,|\mathbf{A}| + \epsilon}\right).
 \end{equation}
 
-\paragraph{Autonomous mode (inference).} No mask is provided. The focus is instead estimated from the confounder subspace:
+\paragraph{Autonomous mode (inference).} No mask is provided. A confounder head predicts the presence of the scar from the confounder subspace, and its sigmoid output is used as the focus:
 \begin{equation}
 \text{Focus}_{\text{auto}} = \sigma\bigl(\mathbf{w}_{\text{conf}}^{\top}\mathbf{v}_{\text{conf}} + b_{\text{conf}}\bigr).
 \end{equation}
-When the model is compiled for deployment in this mode, the mask input and the computations that depend on it are absent from the traced graph (Section~\ref{sec:deployment}).
-% TODO(authors): State how Focus_auto is trained to match the privileged Focus (for
-% example, a regression or distillation loss between the two), since the loss
-% functional below does not include such a term explicitly.
+The confounder head is trained with a binary cross-entropy loss to predict the scar label (Section~\ref{sec:loss}); it is not trained to reproduce the privileged focus. During training, the gate uses the privileged focus, which is unbounded; at inference it uses the autonomous estimate, which lies between 0 and 1. The two therefore differ in scale, and the consequences of this difference are discussed in Chapter~4. When the model is compiled for deployment, the mask input and the computations that depend on it are absent from the traced graph (Section~\ref{sec:deployment}).
 
-\section{Focus-Driven Attention Gate}
-The contribution of visual features is controlled by a gate that combines a learned cross-modal term with an exponential penalty on the focus:
+\subsection{Focus-Driven Attention Gate}
+The contribution of visual features is controlled by a scalar gate that combines a learned cross-modal term with an exponential penalty on the focus:
 \begin{equation}
-G = \sigma\!\bigl(\operatorname{MLP}_{\text{cross}}([\mathbf{v}_{\text{causal}}; \mathbf{p}_{\text{emb}}])\bigr) \cdot \exp(-\kappa \cdot \text{Focus}),
+G = \sigma\!\bigl(\operatorname{MLP}_{\text{cross}}([\mathbf{v}_{\text{causal}}; \mathbf{p}_{\text{emb}}])\bigr) \cdot \exp(-\kappa \cdot \operatorname{clip}(\text{Focus}, 0, 10)),
 \end{equation}
-where $\kappa$ is a learnable temperature initialized at $1.5$ and clamped to $[0.1, 10.0]$. The factor $\exp(-\kappa \cdot \text{Focus})$ reduces the gate, and hence the weight given to visual features, when those features concentrate on the scar region.
+where $\operatorname{MLP}_{\text{cross}}$ maps the 384-dimensional concatenation to a single value and $\kappa$ is a learnable temperature initialized at $1.5$ and clamped to $[0.1, 10.0]$. The same value of $G$ weights all 192 dimensions, and the exponential factor reduces it when visual features concentrate on the scar region.
 
-\section{Latent Fusion and Classification}
-The fused representation weights the visual and physiological embeddings by the gate,
+\subsection{Latent Fusion and Classification}
+The fused representation is
 \begin{equation}
-\mathbf{z}_{\text{fused}} = G \odot \mathbf{v}_{\text{causal}} + (1 - G) \odot \mathbf{p}_{\text{emb}},
+\mathbf{z}_{\text{fused}} = G\, \mathbf{v}_{\text{causal}} + (1 - G)\, \mathbf{p}_{\text{emb}},
 \end{equation}
 and the classifier is
 \begin{equation}
 \hat{Y} = \operatorname{Softmax}\!\Bigl(\operatorname{Linear}_{128 \to 2}\bigl(\operatorname{Dropout}_{0.15}(\operatorname{SiLU}(\operatorname{Linear}_{192 \to 128}(\mathbf{z}_{\text{fused}})))\bigr)\Bigr).
 \end{equation}
 
-\section{Training Objective}
+\subsection{Training Objective}
 \label{sec:loss}
 The model is trained with the combined objective
 \begin{equation}
@@ -81,36 +78,47 @@ The model is trained with the combined objective
 where
 \begin{itemize}
     \item $\mathcal{L}_{\text{task}}$ is the cross-entropy loss for stress classification;
-    \item $\mathcal{L}_{\text{conf}}$ supervises the confounder branch to predict the scar label from $\mathbf{v}_{\text{conf}}$, so that scar information is routed into the confounder subspace;
-    \item $\mathcal{L}_{\text{causal-inv}}$ encourages $\mathbf{v}_{\text{causal}}$ to be invariant to the presence of the scar;
-    \item $\mathcal{L}_{\text{latent-inv}}$ encourages invariance of the fused representation;
-    \item $D_{\text{JS}} = \operatorname{JS}\bigl(f(X) \,\|\, f(X^{S \leftarrow 0})\bigr)$ is the Jensen--Shannon divergence between the predicted distributions for an input and its scar-removed counterfactual; and
+    \item $\mathcal{L}_{\text{conf}}$ is a binary cross-entropy loss for predicting the scar label from $\mathbf{v}_{\text{conf}}$, which routes scar information into the confounder subspace;
+    \item $\mathcal{L}_{\text{causal-inv}}$ and $\mathcal{L}_{\text{latent-inv}}$ are mean squared errors between the causal representations, and between the fused representations, of an input and its scar-free counterfactual;
+    \item $D_{\text{JS}} = \operatorname{JS}\bigl(f(X_V, X_P) \,\|\, f(X_V^{S \leftarrow 0}, X_P)\bigr)$ is the Jensen--Shannon divergence between the predicted distributions for an input and its counterfactual, with the physiological input held fixed; and
     \item $\mathcal{L}_{\text{DP}}$ and $\mathcal{L}_{\text{EO}}$ are differentiable surrogates for the demographic-parity and equalized-odds gaps.
 \end{itemize}
-% TODO(authors): Give the exact definitions of L_causal-inv, L_latent-inv, L_DP and L_EO
-% (distance measure, and which surrogate functions are used for DP and EO).
-Because the fairness terms are surrogates, a low training loss does not by itself guarantee the corresponding fairness properties~\cite{yao2024}; all fairness criteria are therefore evaluated directly on held-out data.
-
-Checkpoints are selected on the validation set by
+% TODO(authors): Give the exact surrogate forms of L_DP and L_EO from train_equitas_rcmf.py.
+Because the fairness terms are surrogates, a low training loss does not by itself guarantee the corresponding fairness properties~\cite{yao2024}; all fairness criteria are therefore evaluated directly on held-out data. Checkpoints are selected on the validation set by
 \begin{equation}
 \text{score} = \text{Acc} - 0.5\,|\Delta\text{DP}| - 0.5\,\max(\Delta\text{EO}) - 0.2\,\text{CF Gap}.
 \end{equation}
 
-\section{Dataset and Experimental Protocol}
-The experiments use a pre-registered pilot cohort of eight participants (s1--s8) from UBFC-Phys~\cite{sabour2023}, a multimodal dataset recorded during a social-stress protocol, which provides both the facial video and the wrist-worn BVP and EDA signals used by the model. Each participant contributes three video clips: a rest task (T1), labelled non-stress ($Y = 0$), and speech (T2) and arithmetic (T3) tasks from the Trier Social Stress Test, labelled stress ($Y = 1$). The 24 clips yield 3,344 temporal windows, split into 2,344 training, 504 validation, and 496 test windows. A synthetic brow-line scar is added to the facial frames, with a segmentation mask recorded for each scarred sample; scar-removed counterfactuals are produced from the mask.
-% TODO(authors): State whether the train/validation/test split is by participant or by
-% window. With eight participants, a window-level split places data from the same
-% person in every split and makes test accuracy optimistic.
+\section{Line B: Controlled Benchmark}
+\label{sec:lineB_data}
+No public dataset provides facial images and physiological recordings from the same people together with controlled annotations of a facial attribute and its counterfactual removal. Line~B therefore uses a constructed benchmark in which the association between a visual attribute and the label is set by design.
 
-To test whether the model ignores the scar, the correlation $\rho$ between the scar and the stress label is varied at test time across three regimes:
+\paragraph{Physiology.} Physiological inputs come from WESAD~\cite{schmidt2018}: chest-worn electrocardiogram (ECG) and EDA recorded at 700~Hz from 15 participants. Signals are divided into 30-second windows with a 15-second stride. From each window, the root mean square of successive differences (RMSSD) of heartbeat intervals is computed from the ECG, and the mean EDA level is computed from the EDA signal; these two features form $X_P$. Each window is labelled stress ($Y = 1$) or non-stress ($Y = 0$) according to the WESAD condition in which it was recorded.
+% TODO(authors): State which WESAD conditions are used (e.g. stress vs. baseline only, or
+% also amusement/meditation as non-stress), and whether X_P is standardized using
+% training-set statistics.
+
+\paragraph{Faces and scars.} Face images come from FFHQ. Images are accepted only if an InsightFace detector finds exactly one adult face with facial keypoints, giving 418 faces. A synthetic brow-line scar is rendered on each face, with a segmentation mask of the scarred region. The counterfactual for a scarred image is the original face image before the scar was added, so the two differ only inside the scar region. Each face is also assigned an estimated age and gender by InsightFace; these estimates describe the face images, not the WESAD participants.
+% TODO(authors): State the number of FFHQ images screened, the number rejected, and the
+% scar morphologies used.
+
+\paragraph{Pairing.} Faces are paired at random with physiological windows of the same stress class within each data split. A face's appearance therefore carries no information about the stress label; the only label-related visual cue is the scar, which is present with a probability that depends on the label. In the training set, the scar accompanies stress in 85\% of samples ($\rho = 0.85$).
+
+\paragraph{Split.} The data are split by WESAD participant: ten participants (S2, S3, S4, S7, S8, S9, S13, S14, S16, S17) for training, two (S6, S15) for validation, and three (S5, S10, S11) for testing, giving 2,344, 504, and 496 samples. Face images are also disjoint across the splits, so no participant and no face appears in more than one split.
+
+\section{Line B: Evaluation Protocol}
+\label{sec:lineB_protocol}
+To test whether a model ignores the scar, the 496 test samples are evaluated under three regimes that differ in how the scar is associated with the label:
 \begin{itemize}
-    \item \textbf{Regime 1 (biased, $\rho = 0.85$):} the scar occurs mostly with stress, as in a biased training set.
-    \item \textbf{Regime 2 (neutral, $\rho = 0.50$):} the scar is distributed equally across classes.
-    \item \textbf{Regime 3 (inverted, $\rho = 0.15$):} the scar occurs mostly without stress, reversing the training correlation.
+    \item \textbf{Biased ($\rho = 0.85$):} the scar occurs mostly with stress, matching the association in the training data.
+    \item \textbf{Neutral ($\rho = 0.50$):} the scar is distributed equally across classes.
+    \item \textbf{Inverted ($\rho = 0.15$):} the scar occurs mostly without stress, reversing that association.
 \end{itemize}
-Each regime is evaluated in both privileged mode, with the ground-truth mask, and autonomous mode, without it. This draft reports results for the neutral regime in autonomous mode (Chapter~4); results for the biased and inverted regimes will be reported in the final version.
+% TODO(authors): State how each regime is constructed from the 496 test samples (for
+% example, by reassigning which samples receive the scarred or clean image).
+A model that relies on the scar should perform well in the biased regime and poorly in the inverted one; a model that ignores it should perform the same in all three. Each regime is evaluated in privileged mode, with the ground-truth mask, and in autonomous mode, without it. The reported metrics are accuracy; the demographic-parity (DP) gap $|P(\hat{y}=1 \mid s=1) - P(\hat{y}=1 \mid s=0)|$; the equalized-odds (EO) gap, the larger of the differences in true-positive and false-positive rates between scarred and unscarred inputs; and the counterfactual (CF) gap, the mean absolute change in the predicted probability of stress when the scar is removed.
 
-Four models are compared, each trained with five random seeds (42, 100, 2026, 777, and 888) for 250 epochs with batch size 32 and learning rate $10^{-4}$, all using a MobileNetV3-Small backbone:
+Four models are compared, all using a MobileNetV3-Small backbone:
 \begin{table}[htbp]
 \centering
 \begin{tabular}{@{}lll@{}}
@@ -118,15 +126,15 @@ Four models are compared, each trained with five random seeds (42, 100, 2026, 77
 \textbf{Model} & \textbf{Description} & \textbf{Purpose} \\
 \midrule
 A: Naive ERM & Concatenation fusion, no fairness terms & Tests reliance on the scar \\
-B: Camera-off & Physiology-only MLP & Physiological performance reference \\
-C: CGF (pruned) & Counterfactual penalty, no Stiefel decomposition & Tests a penalty-only approach \\
+B: Camera-off & Physiology only & Reference without visual input \\
+C: CGF & Counterfactual penalty, no Stiefel decomposition & Tests a penalty-only approach \\
 D: EQUITAS-RCMF & Stiefel decomposition, LUPI focus, gating & Proposed model \\
 \bottomrule
 \end{tabular}
-\caption{Models compared in the ablation study.}
+\caption{Models compared on the Line~B benchmark.}
 \label{tab:ablation_models}
 \end{table}
-% not "CGP"; the markdown used both.
-
-Training used an RTX~4060 GPU, and the edge benchmark used an x86-64 CPU.
-
+% TODO(authors): For each model, state the training CSV and seeds actually used. The
+% existing camera-off reports were trained on an earlier dataset
+% (multimodal_10k_unbiased.csv), not on this benchmark.
+Training used an RTX~4060 GPU, and the latency benchmark used an AMD Ryzen~5 7500F desktop CPU.

@@ -1,0 +1,111 @@
+% =====================================================================
+% Chapter 2 revisions v3 (verified two-line structure)
+%   Line A: leakage test on UBFC-Phys video (s1-s4).
+%   Line B: EQUITAS-RCMF on WESAD chest physiology + FFHQ faces with synthetic scars.
+% This file REPLACES chapter_2_revisions.tex (v2). Do not \input it; copy each
+% passage into chapters/chapter_2.tex over the passage it names.
+% IMPORTANT: the v2 checklist told you to change "HRV/GSR" to "BVP/EDA". Do NOT do
+% that: Line B uses ECG-derived HRV (RMSSD) and EDA ("GSR"), so HRV/GSR is correct.
+% If that change was already applied, revert it.
+% =====================================================================
+
+
+% ---------------------------------------------------------------------
+% 1. Schmidt et al. (2018), WESAD -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} WESAD supplies the physiological input to the Line~B benchmark: its chest-worn electrocardiogram and electrodermal activity, which the benchmark found more informative than wrist-worn signals, provide the two features used by EQUITAS-RCMF, and its study conditions define the stress label. Its design also sets limits the thesis must acknowledge. Stress induced by the Trier Social Stress Test is a controlled proxy for, not a direct measure of, threat-related states. With only 15 participants, performance on unseen individuals can be estimated only if each participant's data are kept entirely in training or in testing; the thesis therefore splits by participant and tests on three held-out participants, following the same principle as the benchmark's leave-one-subject-out evaluation. The benchmark's best stress-detection accuracy (93.12\%) used many features from all chest modalities, whereas EQUITAS-RCMF uses two, so lower accuracy is expected. Finally, the dataset's small and narrow population limits conclusions about how physiological evidence behaves across groups of people.
+
+
+% ---------------------------------------------------------------------
+% 2. Costantini et al. (2023) -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} The Line~B benchmark uses chest-worn recordings, which avoids the wrist-sensor problems Costantini et al.\ document, but their findings matter in two other places. First, the Line~A leakage test uses the BVP recorded by the Empatica E4, the device they validated, as its ground truth; the reliability of that reference, which in their study required reconstruction to recover most heartbeats, bounds how precisely the recovered video signal can be compared with it. Second, a wearable deployment of EQUITAS-RCMF would most likely use a wrist device. There, the HRV feature the model uses, RMSSD, was the least reliable time-domain measure under movement, and wrist EDA did not agree with the reference in any condition, so the accuracy obtained with chest signals is likely to be an upper bound for wrist-based deployment. This supports the sensor-noise robustness evaluation proposed in Section~1.6.
+
+
+% ---------------------------------------------------------------------
+% 3. Toneva et al. (2019) -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} Toneva et al.\ provide a per-example measure of learning difficulty that can be computed during training. Applied to this thesis, forgetting counts could show whether scar-positive windows are learned less stably than scar-negative ones, complementing the post-compression analysis suggested by Hooker et al.~\cite{hooker2019}. Their finding that mislabelled examples are the most forgotten is relevant to the design of Line~B in two ways. Because face images are paired with physiological windows at random, the face is unrelated to the stress label; from the perspective of the visual branch alone, the labels behave like noise, so any visual feature the model memorizes, other than the scar, is fitted to noise. In addition, the stress label is assigned by study condition, although individual physiological responses vary within a condition, and consecutive windows overlap by half, so neighbouring windows are strongly correlated and not independent examples.
+
+
+% ---------------------------------------------------------------------
+% 4. Vapnik and Vashist (2009) -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} LUPI formalizes the setting of this thesis: the scar segmentation mask is available during training but not at deployment~\cite{vapnik2009, vapnik2015}. In EQUITAS-RCMF, the mask is used during training to compute a focus signal that measures how strongly visual features concentrate on the scar, while at inference the focus is replaced by the scar probability predicted from the confounder subspace, and the mask pathway is absent from the compiled model. The LUPI view also clarifies a limitation of the current design: the privileged signal and the estimate that replaces it at inference should be interchangeable, but the privileged focus is unbounded while the estimate lies between 0 and 1, so the deployed gate does not receive the kind of input it was trained on. The two works also use training-only information differently. LUPI uses it to estimate the difficulty of each training example and so improve accuracy, whereas this thesis uses it to route scar information away from the causal representation. Vapnik and Vashist's convergence guarantees are derived for support vector machines and do not transfer formally to this network; the thesis adopts the paradigm, not its guarantees. The physiological signals, by contrast, are available at test time and are an ordinary second modality.
+
+
+% ---------------------------------------------------------------------
+% 5. Anthis and Veitch (2023) -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} This paper provides the theoretical case for the thesis's central assumption. The thesis treats the scar as having no causal effect on stress, so any predictive value it carries is spurious, which is the setting in which Anthis and Veitch show that removing the dependence need not cost accuracy. The Line~B benchmark makes this concrete: the scar--stress association is created by assigning scars according to the stress label, so the evaluation conditions differ only in that association. EQUITAS-RCMF's accuracy was unchanged when the association was reversed (Chapter~4). The paper also explains the pattern of group fairness results. Because scars are assigned according to the label, the setting corresponds most closely to their selection-on-label context, in which counterfactual fairness is equivalent to equalized odds rather than demographic parity. Consistent with this, equalized-odds gaps stayed small while demographic-parity gaps grew with the base-rate differences that the association creates.
+
+
+% ---------------------------------------------------------------------
+% 6. Arjovsky et al. (2019), IRM -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} IRM and this thesis share a goal, a predictor that does not depend on a spurious feature, but rely on different information. IRM infers which features are spurious from how correlations change across training environments. The Line~B training data form a single environment, with the scar associated with stress at $\rho = 0.85$, so IRM is not directly applicable; instead, this thesis knows the spurious feature and enforces invariance to it through paired counterfactual images. The thesis's evaluation adopts the logic of Colored MNIST: the same test windows are evaluated with the scar--stress association reversed, a condition under which a model that relies on the scar should lose accuracy. EQUITAS-RCMF's accuracy did not change under this reversal (Chapter~4).
+
+
+% ---------------------------------------------------------------------
+% 7. Cohen et al. (2025) -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} Cohen et al.\ establish, for image classifiers, the principle this thesis relies on: modifying an input feature and observing whether the prediction changes reveals whether a model depends on that feature. The thesis's counterfactual gap applies this principle to one model and one known attribute, measuring how much the stress prediction changes when the scar is removed. Their finding that correlated attributes need not be exploited, and that uncorrelated ones sometimes are, also explains why the thesis measures reliance directly: the correlation between the scar and stress in the training data shows only that a model \emph{could} use the scar, not that it does. The thesis therefore combines the counterfactual gap with a test condition in which the association is reversed. The thesis goes beyond Cohen et al.\ by using the counterfactual signal as a training objective, not only to measure dependence, in a multimodal model intended for edge deployment.
+
+
+% ---------------------------------------------------------------------
+% 8. Liu et al. (2021), JTT -- replace the "Relevance" paragraph
+% ---------------------------------------------------------------------
+% TODO(authors): Check whether EQUITAS-RCMF training reweights or resamples the
+% (scar, stress) groups. If it does, add one sentence saying so after the second sentence.
+\textit{Relevance to this thesis.} JTT addresses a setting in which the spurious attribute is not labelled during training. In this thesis the scar is labelled for every sample, so the four combinations of scar and stress label are known, and invariance to the scar is enforced through counterfactual pairs rather than by inferring the affected groups from a model's errors. The paper suggests an additional evaluation: worst-group accuracy across the four scar--stress groups, the metric used throughout this literature. Improved worst-group accuracy does not, however, show that a model has stopped using a spurious feature: when counterfactual alignment was used to compare robust-training methods on Waterbirds, JTT did not reduce the classifier's reliance on background features~\cite{cohen2025}. This supports measuring the scar's influence on predictions directly.
+
+
+% ---------------------------------------------------------------------
+% 9. Lin et al. (2022), FairGRAPE -- replace the "Relevance" paragraph
+%    (removes the obsolete CGF Pruned30 results)
+% ---------------------------------------------------------------------
+\textit{Relevance to this thesis.} FairGRAPE motivates treating fairness as a property that must be checked whenever a model is compressed, not only after training. EQUITAS-RCMF is currently deployed in full precision through JIT compilation, and its compressed versions have not yet been evaluated; Chapter~6 identifies quantization that preserves the orthogonality of the subspace projection as necessary future work. FairGRAPE's group-aware pruning criterion is a candidate for such compression, because it preserves the importance of parameters for each group rather than only for overall accuracy. The thesis differs from FairGRAPE in the kind of fairness it targets: invariance to a specific visual attribute, measured counterfactually, rather than parity of accuracy across demographic groups.
+
+
+% ---------------------------------------------------------------------
+% 10. Section 2.3 -- replace the paragraph that begins
+%     "The physiological evidence available to such frameworks..."
+% ---------------------------------------------------------------------
+The physiological evidence available to such frameworks is also limited by existing datasets. Public multimodal stress datasets such as WESAD provide synchronized, high-quality wearable recordings with validated stress conditions, but they are small, demographically narrow, and based on stress induced in the laboratory~\cite{schmidt2018}. UBFC-Phys additionally records facial video from the same participants alongside wrist-worn BVP and EDA~\cite{sabour2023}, but neither dataset provides faces with controlled, annotated scars and exact scar-free counterfactuals. This thesis therefore uses UBFC-Phys video to test whether facial video carries physiological information, and builds a controlled benchmark for scar reliance by pairing WESAD physiology with face images carrying synthetic scars. Stress induced by the Trier Social Stress Test remains a controlled proxy for threat-related states in both.
+
+
+% ---------------------------------------------------------------------
+% 11. Section 2.3 -- in the IRM paragraph, replace the final sentence
+%     "Evaluating such a model on data in which the attribute's relationship with
+%      the label is reversed remains a strong test that this thesis identifies for
+%      future work."
+%     with:
+% ---------------------------------------------------------------------
+This thesis applies such a test, evaluating its model on data in which the scar's association with stress is reversed (Chapter~4).
+
+
+% =====================================================================
+% SENTENCE-LEVEL FIXES in other entries (apply each; leave a TODO if unsure)
+% =====================================================================
+% [ ] Kusner et al. relevance: "observable physiological signals (HRV and GSR)" ->
+%     "observable physiological features (ECG-derived HRV and EDA)". Keep HRV/GSR wording
+%     elsewhere; it is correct for Line B.
+% [ ] Lian and Celiktutan relevance: "point estimates on a single 80/20 split" ->
+%     "point estimates from a single participant-level split".
+% [ ] Hooker et al. relevance: the sentence about comparing "pruned and unpruned models
+%     ... from single training runs" referred to the obsolete CGF pruning experiments ->
+%     "Any compressed version of the model should therefore be compared with the original
+%     across several training runs, and at the level of individual examples."
+% [ ] Ramesh et al. relevance: "a compressed CGF model's DP or EO gap" ->
+%     "a compressed model's DP or EO gap".
+% [ ] Howard et al. relevance: the sentence on "the thesis's compression experiments"
+%     (MobileNetV3-Small losing 2.5 points under 8-bit quantization) may stay, but replace
+%     "evaluating separately whether its counterfactual fairness property is preserved after
+%     compression" with "and identifies evaluating the fairness of compressed versions as
+%     future work".
+% [ ] Schmidt et al. and Villarejo / Gohumpu entries: keep "HRV and GSR" (correct for Line B).
+% [ ] Any remaining statement that the (scar, threat) groups are "balanced during
+%     construction" -> "the scar is associated with stress in the training data
+%     (rho = 0.85)".
+% [ ] Any remaining statement that the thesis uses "UBFC-Phys wrist BVP/EDA" as the
+%     model's input -> Line B uses WESAD chest ECG and EDA; UBFC-Phys is used only in Line A.
